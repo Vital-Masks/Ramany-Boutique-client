@@ -18,6 +18,7 @@ const CategoryCard = ({ size }) => {
         layout="fill"
         objectFit="cover"
         objectPosition={"0% 30%"}
+        alt="img"
       />
       <div className="absolute top-0 bg-black bg-opacity-50 h-full w-full flex">
         <div className="p-10 self-end text-white">
