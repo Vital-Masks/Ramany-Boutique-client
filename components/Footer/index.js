@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
-    <div className="border-t max-w-screen-2xl mx-auto w-full flex flex-col">
-      <div className="grid grid-cols-5 gap-24 py-10">
+    <div className="border-t max-w-screen-lg 2xl:max-w-screen-xl mx-auto w-full py-2 md:py-5 px-5 md:px-20 xl:px-0">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-24 py-10">
         <div className=" col-span-2">
           <h1 className="text-xl font-bold">LOGO</h1>
           <p className="text-sm mt-4 text-gray-400">
