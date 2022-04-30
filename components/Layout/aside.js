@@ -6,7 +6,10 @@ const Aside = ({ open }) => {
   return (
     <aside>
       <p className="text-gray-400 text-sm flex items-center gap-3">
-        <HomeIcon className="w-5 h-5 text-gray-400" /> / All Products
+        <Link href={`/`}>
+          <HomeIcon className="w-5 h-5 text-gray-400" />
+        </Link>{" "}
+        / All Products
       </p>
 
       <Disclosure>

@@ -5,7 +5,7 @@ import { ChevronDownIcon } from "@heroicons/react/solid";
 export default function Dropdown() {
   const [open, setOpen] = useState(false);
   return (
-    <div classNameName="flex flex-col">
+    <div className="relative flex flex-col">
       <button
         onClick={() => setOpen(!open)}
         className="flex items-center justify-between border border-gray-200 py-2 px-4 rounded-full"
@@ -30,7 +30,7 @@ export default function Dropdown() {
       </button>
       {open && (
         <div
-          className=" bg-white text-base z-50 list-none divide-y divide-gray-100 rounded shadow my-4"
+          className="absolute top-8 right-0 bg-white text-base z-50 list-none divide-y divide-gray-100 rounded shadow my-4"
           id="dropdown"
         >
           <ul className="py-1" aria-labelledby="dropdown">
