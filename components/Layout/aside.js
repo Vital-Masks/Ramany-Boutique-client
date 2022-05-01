@@ -6,7 +6,7 @@ const Aside = ({ open }) => {
   return (
     <aside>
       <p className="text-gray-400 text-sm flex items-center gap-3">
-        <Link href={`/`}>
+        <Link href={`/`} passHref>
           <HomeIcon className="w-5 h-5 text-gray-400" />
         </Link>{" "}
         / All Products
@@ -60,19 +60,19 @@ const Aside = ({ open }) => {
             <Disclosure.Panel className="p-4 text-sm text-gray-700 font-medium ">
               <ul>
                 <li className="my-4 hover:text-base active:text-base transition-transform">
-                  <Link href={`#`}>Engagement</Link>
+                  <Link href={`#`} passHref>Engagement</Link>
                 </li>
                 <li className="my-4 hover:text-base active:text-base transition-transform">
-                  <Link href={`#`}>Sangeet & Mehendi</Link>
+                  <Link href={`#`} passHref>Sangeet & Mehendi</Link>
                 </li>
                 <li className="my-4 hover:text-base active:text-base transition-transform">
-                  <Link href={`#`}>Wedding/ Bridal</Link>
+                  <Link href={`#`} passHref>Wedding/ Bridal</Link>
                 </li>
                 <li className="my-4 hover:text-base active:text-base transition-transform">
-                  <Link href={`#`}>Cocktail & Party</Link>
+                  <Link href={`#`} passHref>Cocktail & Party</Link>
                 </li>
                 <li className="my-4 hover:text-base active:text-base transition-transform">
-                  <Link href={`#`}>Day to Day Wear</Link>
+                  <Link href={`#`} passHref>Day to Day Wear</Link>
                 </li>
               </ul>
             </Disclosure.Panel>
