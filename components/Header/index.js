@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { MenuIcon } from "@heroicons/react/solid";
+import { MenuIcon, XIcon } from "@heroicons/react/solid";
 
 import Account from "./account";
 import Cart from "./cart";
@@ -7,13 +7,15 @@ import NavItems from "./navItems";
 import Search from "./search";
 import MobileAside from "../Layout/mobileAside";
 import { useState } from "react";
+import MobileNav from "./mobileNav";
 
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
 
   return (
     <>
-      <div className="border-b flex items-center justify-between max-w-screen-lg 2xl:max-w-screen-xl mx-auto w-full py-2 md:py-5 px-5 md:px-20 xl:px-0">
+      <MobileNav open={openMenu} />
+      <div className="fixed z-30 bg-white lg:relative border-b flex items-center justify-between max-w-screen-lg 2xl:max-w-screen-xl mx-auto w-full py-2 md:py-5 px-5 md:px-20 xl:px-0">
         <div className="flex items-center gap-10">
           <div className="relative h-10 w-20 md:h-12 md:w-24">
             <Image
@@ -33,12 +35,17 @@ const Header = () => {
           </div>
           <Cart />
           <Account />
-          <button onClick={() => setOpenMenu(!openMenu)}>
-            <MenuIcon className="w-5 h-5 text-gray-500 lg:hidden" />
-          </button>
+          {openMenu ?
+            <button onClick={() => setOpenMenu(!openMenu)}>
+              <XIcon className="w-5 h-5 text-gray-500 lg:hidden" />
+            </button> :
+            <button onClick={() => setOpenMenu(!openMenu)}>
+              <MenuIcon className="w-5 h-5 text-gray-500 lg:hidden" />
+            </button>
+          }
+
         </div>
       </div>
-      {openMenu && <MobileAside open={openMenu} />}
     </>
   );
 };

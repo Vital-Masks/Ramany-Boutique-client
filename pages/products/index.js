@@ -3,13 +3,12 @@ import Aside from "../../components/Layout/aside";
 import Dropdown from "../../components/Ui/Dropdown";
 import { AdjustmentsIcon } from "@heroicons/react/outline";
 import MobileAside from "../../components/Layout/mobileAside";
-import CardSection from "../../components/Views/CardSection";
 import Card from "../../components/Views/Card";
 
 const Products = () => {
   const [openMobileMenu, setOpenMobileMenu] = useState(false)
   return (
-    <div className="relative max-w-screen-lg 2xl:max-w-screen-xl mx-auto w-full py-3 md:py-5 px-5 md:px-20 xl:px-0 lg:mt-14 grid grid-cols-4 gap-10">
+    <div className="relative max-w-screen-lg 2xl:max-w-screen-xl mx-auto w-full py-3 md:py-5 px-5 md:px-20 xl:px-0 mt-14 grid grid-cols-4 gap-10">
       <div className="hidden lg:block">
         <Aside />
       </div>

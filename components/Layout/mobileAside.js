@@ -2,10 +2,11 @@ import { ChevronUpIcon, HomeIcon } from "@heroicons/react/outline";
 import { Disclosure } from "@headlessui/react";
 import Link from "next/link";
 
-const MobileAside = ({ open }) => {
+const MobileAside = ({ openMobileMenu }) => {
   return (
     <>
-        <div className="bg-white bg-opacity-95 absolute left-0 top-14 w-full z-10">
+      {openMobileMenu && (
+        <div className="bg-white bg-opacity-95 absolute left-0 top-28 w-full z-10">
           <Disclosure>
             {({ open }) => (
               <div className="border border-gray-200">
@@ -40,7 +41,7 @@ const MobileAside = ({ open }) => {
             )}
           </Disclosure>
         </div>
-     
+      )}
     </>
   );
 };
