@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ArrowRightIcon } from "@heroicons/react/solid";
 import Link from "next/link";
+import { PRODUCTS } from "../../constants/root";
 
 const Banner = () => {
   return (
@@ -19,7 +20,7 @@ const Banner = () => {
           </h1>
           <button className="group flex items-center gap-6 mt-4">
             <ArrowRightIcon className="w-8 h-8 bg-blue-600 rounded-full p-2" />
-            <Link href={`/products`} passHref>
+            <Link href={PRODUCTS} passHref>
               <p className="uppercase font-semibold tracking-widest group-hover:translate-x-2 transition-transform">
                 Shop Now
               </p>

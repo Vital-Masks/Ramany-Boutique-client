@@ -5,8 +5,11 @@ import Account from "./account";
 import Cart from "./cart";
 import NavItems from "./navItems";
 import Search from "./search";
+import MobileAside from "../Layout/mobileAside";
+import { useState } from "react";
 
 const Header = () => {
+  const [openMenu, setOpenMenu] = useState(false);
 
   return (
     <>
@@ -30,9 +33,12 @@ const Header = () => {
           </div>
           <Cart />
           <Account />
-          <MenuIcon className="w-5 h-5 text-gray-500 lg:hidden" />
+          <button onClick={() => setOpenMenu(!openMenu)}>
+            <MenuIcon className="w-5 h-5 text-gray-500 lg:hidden" />
+          </button>
         </div>
       </div>
+      {openMenu && <MobileAside open={openMenu} />}
     </>
   );
 };

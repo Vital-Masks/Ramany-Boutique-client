@@ -1,5 +1,4 @@
 import Link from "next/link";
-import React from "react";
 import { APPLIANCES, FURNITURE, HOME, PACKAGES } from "../../constants/root";
 
 const NavItems = () => {

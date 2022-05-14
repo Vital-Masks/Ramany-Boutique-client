@@ -5,3 +5,17 @@
 html {
   font-family: 'Poppins', sans-serif;
 }
+
+.long-letter {
+  -webkit-transform:scale(2,1) translate(27px); /* Safari and Chrome */
+  -moz-transform:scale(2,1) translate(27px); /* Firefox */
+  -ms-transform:scale(2,1) translate(27px); /* IE 9 */
+  -o-transform:scale(2,1) translate(27px); /* Opera */
+  transform:scale(2,1) translate(27px); /* W3C */
+}
+
+@layer components {
+  .header {
+    @apply text-[4rem] md:text-[8rem] font-semibold leading-none font-[GNFMENU];
+  }
+}
