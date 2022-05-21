@@ -22,8 +22,8 @@ const Checkout = () => {
     <div className="relative max-w-screen-lg 2xl:max-w-screen-xl mx-auto w-full py-3 md:py-5 px-5 md:px-20 xl:px-0 mt-14">
       <h5 className="text-xl font-bold">Shipping and Payment</h5>
 
-      <div className="grid grid-cols-4 gap-1 mt-6">
-        <div className="col-span-3 pr-20">
+      <div className="grid lg:grid-cols-4 gap-1 mt-6">
+        <div className="col-span-3 lg:pr-20">
           <p>Shipping information</p>
           <div className="grid grid-cols-2 gap-4 mt-4">
             <Input type="email" name="email" placeholder="Email" />
