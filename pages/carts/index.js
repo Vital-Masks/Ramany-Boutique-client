@@ -132,15 +132,17 @@ const Carts = () => {
                 <td></td>
                 <td></td>
                 <td></td>
-                <td colSpan="2" className="py-8 text-right">
-                  Total Cost:{" "}
-                  <span className="ml-2 text-lg text-black font-semibold">
-                    $ {price(29999)}
-                  </span>
-                </td>
               </tr>
             </tbody>
           </table>
+        </div>
+        <div>
+          <div className="py-8 text-right">
+            Total Cost:{" "}
+            <span className="ml-2 text-lg text-black font-semibold">
+              $ {price(29999)}
+            </span>
+          </div>
         </div>
         <div className="flex gap-2 items-center justify-end">
           <Link href={PRODUCTS}>

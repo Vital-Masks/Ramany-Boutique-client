@@ -23,7 +23,7 @@ const Checkout = () => {
       <h5 className="text-xl font-bold">Shipping and Payment</h5>
 
       <div className="grid lg:grid-cols-4 gap-1 mt-6">
-        <div className="col-span-3 lg:pr-20">
+        <div className="lg:col-span-3 lg:pr-20">
           <p>Shipping information</p>
           <div className="grid grid-cols-2 gap-4 mt-4">
             <Input type="email" name="email" placeholder="Email" />
@@ -35,10 +35,10 @@ const Checkout = () => {
             <Input type="text" name="postal" placeholder="Postal Code / ZIP" />
           </div>
         </div>
-        <div>
+        <div className="mt-8 lg:mt-0">
           <p>Your Cart</p>
           <div className="flex items-center justify-between w-full mt-4">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 w-full">
               <div className="relative w-10 h-10 rounded-full overflow-hidden">
                 <Image
                   src={`https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80`}
