@@ -16,7 +16,7 @@ const Aside = ({ open }) => {
         {({ open }) => (
           <div className="border border-gray-200 my-5">
             <Disclosure.Button className="focus:outline-none flex w-full justify-between p-4 text-left text-sm font-semibold text-gray-800 hover:bg-gray-200">
-              <span>Occasion Type</span>
+              <span>OCCASION TYPE</span>
               <ChevronUpIcon
                 className={`${
                   open ? "rotate-180 transform" : ""
@@ -60,21 +60,105 @@ const Aside = ({ open }) => {
             <Disclosure.Panel className="p-4 text-sm text-gray-700 font-medium ">
               <ul>
                 <li className="my-4 hover:text-base active:text-base transition-transform">
-                  <Link href={`#`} passHref>Engagement</Link>
+                  <Link href={`#`} passHref>
+                    Engagement
+                  </Link>
                 </li>
                 <li className="my-4 hover:text-base active:text-base transition-transform">
-                  <Link href={`#`} passHref>Sangeet & Mehendi</Link>
+                  <Link href={`#`} passHref>
+                    Sangeet & Mehendi
+                  </Link>
                 </li>
                 <li className="my-4 hover:text-base active:text-base transition-transform">
-                  <Link href={`#`} passHref>Wedding/ Bridal</Link>
+                  <Link href={`#`} passHref>
+                    Wedding/ Bridal
+                  </Link>
                 </li>
                 <li className="my-4 hover:text-base active:text-base transition-transform">
-                  <Link href={`#`} passHref>Cocktail & Party</Link>
+                  <Link href={`#`} passHref>
+                    Cocktail & Party
+                  </Link>
                 </li>
                 <li className="my-4 hover:text-base active:text-base transition-transform">
-                  <Link href={`#`} passHref>Day to Day Wear</Link>
+                  <Link href={`#`} passHref>
+                    Day to Day Wear
+                  </Link>
                 </li>
               </ul>
+            </Disclosure.Panel>
+          </div>
+        )}
+      </Disclosure>
+
+      <Disclosure>
+        {({ open }) => (
+          <div className="border border-gray-200 my-5">
+            <Disclosure.Button className="focus:outline-none flex w-full justify-between p-4 text-left text-sm font-semibold text-gray-800 hover:bg-gray-200">
+              <span>SIZE</span>
+              <ChevronUpIcon
+                className={`${
+                  open ? "rotate-180 transform" : ""
+                } h-5 w-5 text-gray-800`}
+              />
+            </Disclosure.Button>
+            <Disclosure.Panel className="p-4 text-sm text-gray-700 font-medium ">
+              <div className="flex flex-row border border-gray-200 divide-x-2 ">
+                <div className="basis-1/4 grid place-items-center aspect-square">
+                  XS
+                </div>
+                <div className="basis-1/4 grid place-items-center aspect-square">
+                  XS
+                </div>
+                <div className="basis-1/4 grid place-items-center aspect-square">
+                  XS
+                </div>
+                <div className="basis-1/4 grid place-items-center aspect-square">
+                  XS
+                </div>
+                <div className="basis-1/4 grid place-items-center aspect-square">
+                  XS
+                </div>
+                <div className="basis-1/4 grid place-items-center aspect-square">
+                  XS
+                </div>
+              </div>
+            </Disclosure.Panel>
+          </div>
+        )}
+      </Disclosure>
+
+      <Disclosure>
+        {({ open }) => (
+          <div className="border border-gray-200 my-5">
+            <Disclosure.Button className="focus:outline-none flex w-full justify-between p-4 text-left text-sm font-semibold text-gray-800 hover:bg-gray-200">
+              <span>COLOR</span>
+              <ChevronUpIcon
+                className={`${
+                  open ? "rotate-180 transform" : ""
+                } h-5 w-5 text-gray-800`}
+              />
+            </Disclosure.Button>
+            <Disclosure.Panel className="p-4 text-sm text-gray-700 font-medium ">
+              <div className="flex flex-row border border-gray-200 divide-x-2 ">
+                <div className="basis-1/4 grid place-items-center aspect-square p-2">
+                  <div className="bg-black w-full h-full"></div>
+                </div>
+                <div className="basis-1/4 grid place-items-center aspect-square p-2">
+                  <div className="bg-red-500 w-full h-full"></div>
+                </div>
+                <div className="basis-1/4 grid place-items-center aspect-square p-2">
+                  <div className="bg-yellow-500 w-full h-full"></div>
+                </div>
+                <div className="basis-1/4 grid place-items-center aspect-square p-2">
+                  <div className="bg-slate-500 w-full h-full"></div>
+                </div>
+                <div className="basis-1/4 grid place-items-center aspect-square p-2">
+                  <div className="bg-stone-600 w-full h-full"></div>
+                </div>
+                <div className="basis-1/4 grid place-items-center aspect-square p-2">
+                  <div className="border w-full h-full"></div>
+                </div>
+              </div>
             </Disclosure.Panel>
           </div>
         )}
