@@ -22,7 +22,7 @@ const About = () => {
 
       <div className="bg-gray-100">
         <div className="px-5 md:px-20 xl:px-0 max-w-screen-lg 2xl:max-w-screen-xl mx-auto flex gap-3 overflow-x-scroll lg:overflow-hidden">
-          <div className="grid grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             <div className="py-4">
               <h1 className="text-3xl font-bold leading-loose">Who We Are?</h1>
               <p className="text-stone-800">

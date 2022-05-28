@@ -20,10 +20,10 @@ const Contact = () => {
         </div>
       </div>
 
-      <div className="bg-gray-100 p-20 grid grid-cols-3 place-items-center">
+      <div className="bg-gray-100 py-10 px-4 md:py-20 md:px-10 lg:p-20 grid grid-cols-3 lg:place-items-center">
         <div>
-          <h1 className="text-4xl font-bold leading-relaxed"> Address</h1>
-          <p className="text-xl font-semibold text-slate-800">
+          <h1 className="text-lg md:text-4xl font-bold leading-relaxed"> Address</h1>
+          <p className="text-base md:text-xl font-semibold text-slate-800">
             Name <br />
             street <br />
             city
@@ -31,8 +31,8 @@ const Contact = () => {
         </div>
 
         <div>
-          <h1 className="text-4xl font-bold leading-relaxed">Contact us</h1>
-          <p className="text-xl font-semibold text-slate-800">
+          <h1 className="text-lg md:text-4xl font-bold leading-relaxed">Contact us</h1>
+          <p className="text-base md:text-xl font-semibold text-slate-800">
             Name <br />
             street <br />
             city
@@ -40,8 +40,8 @@ const Contact = () => {
         </div>
 
         <div>
-          <h1 className="text-4xl font-bold leading-relaxed">Social Medias</h1>
-          <p className="text-xl font-semibold text-slate-800">
+          <h1 className="text-lg md:text-4xl font-bold leading-relaxed">Social Medias</h1>
+          <p className="text-base md:text-xl font-semibold text-slate-800">
             Name <br />
             street <br />
             city

@@ -17,7 +17,7 @@ const Product = () => {
             </h2>
             <h5 className="text-red-500 font-bold mt-1 text-lg">SKU: A2701R</h5>
 
-            <div className="mt-3 flex items-baseline gap-7">
+            <div className="mt-3 flex items-baseline flex-col md:flex-row gap-7">
               <div>
                   Color:
                   <div className="flex items-center gap-2 mt-2">
@@ -48,7 +48,7 @@ const Product = () => {
               </p>
             </div>
           </div>
-          <div className="mb-28">
+          <div className="md:mb-28">
             <div className="flex gap-3 items-center my-4">
               Qty:
               <div>
