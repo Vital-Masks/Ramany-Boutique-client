@@ -1,9 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import ImageCarousel from "../../components/Ui/ImageCarousel";
 import CardSection from "../../components/Views/CardSection";
+import { getProduct } from "../../services/products";
+import price from './../../utils/price';
 
 const Product = () => {
   const [qty, setQty] = useState(1);
+  const [product, setProduct] = useState();
+
+  const router = useRouter();
+  const { productId } = router.query;
+
+  const fetchProduct = async () => {
+    try {
+      let data = await getProduct(productId);
+      setProduct(data);
+    } catch (err) {
+      console.log("😟 error at [productId].js line:19");
+    }
+  };
+
+  useEffect(() => {
+    if(productId) fetchProduct();
+  }, [productId])
+
   return (
     <div>
       <div className="max-w-screen-lg 2xl:max-w-screen-xl mx-auto w-full py-3 md:py-5 px-5 md:px-20 xl:px-0 lg:mt-14 grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -13,9 +34,11 @@ const Product = () => {
         <div className="p-2 flex flex-col justify-between">
           <div>
             <h2 className="text-xl font-semibold">
-              Antique Gold Plated Kundan Bridal Necklace Set
+              {product?.productName}
             </h2>
-            <h5 className="text-red-500 font-bold mt-1 text-lg">SKU: A2701R</h5>
+            <h5 className="text-red-500 font-bold mt-1 text-lg"> {product?.productCode}</h5>
+
+            <h5 className="my-2 text-3xl font-bold text-gray-600">Rs {price(product?.price || 0)} </h5>
 
             <div className="mt-3 flex items-baseline flex-col md:flex-row gap-7">
               <div>

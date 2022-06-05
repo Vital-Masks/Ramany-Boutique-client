@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const Card = () => {
+const Card = ({id,name,code}) => {
   return (
-    <Link href={`/products/1`} passHref>
+    <Link href={`/products/${id}`} passHref>
       <div className="w-full cursor-pointer">
         <div className="relative w-full h-96">
           <Image
@@ -14,9 +14,9 @@ const Card = () => {
           />
         </div>
         <h3 className="mt-2 text-center px-2 font-semibold text-gray-600">
-          Grand Matte Silver Bridal Wedding Set
+          {name}
         </h3>
-        <p className="text-center mt-2 text-gray-500 text-sm">SKU: A2663R</p>
+        <p className="text-center mt-2 text-gray-500 text-sm">{code}</p>
       </div>
     </Link>
   );
