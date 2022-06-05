@@ -54,7 +54,7 @@ const Products = () => {
             {products.map(
               ({ _id, productName, productCode, price, mainImage }) => (
                 <div key={_id}>
-                  <Card id={_id} name={productName} code={productCode} />
+                  <Card id={_id} name={productName} code={productCode} image={mainImage} />
                 </div>
               )
             )}
