@@ -1,13 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import ImageCarousel from "../../components/Ui/ImageCarousel";
 import CardSection from "../../components/Views/CardSection";
 import { getProduct } from "../../services/products";
-import price from './../../utils/price';
+import toast, { Toaster } from "react-hot-toast";
+
+import { CartSystem } from "../_app";
+
+import { ADD_TO_CART } from "../../constants/actionTypes";
 
 const Product = () => {
   const [qty, setQty] = useState(1);
+  const [selectedSize, setSelectedSize] = useState(null);
   const [product, setProduct] = useState();
+
+  const { state, dispatch } = useContext(CartSystem);
 
   const router = useRouter();
   const { productId } = router.query;
@@ -21,49 +28,42 @@ const Product = () => {
     }
   };
 
+  const addToCart = () => {
+    if (!selectedSize) toast.error("Please select a size!")
+    if (!productId) toast.error("Something went wrong!")
+    if (!qty) toast.error("Quantity must be > 0!")
+
+    if (selectedSize && productId) {
+      const product = {
+        productId: productId,
+        quantity: qty,
+        size: selectedSize,
+      };
+      dispatch({ type: ADD_TO_CART, payload: product });
+    }
+  };
+
   useEffect(() => {
-    if(productId) fetchProduct();
-  }, [productId])
+    if (productId) fetchProduct();
+  }, [productId]);
 
   return (
     <div>
-      <div className="max-w-screen-lg 2xl:max-w-screen-xl mx-auto w-full py-3 md:py-5 px-5 md:px-20 xl:px-0 lg:mt-14 grid grid-cols-1 lg:grid-cols-2 gap-10">
-        <div>
+      <Toaster />
+      <div className="max-w-screen-lg 2xl:max-w-screen-xl mx-auto w-full py-3 md:py-5 px-5 md:px-20 xl:px-0 lg:mt-14 grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <div className=" col-span-2">
           <ImageCarousel />
         </div>
         <div className="p-2 flex flex-col justify-between">
           <div>
-            <h2 className="text-xl font-semibold">
-              {product?.productName}
-            </h2>
-            <h5 className="text-red-500 font-bold mt-1 text-lg"> {product?.productCode}</h5>
+            <h2 className="text-2xl font-semibold">{product?.productName}</h2>
+            <p className="text-red-500 font-bold mt-1 text-md">
+              {" "}
+              {product?.productCode}
+            </p>
 
-            <h5 className="my-2 text-3xl font-bold text-gray-600">Rs {price(product?.price || 0)} </h5>
-
-            <div className="mt-3 flex items-baseline flex-col md:flex-row gap-7">
-              <div>
-                  Color:
-                  <div className="flex items-center gap-2 mt-2">
-                    <div className="w-10 h-10 bg-black border-4"></div>
-                    <div className="w-10 h-10 bg-red-500 border-4"></div>
-                    <div className="w-10 h-10 bg-yellow-500 border-4"></div>
-                    <div className="w-10 h-10 bg-white border-4"></div>
-                  </div>
-              </div>
-              <div>
-                  Size:
-                  <div className="flex items-center gap-2 mt-2">
-                    <div className="w-10 h-10 border-2 flex items-center justify-center">XS</div>
-                    <div className="w-10 h-10 border-2 flex items-center justify-center">S</div>
-                    <div className="w-10 h-10 border-2 flex items-center justify-center">M</div>
-                    <div className="w-10 h-10 border-2 flex items-center justify-center">L</div>
-                    <div className="w-10 h-10 border-2 flex items-center justify-center">XL</div>
-                    <div className="w-10 h-10 border-2 flex items-center justify-center">XXL</div>
-                  </div>
-              </div>
-              
-            </div>
-            <div className="my-4">
+            {/* <h5 className="my-2 text-3xl font-bold text-gray-600">Rs {price(product?.price || 0)} </h5> */}
+            <div className="my-8">
               <p className="uppercase font-bold">Description</p>
               <p className="text-gray-500 text-sm mt-2">
                 INCLUSIONS : Choker Necklace Set: 1, Earrings: 1 Pair,
@@ -71,10 +71,28 @@ const Product = () => {
               </p>
             </div>
           </div>
+
           <div className="md:mb-28">
-            <div className="flex gap-3 items-center my-4">
-              Qty:
-              <div>
+            <div className="my-8">
+              <p className="uppercase font-bold">Size:</p>
+              <div className="flex items-center gap-2 mt-2">
+                {product?.sizeAndCount?.map((size, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedSize(size.size)}
+                    className={`w-10 h-10 border-2 flex items-center justify-center uppercase cursor-pointer hover:bg-black hover:text-white transition-colors ${
+                      selectedSize === size.size && "bg-black  text-white"
+                    }`}
+                  >
+                    {size.size}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className=" my-4">
+              <p className="uppercase font-bold">QTY:</p>
+              <div className="mt-2">
                 <button
                   className="border border-r-0 border-gray-300 px-2 py-1 text-center"
                   onClick={() => setQty(--qty)}
@@ -99,7 +117,10 @@ const Product = () => {
               <button className="my-2 bg-orange-400 py-2 px-8 rounded-full text-sm font-bold uppercase">
                 Buy Now
               </button>
-              <button className="my-2 bg-orange-400 py-2 px-8 rounded-full text-sm font-bold uppercase">
+              <button
+                className="my-2 bg-orange-400 py-2 px-8 rounded-full text-sm font-bold uppercase"
+                onClick={() => addToCart()}
+              >
                 Add to cart
               </button>
             </div>

@@ -7,10 +7,10 @@ const NavItems = () => {
       <Link href={HOME}>
         <a className="font-normal text-gray-500 hover:text-gray-700 hover:font-semibold transition-colors">Home</a>
       </Link>
-      <Link href={JEWELL}>
-        <a className="font-normal text-gray-500 hover:text-gray-500 hover:font-semibold transition-colors">Jelwell Collections</a>
+      <Link href={{ pathname: PRODUCTS, query: { type: 'jewelry' } }}>
+        <a className="font-normal text-gray-500 hover:text-gray-500 hover:font-semibold transition-colors">Jewels Collections</a>
       </Link>
-      <Link href={CLOTHINGS}>
+      <Link href={{ pathname: PRODUCTS, query: { type: 'clothings' } }}>
         <a className="font-normal text-gray-500 hover:text-gray-500 hover:font-semibold transition-colors">Clothings</a>
       </Link>
       

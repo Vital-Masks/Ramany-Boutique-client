@@ -7,7 +7,7 @@ const Aside = ({ categories }) => {
   const router = useRouter()
   const { category } = router.query
 
-  const grouped = categories.reduce((cat, curr) => {
+  const grouped = categories?.reduce((cat, curr) => {
     if (!cat[curr.categoryType]) cat[curr.categoryType] = []; //If this type wasn't previously stored
     cat[curr.categoryType].push(curr);
     return cat;
