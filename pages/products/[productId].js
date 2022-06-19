@@ -46,12 +46,13 @@ const Product = () => {
 
     if (productId) fetchProduct();
   }, [productId]);
-
+  
   return (
     <div>
       <Toaster />
-      <div className="max-w-screen-lg 2xl:max-w-screen-xl mx-auto w-full py-3 md:py-5 px-5 md:px-20 xl:px-0 lg:mt-14 grid grid-cols-1 lg:grid-cols-3 gap-10">
-        <div className=" col-span-2">
+      <div className="max-w-screen-xl mx-auto w-full py-3 md:py-5 px-5 md:px-20 xl:px-0 mt-20 lg:mt-28 xl:mt-12 
+        grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <div className="lg:col-span-2">
           <ImageCarousel />
         </div>
         <div className="p-2 flex flex-col justify-between">
@@ -62,7 +63,10 @@ const Product = () => {
               {product?.productCode}
             </p>
 
-            {/* <h5 className="my-2 text-3xl font-bold text-gray-600">Rs {price(product?.price || 0)} </h5> */}
+            <p className="my-2 text-sm font-semibold text-gray-400">
+              {product?.occasionTypeId?.categoryName} • {product?.clothingCategoryId?.categoryName}
+              </p>
+
             <div className="my-8">
               <p className="uppercase font-bold">Description</p>
               <p className="text-gray-500 text-sm mt-2">
@@ -72,7 +76,7 @@ const Product = () => {
             </div>
           </div>
 
-          <div className="md:mb-28">
+          <div>
             <div className="my-8">
               <p className="uppercase font-bold">Size:</p>
               <div className="flex items-center gap-2 mt-2">

@@ -16,7 +16,7 @@ const Header = () => {
   return (
     <>
       <MobileNav open={openMenu} />
-      <div className="fixed z-30 bg-white lg:relative border-b flex items-center justify-between max-w-screen-lg 2xl:max-w-screen-xl mx-auto w-full py-2 md:py-5 px-5 md:px-20 xl:px-0">
+      <div className="fixed z-30 bg-white xl:relative border-b flex items-center justify-between max-w-screen-xl 2xl:max-w-screen-xl mx-auto w-full py-2 md:py-5 px-5 md:px-20 xl:px-0">
         <div className="flex items-center gap-10">
           <Link href="/" passHref>
             <div className="relative h-10 w-20 md:h-12 md:w-24 cursor-pointer">
@@ -28,7 +28,7 @@ const Header = () => {
               />
             </div>
           </Link>
-          <div className="hidden lg:inline-block">
+          <div className="hidden xl:inline-block">
             <Search />
           </div>
         </div>

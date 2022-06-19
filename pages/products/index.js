@@ -55,12 +55,12 @@ export default function Products() {
   }, [category, productsState]);
 
   return (
-    <div className="relative max-w-screen-lg 2xl:max-w-screen-xl mx-auto w-full py-3 md:py-5 px-5 md:px-20 xl:px-0 mt-14 grid grid-cols-4 gap-10">
+    <div className="relative max-w-screen-xl mx-auto w-full py-3 md:py-5 px-5 md:px-20 xl:px-0 mt-16 lg:mt-28 xl:mt-12 grid grid-cols-4 gap-10">
       <div className="hidden lg:block">
         <Aside categories={categories} />
       </div>
       <div className="col-span-3 lg:hidden">
-        <MobileAside openMobileMenu={openMobileMenu} />
+        <MobileAside categories={categories} openMobileMenu={openMobileMenu} />
       </div>
       <div className="col-span-4 lg:col-span-3">
         <div className="flex items-center lg:items-baseline justify-between border-b pb-4">

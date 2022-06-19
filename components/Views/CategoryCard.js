@@ -2,8 +2,8 @@ import Image from "next/image";
 
 const CategoryCard = ({ size, title }) => {
   const classMap = {
-    large: ["w-full md:w-2/3"],
-    small: ["w-full md:w-1/3"],
+    large: ["w-full lg:w-2/3"],
+    small: ["w-full md:w-2/3 lg:w-1/3"],
   };
 
   const textWidth = {

@@ -13,6 +13,7 @@
     "@heroicons/react": "^1.0.6",
     "@instak/react-responsive-carousel": "^3.2.15",
     "axios": "^0.27.2",
+    "formik": "^2.2.9",
     "next": "12.1.5",
     "nprogress": "^0.2.0",
     "react": "18.0.0",
