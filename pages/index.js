@@ -51,7 +51,7 @@ export default function Home() {
 
       <div className="px-5 md:px-20 xl:px-0 max-w-screen-lg 2xl:max-w-screen-xl mx-auto my-20 flex gap-3 overflow-x-scroll lg:overflow-hidden">
         {types?.map((categoryType, index) => (
-          <CategoryCard size={index === 0 ? "large" : "small"} title={categoryType} />
+          <CategoryCard key={index} size={index === 0 ? "large" : "small"} title={categoryType} />
         ))}
       </div>
       <CardSection products={products} loading={isLoading} />

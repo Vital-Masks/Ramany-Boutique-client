@@ -52,7 +52,7 @@ const Carts = () => {
     if (state) {
       fetchProduct();
     }
-  }, [state]);
+  }, [state, fetchProduct]);
 
   return (
     <div className="relative max-w-screen-lg 2xl:max-w-screen-xl mx-auto w-full py-3 md:py-5 px-5 md:px-20 xl:px-0 mt-14">

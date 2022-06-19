@@ -52,7 +52,7 @@ export default function Products() {
     } else {
       setProducts(productsState)
     }
-  }, [category]);
+  }, [category, productsState]);
 
   return (
     <div className="relative max-w-screen-lg 2xl:max-w-screen-xl mx-auto w-full py-3 md:py-5 px-5 md:px-20 xl:px-0 mt-14 grid grid-cols-4 gap-10">

@@ -19,15 +19,6 @@ const Product = () => {
   const router = useRouter();
   const { productId } = router.query;
 
-  const fetchProduct = async () => {
-    try {
-      let data = await getProduct(productId);
-      setProduct(data);
-    } catch (err) {
-      console.log("😟 error at [productId].js line:19");
-    }
-  };
-
   const addToCart = () => {
     if (!selectedSize) toast.error("Please select a size!")
     if (!productId) toast.error("Something went wrong!")
@@ -44,6 +35,15 @@ const Product = () => {
   };
 
   useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        let data = await getProduct(productId);
+        setProduct(data);
+      } catch (err) {
+        console.log("😟 error at [productId].js line:43");
+      }
+    };
+
     if (productId) fetchProduct();
   }, [productId]);
 
