@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const CategoryCard = ({ size }) => {
+const CategoryCard = ({ size, title }) => {
   const classMap = {
     large: ["w-full md:w-2/3"],
     small: ["w-full md:w-1/3"],
@@ -22,8 +22,8 @@ const CategoryCard = ({ size }) => {
       />
       <div className="absolute top-0 bg-black bg-opacity-50 h-full w-full flex">
         <div className="p-10 self-end text-white">
-          <h1 className={`text-xl tracking-wider ${textWidth[size]}`}>
-            New Arrivals are now available!
+          <h1 className={`text-xl tracking-wider uppercase font-bold ${textWidth[size]}`}>
+            {title}
           </h1>
           <button className="mt-5 bg-white px-4 py-2 rounded-full text-black text-sm font-bold hover:-translate-y-1 transition-transform">
             Show Collection

@@ -3,10 +3,12 @@ import {
   CLEAR_CART,
   CLEAR_CART_ITEM,
   FETCH_CART_ITEM,
-} from "../../constants/actionTypes";
+  FETCH_CATEGORIES,
+  FETCH_PRODUCTS,
+} from "../constants/actionTypes";
 import { v4 as uuidv4 } from "uuid";
 
-export const CartReducers = (state, action) => {
+export const Reducer = (state, action) => {
   switch (action.type) {
     case ADD_TO_CART:
       const { productId, quantity, size } = action.payload;
@@ -36,5 +38,9 @@ export const CartReducers = (state, action) => {
       const filtered = state.filter((x) => x.id !== action.payload);
       localStorage.setItem("cart", JSON.stringify(filtered));
       return filtered;
+    case FETCH_PRODUCTS:
+      return action.payload;
+    case FETCH_CATEGORIES:
+      return action.payload;
   }
 };

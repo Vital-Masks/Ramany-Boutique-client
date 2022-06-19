@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import Aside from "../../components/Layout/aside";
@@ -13,27 +13,19 @@ import {
   getCategories,
   getProductsByCategory,
 } from "../../services/categories";
+import { CategorySystem, ProductSystem } from "../_app";
 
 export default function Products() {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { productsState, dispatch } = useContext(ProductSystem);
+  const { categoriesState, dispatchCategories } = useContext(CategorySystem);
+
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
 
   const router = useRouter();
   const { category } = router.query;
-
-  const fetchProducts = async () => {
-    setIsLoading(true);
-    const productsResults = await getProducts();
-    setProducts(productsResults);
-    setIsLoading(false);
-  };
-
-  const fetchCategories = async () => {
-    const categoriesResults = await getCategories();
-    setCategories(categoriesResults);
-  };
 
   const fetchProductByCategory = async (category) => {
     setIsLoading(true);
@@ -43,15 +35,22 @@ export default function Products() {
   };
 
   useEffect(() => {
-    fetchProducts();
-    fetchCategories();
-  }, []);
+    setIsLoading(true);
+    if(productsState){
+      setProducts(productsState)
+    }
+    setIsLoading(false);
+
+    if(categoriesState){
+      setCategories(categoriesState)
+    }
+  }, [productsState, categoriesState]);
 
   useEffect(() => {
     if (category) {
       fetchProductByCategory(category);
     } else {
-      fetchProducts();
+      setProducts(productsState)
     }
   }, [category]);
 

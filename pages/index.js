@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from "react";
 import Head from "next/head";
 
 import Banner from "../components/Views/Banner";
@@ -7,21 +7,37 @@ import CategoryCard from "../components/Views/CategoryCard";
 
 import { getProducts } from "../services/products";
 import { getRandom } from "../utils/getRandom";
+import { CategorySystem, ProductSystem } from "./_app";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState([]);
+  const [types, setTypes] = useState([])
+  const { productsState, dispatchProducts } = useContext(ProductSystem);
+  const { categoriesState, dispatchCategories } = useContext(CategorySystem);
 
-  const fetchProducts = async () => {
-    setIsLoading(true);
-    const productsResults = await getProducts();
-    setProducts(getRandom(productsResults, 4));
-    setIsLoading(false);
-  };
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    setIsLoading(true);
+    if (productsState) {
+      setProducts(getRandom(productsState, 4));
+    }
+    setIsLoading(false);
+  }, [productsState]);
+
+  useEffect(() => {
+    if (categoriesState) {
+      const grouped = categoriesState?.reduce((cat, curr) => {
+        if (!cat[curr.categoryType]) cat[curr.categoryType] = []; //If this type wasn't previously stored
+        cat[curr.categoryType].push(curr);
+        return cat;
+      }, {});
+
+      if (grouped) {
+        setTypes(Object.keys(grouped))
+      }
+    }
+  }, [categoriesState])
 
   return (
     <div className="relative h-full">
@@ -31,20 +47,14 @@ export default function Home() {
       </Head>
       <Banner />
 
-      <CardSection
-        products={products}
-        loading={isLoading}
-      />
+      <CardSection products={products} loading={isLoading} />
 
       <div className="px-5 md:px-20 xl:px-0 max-w-screen-lg 2xl:max-w-screen-xl mx-auto my-20 flex gap-3 overflow-x-scroll lg:overflow-hidden">
-        <CategoryCard size="large" />
-        <CategoryCard size="small" />
-        <CategoryCard size="small" />
+        {types?.map((categoryType, index) => (
+          <CategoryCard size={index === 0 ? "large" : "small"} title={categoryType} />
+        ))}
       </div>
-      <CardSection
-        products={products}
-        loading={isLoading}
-      />
+      <CardSection products={products} loading={isLoading} />
     </div>
   );
 }
