@@ -19,9 +19,9 @@ const Header = () => {
       <div className="fixed z-30 bg-white xl:relative border-b flex items-center justify-between max-w-screen-xl 2xl:max-w-screen-xl mx-auto w-full py-2 md:py-5 px-5 md:px-20 xl:px-0">
         <div className="flex items-center gap-10">
           <Link href="/" passHref>
-            <div className="relative h-10 w-20 md:h-12 md:w-24 cursor-pointer">
+            <div className="relative h-10 w-10 md:h-16 md:w-16 cursor-pointer">
               <Image
-                src={`https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80`}
+                src={`/logo.png`}
                 layout="fill"
                 objectFit="cover"
                 alt="img"
