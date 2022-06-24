@@ -37,7 +37,7 @@ const Header = () => {
             <NavItems />
           </div>
           <Cart />
-          <Account />
+          {/* <Account /> */}
           {openMenu ? (
             <button onClick={() => setOpenMenu(!openMenu)}>
               <XIcon className="w-5 h-5 text-gray-500 lg:hidden" />

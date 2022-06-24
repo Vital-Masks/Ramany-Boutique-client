@@ -62,9 +62,9 @@ const Carts = () => {
       <Toaster />
       <div>
         <h5 className="text-xl font-bold">Shopping Cart</h5>
-        <div className="relative overflow-x-auto">
-          <table className="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-16 ">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50  dark:text-gray-400">
+        <div className="relative h-[600px] overflow-y-auto mt-16">
+          <table className="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead className=" text-xs text-gray-700 uppercase bg-gray-50  dark:text-gray-400">
               <tr>
                 <th scope="col" className="px-6 py-3">
                   Product
@@ -78,7 +78,7 @@ const Carts = () => {
                 <th scope="col" className="px-6 py-3 w-12"></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody >
               {cartItems.length ? (
                 cartItems.map((cart, index) => (
                   <tr key={index} className="text-gray-900">
