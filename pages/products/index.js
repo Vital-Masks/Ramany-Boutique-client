@@ -8,18 +8,18 @@ import Card from "../../components/Views/Card";
 import Loader from "./../../components/Ui/Loader";
 import { AdjustmentsIcon } from "@heroicons/react/outline";
 
-import { getProducts } from "../../services/products";
 import {
-  getCategories,
   getProductsByCategory,
 } from "../../services/categories";
-import { CategorySystem, ProductSystem } from "../_app";
+import { ProductContext } from "../../context/productContext";
+import { CategoryContext } from "../../context/categoryContext";
 
 export default function Products() {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { productsState, dispatch } = useContext(ProductSystem);
-  const { categoriesState, dispatchCategories } = useContext(CategorySystem);
+  
+  const { products: productsState } = useContext(ProductContext);
+  const { categories: categoriesState } = useContext(CategoryContext);
 
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);

@@ -2,27 +2,27 @@ import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { CHECKOUT, PRODUCTS } from "../../constants/root";
-import { CartSystem } from "./../_app";
 import { getProduct } from "../../services/products";
-import { CLEAR_CART, CLEAR_CART_ITEM } from "../../constants/actionTypes";
 import toast, { Toaster } from "react-hot-toast";
 import { TrashIcon } from "@heroicons/react/solid";
 import Loader from "./../../components/Ui/Loader";
+import { CartContext } from "../../context/cartContext";
 
 const Carts = () => {
   const [cartItems, setCartItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { state, dispatch } = useContext(CartSystem);
+
+  const { cart, clearCart: clear, clearCartItem } = useContext(CartContext);
 
   const fetchProduct = async () => {
     setIsLoading(true);
     const data = await Promise.all(
-      state?.map((state) => getProduct(state.productId))
+      cart?.map((cart) => getProduct(cart.productId))
     );
 
     if (data) {
       let cartArray = [];
-      state.map((cart) =>
+      cart.map((cart) =>
         cartArray.push({
           id: cart.id,
           productId: cart.productId,
@@ -41,21 +41,21 @@ const Carts = () => {
   const clearCart = () => {
     localStorage.removeItem("cart");
     setCartItems([]);
-    dispatch({ type: CLEAR_CART, payload: [] });
+    clear();
     toast.success("Cart cleared successfully!");
   };
 
-  const deleteCartItem = (id) => {
-    dispatch({ type: CLEAR_CART_ITEM, payload: id });
-    fetchProduct();
+  const deleteCartItem = async (id) => {
+    await clearCartItem(id);
+    await fetchProduct();
     toast.success("Cart item removed successfully!");
   };
 
   useEffect(() => {
-    if (state) {
+    if (cart) {
       fetchProduct();
     }
-  }, [state]);
+  }, [cart]);
 
   return (
     <div className="relative max-w-screen-xl mx-auto w-full py-3 md:py-5 px-5 md:px-20 xl:px-0 mt-20 lg:mt-28 xl:mt-12">

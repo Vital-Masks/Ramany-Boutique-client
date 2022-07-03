@@ -4,11 +4,12 @@ import { ShoppingCartIcon } from "@heroicons/react/solid";
 
 import { CARTS } from "../../constants/root";
 import { CartSystem } from "../../pages/_app";
+import { CartContext } from "../../context/cartContext";
 
 const Cart = () => {
-  const { state } = useContext(CartSystem);
+  const { cart } = useContext(CartContext);
 
-  const cartCount = state?.reduce((total, item) => {
+  const cartCount = cart?.reduce((total, item) => {
     return total + item.quantity;
   }, 0);
 
