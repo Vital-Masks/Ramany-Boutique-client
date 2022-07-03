@@ -4,17 +4,14 @@ import ImageCarousel from "../../components/Ui/ImageCarousel";
 import CardSection from "../../components/Views/CardSection";
 import { getProduct } from "../../services/products";
 import toast, { Toaster } from "react-hot-toast";
-
-import { CartSystem } from "../_app";
-
-import { ADD_TO_CART } from "../../constants/actionTypes";
+import { CartContext } from "../../context/cartContext";
 
 const Product = () => {
   const [qty, setQty] = useState(1);
   const [selectedSize, setSelectedSize] = useState(null);
   const [product, setProduct] = useState();
 
-  const { state, dispatch } = useContext(CartSystem);
+  const { addToCart: add } = useContext(CartContext);
 
   const router = useRouter();
   const { productId } = router.query;
@@ -30,7 +27,7 @@ const Product = () => {
         quantity: qty,
         size: selectedSize,
       };
-      dispatch({ type: ADD_TO_CART, payload: product });
+      add(product);
     }
   };
 

@@ -3,12 +3,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { PRODUCTS } from "../../constants/root";
 import price from "./../../utils/price";
-import { CartSystem } from "../_app";
 import { getProduct } from "../../services/products";
 import Loader from "./../../components/Ui/Loader";
 import { Formik } from "formik";
 import toast, { Toaster } from "react-hot-toast";
-import { CLEAR_CART } from "./../../constants/actionTypes";
+import { CartContext } from "../../context/cartContext";
 
 const Checkout = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -22,17 +21,18 @@ const Checkout = () => {
     city: "",
     postal: "",
   });
-  const { state, dispatch } = useContext(CartSystem);
+
+  const { cart, clearCart } = useContext(CartContext);
 
   const fetchProduct = async () => {
     setIsLoading(true);
     const data = await Promise.all(
-      state?.map((state) => getProduct(state.productId))
+      cart?.map((cart) => getProduct(cart.productId))
     );
 
     if (data) {
       let cartArray = [];
-      state.map((cart) =>
+      cart.map((cart) =>
         cartArray.push({
           id: cart.id,
           productId: cart.productId,
@@ -56,16 +56,16 @@ const Checkout = () => {
       console.log("cart >> ", cartItems);
       localStorage.removeItem("cart");
       setCartItems([]);
-      dispatch({ type: CLEAR_CART, payload: [] });
+      clearCart();
       toast.success("Order made successfully!");
     }
   };
 
   useEffect(() => {
-    if (state) {
+    if (cart) {
       fetchProduct();
     }
-  }, [state]);
+  }, [cart]);
 
   return (
     <Formik
