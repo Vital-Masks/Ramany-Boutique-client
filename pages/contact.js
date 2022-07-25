@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { BsFacebook, BsInstagram , BsTwitter} from "react-icons/bs";
 
 const Contact = () => {
   return (
@@ -14,40 +16,49 @@ const Contact = () => {
           <div className="md:w-[70%] ml-10 lg:ml-40 xl:ml-60 xl:w-[60%]">
             <h1 className="text-2xl md:text-5xl lg:text-6xl xl:text-8xl tracking-wide xl:leading-snug font-extrabold">
               {" "}
-              About Us
+              Contact Us
             </h1>
           </div>
         </div>
       </div>
 
-      <div className="bg-gray-100 py-10 px-4 md:py-20 md:px-10 lg:p-20 grid grid-cols-3 lg:place-items-center">
-        <div>
-          <h1 className="text-lg md:text-4xl font-bold leading-relaxed"> Address</h1>
-          <p className="text-base md:text-xl font-semibold text-slate-800">
-            Name <br />
-            street <br />
-            city
-          </p>
-        </div>
-
-        <div>
-          <h1 className="text-lg md:text-4xl font-bold leading-relaxed">Contact us</h1>
-          <p className="text-base md:text-xl font-semibold text-slate-800">
-            Name <br />
-            street <br />
-            city
-          </p>
-        </div>
-
-        <div>
-          <h1 className="text-lg md:text-4xl font-bold leading-relaxed">Social Medias</h1>
-          <p className="text-base md:text-xl font-semibold text-slate-800">
-            Name <br />
-            street <br />
-            city
-          </p>
+      <div className="bg-gray-100 py-10 px-4 md:py-20 md:px-10 lg:p-20">
+        <h1 className="text-4xl font-semibold text-center">Get in touch.</h1>
+        <div className="grid md:grid-cols-3 place-items-center items-start gap-10 text-center md:text-left mt-10 max-w-5xl mx-auto">
+          <div className="border-t-2 w-full">
+            <h4 className="text-xl text-gray-600 mt-1">Address</h4>
+            <p className="text-gray-500">
+              No.15, Dubai kuruku sandhu, <br /> Dubai main road, Dubai
+            </p>
+          </div>
+          <div className="border-t-2 w-full">
+            <h4 className="text-xl text-gray-600 mt-1">Contact number</h4>
+            <p className="text-gray-500">+94 077 123 4567</p>
+          </div>
+          <div className="border-t-2 w-full">
+            <h4 className="text-xl text-gray-600 mt-1">Social media</h4>
+            <div className="mt-1 flex items-center justify-center md:justify-start gap-4">
+              <Link href={"#"}>
+                <a>
+                  <BsFacebook className="w-7 h-7 text-[#4267B2]" />
+                </a>
+              </Link>
+              <Link href={"#"}>
+                <a>
+                  <BsInstagram className="w-7 h-7 text-[#FD1D1D]" />
+                </a>
+              </Link>
+              <Link href={"#"}>
+                <a>
+                  <BsTwitter className="w-7 h-7 text-[#1DA1F2]" />
+                </a>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
+
+     
       <div>
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15731.087810676037!2d80.04231435!3d9.7004949!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2slk!4v1653721592018!5m2!1sen!2slk"
