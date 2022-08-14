@@ -1,39 +1,87 @@
-import React from "react";
+import { Field, Form, Formik } from 'formik';
+import toast from 'react-hot-toast';
+import * as Yup from 'yup';
+import { loginCustomer } from '../../../services/auth';
+import { setAuth } from '../../../utils/manageUser';
+
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().required('Required'),
+  password: Yup.string().required('Required'),
+});
 
 const Login = ({ setIsLogin, setIsRegister }) => {
+  const handleSubmit = async (formObj) => {
+    try {
+      const results = await loginCustomer(formObj);
+      setIsLogin(false);
+      setAuth(results.customerDetails[0]);
+    } catch (error) {
+      toast.error('username or password is incorrect!');
+      console.log('error', error);
+    }
+    setIsLogin(false);
+  };
   return (
-    <div className="absolute top-16 md:top-24 z-10 bg-white  p-5 rounded-xl right-5 md-max:left-5 md:w-1/2 md:right-20 lg:w-1/3  xl:w-1/4 xl:right-52">
+    <div className="absolute z-10 p-5 bg-white shadow-xl top-16 md:top-24 rounded-xl right-5 md-max:left-5 md:w-1/2 md:right-20 lg:w-1/3 xl:w-1/4 xl:right-22">
       <p
-        className="text-right font-extrabold text-gray-400 hover:text-gray-500 cursor-pointer"
+        className="font-extrabold text-right text-gray-400 cursor-pointer hover:text-gray-500"
         onClick={() => setIsLogin(false)}
       >
         X
       </p>
-      <div className="text-center space-y-6">
+      <div className="space-y-6 text-center">
         <p className="text-lg font-bold">Login</p>
-        <input
-          type="email"
-          placeholder="email"
-          className="border border-gray-300 w-full rounded-full py-2 px-4 focus-within:outline-none"
-        />
-        <input
-          type="password"
-          placeholder="password"
-          className="border border-gray-300 w-full rounded-full py-2 px-4 focus-within:outline-none"
-        />
-        <div>
-          <div className="flex items-center gap-2">
-            <input type="checkbox" className="w-4 h-4" />
-            <p className="text-sm">keep me signed in</p>
-          </div>
-        </div>
-        <button className="my-2 bg-orange-400 py-3 px-8 rounded-full text-sm font-bold uppercase w-full">
-          Sign In
-        </button>
-        <div className="flex items-center gap-2 justify-center">
+        <Formik
+          initialValues={{
+            email: '',
+            password: '',
+          }}
+          validationSchema={LoginSchema}
+          onSubmit={(values) => {
+            handleSubmit(values);
+          }}
+        >
+          {({ errors, touched }) => (
+            <Form className="space-y-3">
+              <div>
+                <Field
+                  placeholder="Email"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-full focus-within:outline-none"
+                  name="email"
+                />
+                {errors.email && touched.email ? (
+                  <p className="ml-3 text-sm text-left text-red-500">
+                    {errors.email}
+                  </p>
+                ) : null}
+              </div>
+              <div>
+                <Field
+                  type="password"
+                  placeholder="Password"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-full focus-within:outline-none"
+                  name="password"
+                />
+                {errors.password && touched.password ? (
+                  <p className="ml-3 text-sm text-left text-red-500">
+                    {errors.password}
+                  </p>
+                ) : null}
+              </div>
+              <button
+                className="w-full px-8 py-3 my-2 text-sm font-bold uppercase bg-orange-400 rounded-full"
+                type="submit"
+              >
+                Submit
+              </button>
+            </Form>
+          )}
+        </Formik>
+
+        <div className="flex items-center justify-center gap-2">
           <p>Not a member yet?</p>
           <button
-            className="underline text-blue-300"
+            className="text-blue-300 underline"
             onClick={() => {
               setIsRegister(true);
               setIsLogin(false);

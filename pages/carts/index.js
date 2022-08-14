@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { CHECKOUT, PRODUCTS } from "../../constants/root";
-import { getProduct } from "../../services/products";
-import toast, { Toaster } from "react-hot-toast";
-import { TrashIcon } from "@heroicons/react/solid";
-import Loader from "./../../components/Ui/Loader";
-import { CartContext } from "../../context/cartContext";
+import React, { useContext, useEffect, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { CHECKOUT, PRODUCTS } from '../../constants/root';
+import { getProduct } from '../../services/products';
+import toast, { Toaster } from 'react-hot-toast';
+import { TrashIcon } from '@heroicons/react/solid';
+import Loader from './../../components/Ui/Loader';
+import { CartContext } from '../../context/cartContext';
 
 const Carts = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -26,8 +26,8 @@ const Carts = () => {
         cartArray.push({
           id: cart.id,
           productId: cart.productId,
-          name: data.find((x) => x._id === cart.productId).productName,
-          code: data.find((x) => x._id === cart.productId).productCode,
+          name: data.find((x) => x._id === cart.productId).clothName,
+          code: data.find((x) => x._id === cart.productId).clothCode,
           size: cart.size,
           qty: cart.quantity,
         })
@@ -39,16 +39,16 @@ const Carts = () => {
   };
 
   const clearCart = () => {
-    localStorage.removeItem("cart");
+    localStorage.removeItem('cart');
     setCartItems([]);
     clear();
-    toast.success("Cart cleared successfully!");
+    toast.success('Cart cleared successfully!');
   };
 
   const deleteCartItem = async (id) => {
     await clearCartItem(id);
     await fetchProduct();
-    toast.success("Cart item removed successfully!");
+    toast.success('Cart item removed successfully!');
   };
 
   useEffect(() => {
@@ -58,13 +58,13 @@ const Carts = () => {
   }, [cart]);
 
   return (
-    <div className="relative max-w-screen-xl mx-auto w-full py-3 md:py-5 px-5 md:px-20 xl:px-0 mt-20 lg:mt-28 xl:mt-12">
+    <div className="relative w-full max-w-screen-xl px-5 py-3 mx-auto mt-20 md:py-5 md:px-20 xl:px-0 lg:mt-28 xl:mt-12">
       <Toaster />
       <div>
         <h5 className="text-xl font-bold">Shopping Cart</h5>
         <div className="relative h-[600px] overflow-y-auto mt-16">
-          <table className="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead className=" text-xs text-gray-700 uppercase bg-gray-50  dark:text-gray-400">
+          <table className="w-full text-sm text-left text-gray-500 table-auto dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:text-gray-400">
               <tr>
                 <th scope="col" className="px-6 py-3">
                   Product
@@ -75,18 +75,18 @@ const Carts = () => {
                 <th scope="col" className="px-6 py-3 ">
                   Quantity
                 </th>
-                <th scope="col" className="px-6 py-3 w-12"></th>
+                <th scope="col" className="w-12 px-6 py-3"></th>
               </tr>
             </thead>
-            <tbody >
+            <tbody>
               {cartItems.length ? (
                 cartItems.map((cart, index) => (
                   <tr key={index} className="text-gray-900">
                     <th
                       scope="row"
-                      className="px-6 py-8 font-medium flex items-center gap-4"
+                      className="flex items-center gap-4 px-6 py-8 font-medium"
                     >
-                      <div className="relative w-14 h-14 rounded-full overflow-hidden flex-shrink-0">
+                      <div className="relative flex-shrink-0 overflow-hidden rounded-full w-14 h-14">
                         <Image
                           src={`https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80`}
                           layout="fill"
@@ -105,7 +105,7 @@ const Carts = () => {
                     <td className="px-6 py-8">{cart.qty}</td>
                     <td className="px-6 py-8 text-right">
                       <button onClick={() => deleteCartItem(cart.id)}>
-                        <TrashIcon className="w-5 h-5 text-gray-400 hover:text-gray-500 transition-colors" />
+                        <TrashIcon className="w-5 h-5 text-gray-400 transition-colors hover:text-gray-500" />
                       </button>
                     </td>
                   </tr>
@@ -113,14 +113,14 @@ const Carts = () => {
               ) : isLoading ? (
                 <tr>
                   <td></td>
-                  <td className="px-6 py-8 font-medium flex items-center justify-center gap-4 text-center w-full">
+                  <td className="flex items-center justify-center w-full gap-4 px-6 py-8 font-medium text-center">
                     <Loader load={isLoading} />
                   </td>
                 </tr>
               ) : (
                 <tr>
                   <td></td>
-                  <td className="px-6 py-8 font-medium flex items-center justify-center gap-4 text-center w-full">
+                  <td className="flex items-center justify-center w-full gap-4 px-6 py-8 font-medium text-center">
                     <p>No Items !</p>
                   </td>
                 </tr>
@@ -135,20 +135,20 @@ const Carts = () => {
             </tbody>
           </table>
         </div>
-        <div className="flex flex-col-reverse md:flex-row gap-2 items-center justify-end">
+        <div className="flex flex-col-reverse items-center justify-end gap-2 md:flex-row">
           <button
             onClick={() => clearCart()}
-            className="bg-gray-100 text-gray-400 py-2 px-8 rounded-full text-sm font-bold uppercase hover:text-gray-600  transition-colors md-max:w-full"
+            className="px-8 py-2 text-sm font-bold text-gray-400 uppercase transition-colors bg-gray-100 rounded-full hover:text-gray-600 md-max:w-full"
           >
             Clear cart
           </button>
           <Link href={PRODUCTS}>
-            <a className="bg-white border text-black py-2 px-8 rounded-full text-sm font-bold uppercase hover:bg-gray-100 transition-colors text-center md-max:w-full">
+            <a className="px-8 py-2 text-sm font-bold text-center text-black uppercase transition-colors bg-white border rounded-full hover:bg-gray-100 md-max:w-full">
               Continue shopping
             </a>
           </Link>
           <Link href={CHECKOUT}>
-            <a className="bg-orange-400 text-black py-2 px-8 rounded-full text-sm font-bold uppercase hover:bg-orange-500 transition-colors text-center md-max:w-full">
+            <a className="px-8 py-2 text-sm font-bold text-center text-black uppercase transition-colors bg-orange-400 rounded-full hover:bg-orange-500 md-max:w-full">
               Checkout
             </a>
           </Link>

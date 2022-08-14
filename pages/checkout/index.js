@@ -1,28 +1,50 @@
-import React, { useState, useContext, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { PRODUCTS } from "../../constants/root";
-import price from "./../../utils/price";
-import { getProduct } from "../../services/products";
-import Loader from "./../../components/Ui/Loader";
-import { Formik } from "formik";
-import toast, { Toaster } from "react-hot-toast";
-import { CartContext } from "../../context/cartContext";
+import React, { useState, useContext, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { PRODUCTS } from '../../constants/root';
+import price from './../../utils/price';
+import { getProduct, makeOrder } from '../../services/products';
+import Loader from './../../components/Ui/Loader';
+import { Field, Form, Formik } from 'formik';
+import toast, { Toaster } from 'react-hot-toast';
+import { CartContext } from '../../context/cartContext';
+import { getAuth, isLoggedIn } from '../../utils/manageUser';
+import * as Yup from 'yup';
+
+const CheckoutSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid email').required('Required'),
+  number: Yup.string().required('Required'),
+  firstName: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  lastName: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  address: Yup.string().required('Required'),
+  city: Yup.string().required('Required'),
+});
+
+function calculateTotalCost(obj) {
+  return obj.reduce((acc, o) => acc + parseInt(o.netPrice), 0);
+}
 
 const Checkout = () => {
   const [cartItems, setCartItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [initialState, setInitialState] = useState({
-    email: "",
-    number: "",
-    firstName: "",
-    lastName: "",
-    address: "",
-    city: "",
-    postal: "",
+    email: '',
+    number: '',
+    firstName: '',
+    lastName: '',
+    address: '',
+    city: '',
+    postal: '',
   });
 
   const { cart, clearCart } = useContext(CartContext);
+  const loggedIn = isLoggedIn();
 
   const fetchProduct = async () => {
     setIsLoading(true);
@@ -36,28 +58,52 @@ const Checkout = () => {
         cartArray.push({
           id: cart.id,
           productId: cart.productId,
-          name: data.find((x) => x._id === cart.productId).productName,
-          code: data.find((x) => x._id === cart.productId).productCode,
+          name: data.find((x) => x._id === cart.productId).clothName,
+          code: data.find((x) => x._id === cart.productId).clothCode,
           size: cart.size,
           qty: cart.quantity,
+          price: data.find((x) => x._id === cart.productId).price || 0,
         })
       );
       setCartItems(cartArray);
     }
-    
-    setIsLoading(false)
+
+    setIsLoading(false);
   };
 
-  const handleSubmit = (value) => {
+  const handleSubmit = async (value) => {
     if (cartItems.length === 0) {
-      toast.error("No items in cart!");
+      toast.error('No items in cart!');
+    } else if (!loggedIn) {
+      toast.error('You have to log in!');
     } else {
-      console.log("form >> ", value);
-      console.log("cart >> ", cartItems);
-      localStorage.removeItem("cart");
-      setCartItems([]);
-      clearCart();
-      toast.success("Order made successfully!");
+      const products = [];
+      cartItems.map((cart) =>
+        products.push({
+          productName: cart.name,
+          productId: cart.id,
+          quantity: cart.qty,
+          netPrice: cart.qty * cart.price,
+        })
+      );
+
+      const cart = {
+        customerId: value.id,
+        totalCost: calculateTotalCost(products),
+        status: 'pending',
+        productDetails: products,
+      };
+
+      try {
+        await makeOrder(cart);
+        toast.success('Order made successfully!');
+        localStorage.removeItem('cart');
+        setCartItems([]);
+        clearCart();
+      } catch (error) {
+        toast.error('Soemthing went wrong!');
+        console.log(error);
+      }
     }
   };
 
@@ -67,171 +113,123 @@ const Checkout = () => {
     }
   }, [cart]);
 
+  useEffect(() => {
+    const user = getAuth();
+    if (user) {
+      setInitialState({
+        email: user.email,
+        number: user.phone,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        address: user.address,
+        city: user.city,
+        id: user._id,
+      });
+    }
+  }, []);
+
   return (
     <Formik
       initialValues={initialState}
-      validate={(values) => {
-        const errors = {};
-        if (
-          !values.email ||
-          !values.number ||
-          !values.firstName ||
-          !values.lastName ||
-          !values.address ||
-          !values.city ||
-          !values.postal
-        ) {
-          errors.email = "Required";
-          errors.number = "Required";
-          errors.firstName = "Required";
-          errors.lastName = "Required";
-          errors.address = "Required";
-          errors.city = "Required";
-          errors.postal = "Required";
-        } else if (
-          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-        ) {
-          errors.email = "Invalid email address";
-        }
-        return errors;
-      }}
+      enableReinitialize
+      validationSchema={CheckoutSchema}
       onSubmit={(values) => {
         handleSubmit(values);
       }}
     >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleSubmit,
-        isSubmitting,
-      }) => (
-        <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-          <div className="relative max-w-screen-xl mx-auto w-full py-3 md:py-5 px-5 md:px-20 xl:px-0 mt-20 lg:mt-28 xl:mt-12">
+      {({ values, errors, touched, isSubmitting }) => (
+        <Form>
+          <div className="relative w-full max-w-screen-xl px-5 py-3 mx-auto mt-20 md:py-5 md:px-20 xl:px-0 lg:mt-28 xl:mt-12">
             <Toaster />
 
             <h5 className="text-xl font-bold">Shipping and Payment</h5>
 
-            <div className="grid lg:grid-cols-4 gap-1 mt-6">
+            <div className="grid gap-1 mt-6 lg:grid-cols-4">
               <div className="lg:col-span-3 lg:pr-20">
                 <p>Shipping information</p>
                 <div className="grid grid-cols-2 gap-4 mt-4">
                   <div className="w-full">
-                    <input
-                      type="email"
-                      name="email"
+                    <Field
                       placeholder="Email"
-                      className="focus:outline-none border py-2 px-4 rounded-full w-full"
-                      value={values.name}
-                      onChange={handleChange}
+                      className="w-full px-4 py-2 border rounded-full focus:outline-none"
+                      name="email"
                     />
-                    {errors.email && (
-                      <p className="text-sm pl-4 text-red-500">
+                    {errors.email && touched.email ? (
+                      <p className="pl-4 text-sm text-red-500">
                         {errors.email}
                       </p>
-                    )}
+                    ) : null}
                   </div>
                   <div className="w-full">
-                    <input
-                      type="text"
-                      name="number"
+                    <Field
                       placeholder="Phone"
-                      className="focus:outline-none border py-2 px-4 rounded-full w-full"
-                      value={values.number}
-                      onChange={handleChange}
+                      className="w-full px-4 py-2 border rounded-full focus:outline-none"
+                      name="number"
                     />
                     {errors.number && (
-                      <p className="text-sm pl-4 text-red-500">
+                      <p className="pl-4 text-sm text-red-500">
                         {errors.number}
                       </p>
                     )}
                   </div>
                   <div className="w-full">
-                    <input
-                      type="text"
-                      name="firstName"
+                    <Field
                       placeholder="First Name"
-                      className="focus:outline-none border py-2 px-4 rounded-full w-full"
-                      value={values.firstName}
-                      onChange={handleChange}
+                      className="w-full px-4 py-2 border rounded-full focus:outline-none"
+                      name="firstName"
                     />
                     {errors.firstName && (
-                      <p className="text-sm pl-4 text-red-500">
+                      <p className="pl-4 text-sm text-red-500">
                         {errors.firstName}
                       </p>
                     )}
                   </div>
                   <div className="w-full">
-                    <input
-                      type="text"
-                      name="lastName"
+                    <Field
                       placeholder="Last Name"
-                      className="focus:outline-none border py-2 px-4 rounded-full w-full"
-                      value={values.lastName}
-                      onChange={handleChange}
+                      className="w-full px-4 py-2 border rounded-full focus:outline-none"
+                      name="lastName"
                     />
                     {errors.lastName && (
-                      <p className="text-sm pl-4 text-red-500">
+                      <p className="pl-4 text-sm text-red-500">
                         {errors.lastName}
                       </p>
                     )}
                   </div>
                   <div className="w-full">
-                    <input
-                      type="text"
-                      name="address"
+                    <Field
                       placeholder="Address"
-                      className="focus:outline-none border py-2 px-4 rounded-full w-full"
-                      value={values.address}
-                      onChange={handleChange}
+                      className="w-full px-4 py-2 border rounded-full focus:outline-none"
+                      name="address"
                     />
                     {errors.address && (
-                      <p className="text-sm pl-4 text-red-500">
+                      <p className="pl-4 text-sm text-red-500">
                         {errors.address}
                       </p>
                     )}
                   </div>
                   <div className="w-full">
-                    <input
-                      type="text"
-                      name="city"
+                    <Field
                       placeholder="City"
-                      className="focus:outline-none border py-2 px-4 rounded-full w-full"
-                      value={values.city}
-                      onChange={handleChange}
+                      className="w-full px-4 py-2 border rounded-full focus:outline-none"
+                      name="city"
                     />
                     {errors.city && (
-                      <p className="text-sm pl-4 text-red-500">{errors.city}</p>
-                    )}
-                  </div>
-                  <div className="w-full">
-                    <input
-                      type="text"
-                      name="postal"
-                      placeholder="Postal Code / ZIP"
-                      className="focus:outline-none border py-2 px-4 rounded-full w-full"
-                      value={values.postal}
-                      onChange={handleChange}
-                    />
-                    {errors.postal && (
-                      <p className="text-sm pl-4 text-red-500">
-                        {errors.postal}
-                      </p>
+                      <p className="pl-4 text-sm text-red-500">{errors.city}</p>
                     )}
                   </div>
                 </div>
               </div>
               <div className="mt-8 lg:mt-0">
                 <p>Your Cart</p>
-                <div className="flex flex-col space-y-3 items-center justify-between w-full mt-4">
+                <div className="flex flex-col items-center justify-between w-full mt-4 space-y-3">
                   {cartItems.length ? (
                     cartItems.map((cart, index) => (
                       <div
                         key={index}
-                        className="flex items-center gap-4 w-full"
+                        className="flex items-center w-full gap-4"
                       >
-                        <div className="relative w-10 h-10 rounded-full overflow-hidden">
+                        <div className="relative w-10 h-10 overflow-hidden rounded-full">
                           <Image
                             src={`https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80`}
                             layout="fill"
@@ -241,7 +239,7 @@ const Checkout = () => {
                         </div>
                         <div>
                           <p className="font-bold shrink-1">{cart.name}</p>
-                          <p className="font-semibild text-sm text-gray-400 shrink-1">
+                          <p className="text-sm text-gray-400 font-semibild shrink-1">
                             {cart.code}
                           </p>
                         </div>
@@ -256,22 +254,22 @@ const Checkout = () => {
               </div>
             </div>
 
-            <div className="flex gap-2 items-center justify-end mt-4">
+            <div className="flex items-center justify-end gap-2 mt-4">
               <Link href={PRODUCTS}>
-                <a className="bg-white border text-black py-2 px-8 rounded-full text-sm font-bold uppercase">
+                <a className="px-8 py-2 text-sm font-bold text-black uppercase bg-white border rounded-full">
                   Continue shopping
                 </a>
               </Link>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-orange-400 text-black py-2 px-8 rounded-full text-sm font-bold uppercase"
+                className="px-8 py-2 text-sm font-bold text-black uppercase bg-orange-400 rounded-full"
               >
                 Make order
               </button>
             </div>
           </div>
-        </form>
+        </Form>
       )}
     </Formik>
   );

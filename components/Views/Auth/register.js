@@ -1,50 +1,192 @@
-import React from "react";
+import { Field, Form, Formik } from 'formik';
+import React from 'react';
+import toast from 'react-hot-toast';
+import * as Yup from 'yup';
+import { registerCustomer } from '../../../services/auth';
+
+const SignupSchema = Yup.object().shape({
+  firstName: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  lastName: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  email: Yup.string().email('Invalid email').required('Required'),
+  password: Yup.string()
+    .min(8, 'Password must be at least 8 characters!')
+    .required('Required'),
+  address: Yup.string().required('Required'),
+  city: Yup.string().required('Required'),
+  country: Yup.string().required('Required'),
+  phone: Yup.string().required('Required'),
+});
 
 const Register = ({ setIsRegister, setIsLogin }) => {
+  const handleSubmit = async (formObj) => {
+    try {
+      const results = await registerCustomer(formObj);
+      toast.success('Successfully registered!');
+      console.log('res', results);
+    } catch (error) {
+      toast.error('Something went wrong!');
+      console.log('error', error);
+    }
+    setIsRegister(false);
+  };
+
   return (
-    <div className="absolute top-16 md:top-24 z-10 bg-white  p-5 rounded-xl right-5 md-max:left-5 md:w-1/2 md:right-20 lg:w-1/3 xl:w-1/4 xl:right-52">
+    <div className="absolute z-10 p-5 bg-white shadow-xl top-16 md:top-24 rounded-xl right-5 md-max:left-5 md:w-1/2 md:right-20 lg:w-1/3 xl:w-2/5 xl:right-22">
       <p
-        className="text-right font-extrabold text-gray-400 hover:text-gray-500 cursor-pointer"
+        className="font-extrabold text-right text-gray-400 cursor-pointer hover:text-gray-500"
         onClick={() => setIsRegister(false)}
       >
         X
       </p>
-      <div className="text-center space-y-6">
+      <div className="space-y-6 text-center">
         <p className="text-lg font-bold">Register</p>
-        <input
-          type="text"
-          placeholder="First name"
-          className="border border-gray-300 w-full rounded-full py-2 px-4 focus-within:outline-none"
-        />
-        <input
-          type="text"
-          placeholder="Last name"
-          className="border border-gray-300 w-full rounded-full py-2 px-4 focus-within:outline-none"
-        />
-        <input
-          type="email"
-          placeholder="email"
-          className="border border-gray-300 w-full rounded-full py-2 px-4 focus-within:outline-none"
-        />
-        <input
-          type="password"
-          placeholder="password"
-          className="border border-gray-300 w-full rounded-full py-2 px-4 focus-within:outline-none"
-        />
-        <div>
-          <div className="flex items-center gap-2">
-            <input type="checkbox" className="w-4 h-4" />
-            <p className="text-xs">
-              I agree to the Google Terms of Service and Privacy Policy
-            </p>
-          </div>
-        </div>
-        <button className="my-2 bg-orange-400 py-3 px-8 rounded-full text-sm font-bold uppercase w-full">
-          Sign In
-        </button>
-        <div className="flex items-center gap-2 justify-center">
+        <Formik
+          initialValues={{
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            address: '',
+            city: '',
+            country: '',
+            phone: '',
+          }}
+          validationSchema={SignupSchema}
+          onSubmit={(values) => {
+            handleSubmit(values);
+          }}
+        >
+          {({ errors, touched }) => (
+            <Form className="space-y-3">
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <Field
+                    placeholder="First Name"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-full focus-within:outline-none"
+                    name="firstName"
+                  />
+                  {errors.firstName && touched.firstName ? (
+                    <p className="ml-3 text-sm text-left text-red-500">
+                      {errors.firstName}
+                    </p>
+                  ) : null}
+                </div>
+                <div>
+                  <Field
+                    placeholder="Last Name"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-full focus-within:outline-none"
+                    name="lastName"
+                  />
+                  {errors.lastName && touched.lastName ? (
+                    <p className="ml-3 text-sm text-left text-red-500">
+                      {errors.lastName}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <Field
+                    placeholder="Email"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-full focus-within:outline-none"
+                    name="email"
+                  />
+                  {errors.email && touched.email ? (
+                    <p className="ml-3 text-sm text-left text-red-500">
+                      {errors.email}
+                    </p>
+                  ) : null}
+                </div>
+                <div>
+                  <Field
+                    type="password"
+                    placeholder="Password"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-full focus-within:outline-none"
+                    name="password"
+                  />
+                  {errors.password && touched.password ? (
+                    <p className="ml-3 text-sm text-left text-red-500">
+                      {errors.password}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <Field
+                    placeholder="Address"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-full focus-within:outline-none"
+                    name="address"
+                  />
+                  {errors.address && touched.address ? (
+                    <p className="ml-3 text-sm text-left text-red-500">
+                      {errors.address}
+                    </p>
+                  ) : null}
+                </div>
+                <div>
+                  <Field
+                    placeholder="City"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-full focus-within:outline-none"
+                    name="city"
+                  />
+                  {errors.city && touched.city ? (
+                    <p className="ml-3 text-sm text-left text-red-500">
+                      {errors.city}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <Field
+                    placeholder="Country"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-full focus-within:outline-none"
+                    name="country"
+                  />
+                  {errors.country && touched.country ? (
+                    <p className="ml-3 text-sm text-left text-red-500">
+                      {errors.country}
+                    </p>
+                  ) : null}
+                </div>
+                <div>
+                  <Field
+                    placeholder="Phone"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-full focus-within:outline-none"
+                    name="phone"
+                  />
+                  {errors.phone && touched.phone ? (
+                    <p className="ml-3 text-sm text-left text-red-500">
+                      {errors.phone}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+              <button
+                className="w-full px-8 py-3 my-2 text-sm font-bold uppercase bg-orange-400 rounded-full"
+                type="submit"
+              >
+                Submit
+              </button>
+            </Form>
+          )}
+        </Formik>
+        <div className="flex items-center justify-center gap-2">
           <p>Already a member?</p>
-          <button className="underline text-blue-300" onClick={() => {setIsRegister(false); setIsLogin(true)}}>
+          <button
+            className="text-blue-300 underline"
+            onClick={() => {
+              setIsRegister(false);
+              setIsLogin(true);
+            }}
+          >
             Sign in
           </button>
         </div>
