@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from 'next/image';
 
 const About = () => {
   return (
@@ -10,10 +10,10 @@ const About = () => {
           layout="fill"
           objectFit="cover"
         />
-        <div className="absolute top-0 left-0 h-full bg-black bg-opacity-40 text-white flex flex-col justify-center items-start w-full">
+        <div className="absolute top-0 left-0 flex flex-col items-start justify-center w-full h-full text-white bg-black bg-opacity-40">
           <div className="md:w-[70%] ml-10 lg:ml-40 xl:ml-60 xl:w-[60%]">
-            <h1 className="text-2xl md:text-5xl lg:text-6xl xl:text-8xl tracking-wide xl:leading-snug font-extrabold">
-              {" "}
+            <h1 className="text-2xl font-extrabold tracking-wide md:text-5xl lg:text-6xl xl:text-8xl xl:leading-snug">
+              {' '}
               About Us
             </h1>
           </div>
@@ -21,8 +21,8 @@ const About = () => {
       </div>
 
       <div className="bg-gray-100">
-        <div className="px-5 md:px-20 xl:px-0 max-w-screen-lg 2xl:max-w-screen-xl mx-auto flex gap-3 overflow-x-scroll lg:overflow-hidden">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="flex max-w-screen-lg gap-3 px-5 mx-auto overflow-x-scroll md:px-20 xl:px-0 2xl:max-w-screen-xl lg:overflow-hidden">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
             <div className="py-4">
               <h1 className="text-3xl font-bold leading-loose">Who We Are?</h1>
               <p className="text-stone-800">
@@ -37,6 +37,7 @@ const About = () => {
                 src={`https://images.unsplash.com/photo-1615886753866-79396abc446e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80`}
                 layout="fill"
                 objectFit="cover"
+                alt="cover image"
               />
             </div>
           </div>
