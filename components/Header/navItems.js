@@ -1,24 +1,41 @@
-import Link from "next/link";
-import { ABOUT, CLOTHINGS, CONTACT, HOME, JEWELL, PRODUCTS } from "../../constants/root";
+import Link from 'next/link';
+import {
+  ABOUT,
+  CLOTHINGS,
+  CONTACT,
+  HOME,
+  JEWELL,
+  PRODUCTS,
+} from '../../constants/root';
 
 const NavItems = () => {
   return (
-    <div className="flex flex-col lg:flex-row gap-5 divide-y lg:divide-y-0">
+    <div className="flex flex-col gap-5 divide-y lg:flex-row lg:divide-y-0">
       <Link href={HOME}>
-        <a className="font-normal text-gray-500 hover:text-gray-700 hover:font-semibold transition-colors">Home</a>
+        <a className="font-normal text-gray-500 transition-colors hover:text-orange-500 ">
+          Home
+        </a>
       </Link>
       <Link href={{ pathname: PRODUCTS, query: { type: 'jewelry' } }}>
-        <a className="font-normal text-gray-500 hover:text-gray-500 hover:font-semibold transition-colors">Jewels Collections</a>
+        <a className="font-normal text-gray-500 transition-colors hover:text-orange-500 ">
+          Jewels Collections
+        </a>
       </Link>
       <Link href={{ pathname: PRODUCTS, query: { type: 'clothings' } }}>
-        <a className="font-normal text-gray-500 hover:text-gray-500 hover:font-semibold transition-colors">Clothings</a>
+        <a className="font-normal text-gray-500 transition-colors hover:text-orange-500 ">
+          Clothings
+        </a>
       </Link>
-      
+
       <Link href={ABOUT}>
-        <a className="font-normal text-gray-500 hover:text-gray-500 hover:font-semibold transition-colors">About Us</a>
+        <a className="font-normal text-gray-500 transition-colors hover:text-orange-500 ">
+          About Us
+        </a>
       </Link>
       <Link href={CONTACT}>
-        <a className="font-normal text-gray-500 hover:text-gray-500 hover:font-semibold transition-colors">Contact Us</a>
+        <a className="font-normal text-gray-500 transition-colors hover:text-orange-500 ">
+          Contact Us
+        </a>
       </Link>
     </div>
   );

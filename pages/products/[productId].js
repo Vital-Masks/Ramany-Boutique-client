@@ -5,6 +5,7 @@ import ImageCarousel from '../../components/Ui/ImageCarousel';
 import CardSection from '../../components/Views/CardSection';
 import { CartContext } from '../../context/cartContext';
 import { getProduct } from '../../services/products';
+import Image from 'next/image';
 
 const Product = () => {
   const [qty, setQty] = useState(1);
@@ -50,7 +51,20 @@ const Product = () => {
       <Toaster />
       <div className="grid w-full max-w-screen-xl grid-cols-1 gap-10 px-5 py-3 mx-auto mt-20 md:py-5 md:px-20 xl:px-0 lg:mt-28 xl:mt-12 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <ImageCarousel />
+          {product?.subImage.length > 0 ? (
+            <ImageCarousel images={product?.subImage} />
+          ) : (
+            product && (
+              <div className="relative object-contain w-auto h-full">
+                <Image
+                  src={product?.mainImage?.base64URL}
+                  layout="fill"
+                  objectFit="contain"
+                  alt="image"
+                />
+              </div>
+            )
+          )}
         </div>
         <div className="flex flex-col justify-between p-2">
           <div>
