@@ -9,18 +9,16 @@ import Card from '../../components/Views/Card';
 import Loader from './../../components/Ui/Loader';
 import { AdjustmentsIcon } from '@heroicons/react/outline';
 
-import { getProductsByCategory } from '../../services/categories';
-import { ProductContext } from '../../context/productContext';
 import { CategoryContext } from '../../context/categoryContext';
 import { JewelleryContext } from '../../context/jewelleryContext';
 
 import Search from '../../components/Header/search';
+import { getJewelleryByCategory } from '../../services/jewellery';
 
-export default function Products() {
+export default function Jewelleries() {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { products: productsState } = useContext(ProductContext);
   const { categories: categoriesState } = useContext(CategoryContext);
   const { jewelleries: jewelleriesState } = useContext(JewelleryContext);
 
@@ -28,37 +26,35 @@ export default function Products() {
   const [categories, setCategories] = useState([]);
 
   const router = useRouter();
-  const { category, type } = router.query;
+  const { category } = router.query;
 
-  const fetchProductByCategory = async (category) => {
+  const fetchJewelleryByCategory = async (category) => {
     setIsLoading(true);
-    const categoryProductsResults = await getProductsByCategory(category);
+    const categoryProductsResults = await getJewelleryByCategory(category);
     setProducts(categoryProductsResults);
     setIsLoading(false);
   };
 
   useEffect(() => {
     setIsLoading(true);
-    if (productsState) {
-      setProducts(productsState);
+    if (jewelleriesState) {
+      setProducts(jewelleriesState);
     }
     setIsLoading(false);
 
     if (categoriesState) {
       setCategories(categoriesState);
     }
-  }, [productsState, categoriesState]);
+  }, [jewelleriesState, categoriesState]);
 
   useEffect(() => {
     console.log(jewelleriesState);
-    if (type === 'jewellery') {
-      setProducts(jewelleriesState);
-    } else if (category) {
-      fetchProductByCategory(category);
+    if (category) {
+      fetchJewelleryByCategory(category);
     } else {
-      setProducts(productsState);
+      setProducts(jewelleriesState);
     }
-  }, [category, productsState, type]);
+  }, [category, jewelleriesState]);
 
   return (
     <div className="relative grid w-full max-w-screen-xl grid-cols-4 gap-10 px-5 py-3 mx-auto mt-16 md:py-5 md:px-20 xl:px-0 lg:mt-28 xl:mt-12">
@@ -94,7 +90,7 @@ export default function Products() {
         ) : products?.length ? (
           <div className="grid grid-cols-1 gap-12 py-5 md:grid-cols-2 xl:grid-cols-3 gap-y-10">
             {products.map(({ _id, productName, productCode, mainImage }) => (
-              <Link href={`/products/${_id}`} key={_id} passHref>
+              <Link href={`/jewellery/${_id}`} key={_id}>
                 <a>
                   <Card
                     name={productName}

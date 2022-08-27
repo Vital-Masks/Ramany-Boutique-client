@@ -5,6 +5,7 @@ import {
   CONTACT,
   HOME,
   JEWELL,
+  JEWELLERIES,
   PRODUCTS,
 } from '../../constants/root';
 
@@ -16,12 +17,12 @@ const NavItems = () => {
           Home
         </a>
       </Link>
-      <Link href={{ pathname: PRODUCTS, query: { type: 'jewelry' } }}>
+      <Link href={{ pathname: JEWELLERIES }}>
         <a className="font-normal text-gray-500 transition-colors hover:text-orange-500 ">
           Jewels Collections
         </a>
       </Link>
-      <Link href={{ pathname: PRODUCTS, query: { type: 'clothings' } }}>
+      <Link href={{ pathname: PRODUCTS }}>
         <a className="font-normal text-gray-500 transition-colors hover:text-orange-500 ">
           Clothings
         </a>

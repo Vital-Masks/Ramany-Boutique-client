@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { getAuth } from '../../utils/manageUser';
 import { PencilAltIcon } from '@heroicons/react/solid';
 import toast, { Toaster } from 'react-hot-toast';
+import { getOrders } from '../../services/orders';
 
 const Profile = () => {
   const [user, setUser] = useState();
   const [isEdit, setIsEdit] = useState(false);
+  const [orders, setOrders] = useState([]);
   const [initialState, setInitialState] = useState({
     firstName: '',
     lastName: '',
@@ -18,10 +20,16 @@ const Profile = () => {
 
   const handleSubmit = () => {};
 
+  const fetchUserOrders = async () => {
+    const data = await getOrders(initialState.id);
+    console.log(data);
+  };
+
   useEffect(() => {
     const user = getAuth();
     setUser(user);
     setInitialState({
+      id: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
@@ -30,6 +38,12 @@ const Profile = () => {
       country: user.country,
     });
   }, []);
+
+  useEffect(() => {
+    if (initialState.id) {
+      fetchUserOrders();
+    }
+  }, [initialState]);
 
   return (
     <div className="max-w-screen-lg px-5 mx-auto my-20 md:px-20 xl:px-0 2xl:max-w-screen-xl">

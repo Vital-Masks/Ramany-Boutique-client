@@ -51,7 +51,7 @@ const Product = () => {
       <Toaster />
       <div className="grid w-full max-w-screen-xl grid-cols-1 gap-10 px-5 py-3 mx-auto mt-20 md:py-5 md:px-20 xl:px-0 lg:mt-28 xl:mt-12 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          {product?.subImage.length > 0 ? (
+          {product?.subImage?.length > 0 ? (
             <ImageCarousel images={product?.subImage} />
           ) : (
             product && (
@@ -73,7 +73,7 @@ const Product = () => {
               {' '}
               {product?.clothCode}
             </p>
-            {product?.occasionTypeId.map(({ categoryName, index }) => (
+            {product?.occasionTypeId.map(({ categoryName }, index) => (
               <p
                 key={index}
                 className="my-2 text-sm font-semibold text-gray-400"
@@ -148,6 +148,93 @@ const Product = () => {
               >
                 Add to cart
               </button>
+            </div>
+          </div>
+        </div>
+        <div className="lg:col-span-2">
+          <div>
+            <div>
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Additional Information
+              </h3>
+            </div>
+            <div className="mt-5 border-t border-gray-200">
+              <dl className="sm:divide-y sm:divide-gray-200">
+                {/* <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                  <dt className="text-sm font-medium text-gray-500">
+                    Cloth Name
+                  </dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                    {product?.clothName}
+                  </dd>
+                </div>
+                <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                  <dt className="text-sm font-medium text-gray-500">
+                    Cloth Code
+                  </dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                    {product?.clothCode}
+                  </dd>
+                </div> */}
+                <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                  <dt className="text-sm font-medium text-gray-500">
+                    Custom Altrations
+                  </dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                    {product?.customAltrations}
+                  </dd>
+                </div>
+                <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                  <dt className="text-sm font-medium text-gray-500">Fabric</dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                    {product?.fabric}
+                  </dd>
+                </div>
+                <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                  <dt className="text-sm font-medium text-gray-500">
+                    Features
+                  </dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                    {product?.features}
+                  </dd>
+                </div>
+                <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                  <dt className="text-sm font-medium text-gray-500">Gender</dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                    {product?.gender}
+                  </dd>
+                </div>
+                <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                  <dt className="text-sm font-medium text-gray-500">
+                    Measurements
+                  </dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                    {product?.measurements}
+                  </dd>
+                </div>
+                <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                  <dt className="text-sm font-medium text-gray-500">Style</dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                    {product?.style}
+                  </dd>
+                </div>
+                <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                  <dt className="text-sm font-medium text-gray-500">
+                    Wash Instructions
+                  </dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                    {product?.washInstructions}
+                  </dd>
+                </div>
+                <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                  <dt className="text-sm font-medium text-gray-500">
+                    Description
+                  </dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                    {product?.description}
+                  </dd>
+                </div>
+              </dl>
             </div>
           </div>
         </div>
