@@ -22,11 +22,11 @@ const NavItems = () => {
           Jewels Collections
         </a>
       </Link>
-      <Link href={{ pathname: PRODUCTS }}>
+      {/* <Link href={{ pathname: PRODUCTS }}>
         <a className="font-normal text-gray-500 transition-colors hover:text-orange-500 ">
           Clothings
         </a>
-      </Link>
+      </Link> */}
 
       <Link href={ABOUT}>
         <a className="font-normal text-gray-500 transition-colors hover:text-orange-500 ">

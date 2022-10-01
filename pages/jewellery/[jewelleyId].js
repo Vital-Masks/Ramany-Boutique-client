@@ -5,7 +5,7 @@ import ImageCarousel from '../../components/Ui/ImageCarousel';
 import CardSection from '../../components/Views/CardSection';
 import { CartContext } from '../../context/cartContext';
 import Image from 'next/image';
-import { getJewellery } from '../../services/jewellery';
+import { getJewelleryById } from '../../services/jewellery';
 
 const Jewellery = () => {
   const [qty, setQty] = useState(1);
@@ -18,15 +18,15 @@ const Jewellery = () => {
   const { jewelleyId } = router.query;
 
   const addToCart = () => {
-    if (!selectedSize) toast.error('Please select a size!');
+    // if (selectedSize) toast.error('Please select a size!');
     if (!jewelleyId) toast.error('Something went wrong!');
     if (!qty) toast.error('Quantity must be > 0!');
 
-    if (selectedSize && jewelleyId) {
+    if (jewelleyId) {
       const product = {
         productId: jewelleyId,
         quantity: qty,
-        size: selectedSize,
+        size: ['free'],
       };
       add(product);
     }
@@ -34,9 +34,8 @@ const Jewellery = () => {
 
   const fetchProduct = async () => {
     try {
-      let data = await getJewellery(jewelleyId);
-      console.log('data', data);
-      setProduct(data[0]);
+      let data = await getJewelleryById(jewelleyId);
+      setProduct(data);
     } catch (err) {
       console.log('😟 error at [jewelleyId].js line:43');
     }
@@ -59,7 +58,7 @@ const Jewellery = () => {
             product && (
               <div className="relative object-contain w-auto h-full">
                 <Image
-                  src={product?.mainImage?.base64URL}
+                  src={product?.mainImage?.base64URL ?? '/no-image.png'}
                   layout="fill"
                   objectFit="contain"
                   alt="image"
@@ -154,7 +153,7 @@ const Jewellery = () => {
           </div>
         </div>
       </div>
-      <CardSection />
+      {/* <CardSection /> */}
     </div>
   );
 };

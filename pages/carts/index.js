@@ -7,6 +7,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { TrashIcon } from '@heroicons/react/solid';
 import Loader from './../../components/Ui/Loader';
 import { CartContext } from '../../context/cartContext';
+import { getJewelleryById } from '../../services/jewellery';
 
 const Carts = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -16,25 +17,44 @@ const Carts = () => {
 
   const fetchProduct = async () => {
     setIsLoading(true);
-    const data = await Promise.all(
+    const cloth = await Promise.all(
       cart?.map((cart) => getProduct(cart.productId))
     );
 
-    if (data) {
-      let cartArray = [];
+    const jewellery = await Promise.all(
+      cart?.map((cart) => getJewelleryById(cart.productId))
+    );
+
+    let cartArray = [];
+    if (cloth.find((x) => x._id === cart[0].productId)?.clothName) {
       cart.map((cart) =>
         cartArray.push({
           id: cart.id,
           productId: cart.productId,
-          name: data.find((x) => x._id === cart.productId).clothName,
-          code: data.find((x) => x._id === cart.productId).clothCode,
+          name: cloth.find((x) => x._id === cart.productId).clothName,
+          code: cloth.find((x) => x._id === cart.productId).clothCode,
+          type: cloth.find((x) => x._id === cart.productId).clothType,
           size: cart.size,
           qty: cart.quantity,
         })
       );
-      setCartItems(cartArray);
     }
 
+    if (jewellery.find((x) => x._id === cart[0].productId)?.jewelleryName) {
+      cart.map((cart) =>
+        cartArray.push({
+          id: cart.id,
+          productId: cart.productId,
+          name: jewellery.find((x) => x._id === cart.productId).jewelleryName,
+          code: jewellery.find((x) => x._id === cart.productId).jewelleryCode,
+          type: jewellery.find((x) => x._id === cart.productId).jewelleryType,
+          size: cart.size,
+          qty: cart.quantity,
+        })
+      );
+    }
+
+    setCartItems(cartArray);
     setIsLoading(false);
   };
 

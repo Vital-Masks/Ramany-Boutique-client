@@ -1,5 +1,5 @@
-import { createContext, useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { createContext, useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 export const CartContext = createContext(null);
 
@@ -19,11 +19,11 @@ export const CartContextProvider = ({ children }) => {
           : cart
       );
 
-      localStorage.setItem("cart", JSON.stringify(item));
+      localStorage.setItem('cart', JSON.stringify(item));
       setCart(item);
     } else {
       const item = [...cart, { id: uuidv4(), productId, quantity, size }];
-      localStorage.setItem("cart", JSON.stringify(item));
+      localStorage.setItem('cart', JSON.stringify(item));
       setCart(item);
     }
   };
@@ -34,14 +34,14 @@ export const CartContextProvider = ({ children }) => {
 
   const clearCartItem = (id) => {
     const filtered = cart.filter((x) => x.id !== id);
-    localStorage.setItem("cart", JSON.stringify(filtered));
+    localStorage.setItem('cart', JSON.stringify(filtered));
     setCart(filtered);
   };
 
   const getCardItem = async () => {
     const data = await JSON.parse(localStorage?.cart);
     if (data) {
-      setCart(data)
+      setCart(data);
     }
   };
 

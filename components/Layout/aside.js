@@ -51,7 +51,9 @@ const Aside = ({ categories }) => {
                     >
                       <Link
                         href={{
-                          pathname: '/products',
+                          pathname: type.includes('jewellery')
+                            ? '/jewellery'
+                            : '/products',
                           query: { category: cat._id },
                         }}
                       >

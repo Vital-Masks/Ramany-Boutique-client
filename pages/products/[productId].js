@@ -36,7 +36,6 @@ const Product = () => {
     const fetchProduct = async () => {
       try {
         let data = await getProduct(productId);
-        console.log(data);
         setProduct(data);
       } catch (err) {
         console.log('😟 error at [productId].js line:43');

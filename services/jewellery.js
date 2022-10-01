@@ -15,6 +15,18 @@ export const getJewellery = async () => {
   return (await axios(options)).data || [];
 };
 
+export const getJewelleryById = async (id) => {
+  const options = {
+    method: 'GET',
+    url: `${baseUrl + endpoints.GET_JEWELLERY}/${id}`,
+    headers: {
+      accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  };
+  return (await axios(options)).data || [];
+};
+
 export const getJewelleryByCategory = async (id) => {
   const options = {
     method: 'GET',

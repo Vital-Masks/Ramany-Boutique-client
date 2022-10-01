@@ -10,6 +10,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { CartContext } from '../../context/cartContext';
 import { getAuth, isLoggedIn } from '../../utils/manageUser';
 import * as Yup from 'yup';
+import { getJewelleryById } from '../../services/jewellery';
 
 const CheckoutSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
@@ -48,26 +49,45 @@ const Checkout = () => {
 
   const fetchProduct = async () => {
     setIsLoading(true);
-    const data = await Promise.all(
+
+    const cloth = await Promise.all(
       cart?.map((cart) => getProduct(cart.productId))
     );
 
-    if (data) {
-      let cartArray = [];
+    const jewellery = await Promise.all(
+      cart?.map((cart) => getJewelleryById(cart.productId))
+    );
+
+    let cartArray = [];
+
+    if (cloth.find((x) => x._id === cart[0].productId)?.clothName) {
       cart.map((cart) =>
         cartArray.push({
           id: cart.id,
           productId: cart.productId,
-          name: data.find((x) => x._id === cart.productId).clothName,
-          code: data.find((x) => x._id === cart.productId).clothCode,
+          name: cloth.find((x) => x._id === cart.productId).clothName,
+          code: cloth.find((x) => x._id === cart.productId).clothCode,
+          type: cloth.find((x) => x._id === cart.productId).clothType,
           size: cart.size,
           qty: cart.quantity,
-          price: data.find((x) => x._id === cart.productId).price || 0,
         })
       );
-      setCartItems(cartArray);
     }
 
+    if (jewellery.find((x) => x._id === cart[0].productId)?.jewelleryName) {
+      cart.map((cart) =>
+        cartArray.push({
+          id: cart.id,
+          productId: cart.productId,
+          name: jewellery.find((x) => x._id === cart.productId).jewelleryName,
+          code: jewellery.find((x) => x._id === cart.productId).jewelleryCode,
+          type: jewellery.find((x) => x._id === cart.productId).jewelleryType,
+          size: cart.size,
+          qty: cart.quantity,
+        })
+      );
+    }
+    setCartItems(cartArray);
     setIsLoading(false);
   };
 
@@ -77,25 +97,50 @@ const Checkout = () => {
     } else if (!loggedIn) {
       toast.error('You have to log in!');
     } else {
-      const products = [];
-      cartItems.map((cart) =>
-        products.push({
-          productName: cart.name,
-          productId: cart.id,
-          quantity: cart.qty,
-          netPrice: cart.qty * cart.price,
-        })
-      );
+      const sellProducts = [];
+      const rentProducts = [];
 
-      const cart = {
+      cartItems
+        .filter((x) => x.type === 'Sell')
+        .map((cart) =>
+          sellProducts.push({
+            orderType: 'sale',
+            productName: cart.name,
+            productId: cart.id,
+            quantity: cart.qty,
+            netPrice: cart.qty * cart.price,
+          })
+        );
+
+      cartItems
+        .filter((x) => x.type === 'Rental')
+        .map((cart) =>
+          rentProducts.push({
+            orderType: 'rent',
+            productName: cart.name,
+            productId: cart.id,
+            quantity: cart.qty,
+            netPrice: cart.qty * cart.price,
+          })
+        );
+
+      const sellCart = {
         customerId: value.id,
-        totalCost: calculateTotalCost(products),
+        totalCost: calculateTotalCost(sellProducts),
         status: 'pending',
-        productDetails: products,
+        productDetails: sellProducts,
+      };
+
+      const rentCart = {
+        customerId: value.id,
+        totalCost: calculateTotalCost(rentProducts),
+        status: 'pending',
+        productDetails: rentProducts,
       };
 
       try {
-        await makeOrder(cart);
+        await makeOrder(sellCart);
+        await makeOrder(rentCart);
         toast.success('Order made successfully!');
         localStorage.removeItem('cart');
         setCartItems([]);

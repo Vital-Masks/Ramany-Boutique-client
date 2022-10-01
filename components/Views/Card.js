@@ -1,10 +1,16 @@
 import Image from 'next/image';
 
-const Card = ({ name, code, image }) => {
+const Card = ({ name, code, image, type }) => {
   const srcImage = image.base64URL ?? '/no-image.png';
 
   return (
-    <div className="w-full cursor-pointer">
+    <div className="relative w-full cursor-pointer">
+      {type?.toLowerCase() === 'rental' && (
+        <span className="absolute top-2 right-2 z-10 bg-indigo-100 text-indigo-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-200 dark:text-indigo-900">
+          {type}
+        </span>
+      )}
+
       <div className="relative w-full h-96">
         <Image src={srcImage} layout="fill" objectFit="cover" alt="img" />
       </div>

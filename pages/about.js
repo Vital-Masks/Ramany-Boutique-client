@@ -9,6 +9,7 @@ const About = () => {
           src={`https://images.unsplash.com/photo-1614951841462-92cb7e25f7fb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80`}
           layout="fill"
           objectFit="cover"
+          alt="banner"
         />
         <div className="absolute top-0 left-0 flex flex-col items-start justify-center w-full h-full text-white bg-black bg-opacity-40">
           <div className="md:w-[70%] ml-10 lg:ml-40 xl:ml-60 xl:w-[60%]">

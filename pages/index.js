@@ -9,6 +9,7 @@ import { Toaster } from 'react-hot-toast';
 import { CategoryContext } from '../context/categoryContext';
 import { ProductContext } from '../context/productContext';
 import { getRandom } from '../utils/getRandom';
+import { JewelleryContext } from '../context/jewelleryContext';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,14 +18,23 @@ export default function Home() {
 
   const { categories: categoriesState } = useContext(CategoryContext);
   const { products: productsState } = useContext(ProductContext);
+  const { jewelleries: jewelleriesState } = useContext(JewelleryContext);
+
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   if (productsState) {
+  //     setProducts(getRandom(productsState, 4));
+  //   }
+  //   setIsLoading(false);
+  // }, [productsState]);
 
   useEffect(() => {
     setIsLoading(true);
-    if (productsState) {
-      setProducts(getRandom(productsState, 4));
+    if (jewelleriesState) {
+      setProducts(getRandom(jewelleriesState, 4));
     }
     setIsLoading(false);
-  }, [productsState]);
+  }, [jewelleriesState]);
 
   useEffect(() => {
     if (categoriesState) {
@@ -51,13 +61,14 @@ export default function Home() {
       <Banner />
 
       {/* Products Section */}
-      <CardSection products={products} loading={isLoading} />
+      <CardSection type={'jewellery'} products={products} loading={isLoading} />
 
       {/* Category Type Section */}
       <div className="flex max-w-screen-lg gap-3 px-5 mx-auto my-20 overflow-x-scroll md:px-20 xl:px-0 2xl:max-w-screen-xl lg:overflow-hidden">
         {types?.map((categoryType, index) => (
           <CategoryCard
             key={index}
+            index={index}
             size={index === 0 ? 'large' : 'small'}
             title={categoryType}
           />
@@ -65,7 +76,7 @@ export default function Home() {
       </div>
 
       {/* Products Section */}
-      <CardSection products={products} loading={isLoading} />
+      <CardSection type={'jewellery'} products={products} loading={isLoading} />
     </div>
   );
 }
