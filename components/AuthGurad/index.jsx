@@ -23,7 +23,7 @@ const AuthGuard = ({ children }) => {
               <div className="text-center">
                 <p className="text-base font-semibold text-indigo-600">401</p>
                 <h1 className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-                  You don't have access.
+                  You don&apos;t have access.
                 </h1>
                 <p className="mt-2 text-base text-gray-500">Please Sign in.</p>
                 <div className="mt-6">

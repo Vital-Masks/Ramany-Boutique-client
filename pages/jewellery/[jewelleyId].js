@@ -17,7 +17,6 @@ const Jewellery = () => {
   const { jewelleyId } = router.query;
 
   const addToCart = () => {
-    // if (selectedSize) toast.error('Please select a size!');
     if (!jewelleyId) toast.error('Something went wrong!');
     if (!qty) toast.error('Quantity must be > 0!');
 
@@ -25,7 +24,7 @@ const Jewellery = () => {
       const product = {
         productId: jewelleyId,
         quantity: qty,
-        size: ['free'],
+        size: 'free',
       };
       add(product);
     }
