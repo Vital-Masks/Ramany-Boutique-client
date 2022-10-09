@@ -3,6 +3,7 @@ import React from 'react';
 import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 import { registerCustomer } from '../../../services/auth';
+import { setAuth } from '../../../utils/manageUser';
 
 const SignupSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -27,8 +28,8 @@ const Register = ({ setIsRegister, setIsLogin }) => {
   const handleSubmit = async (formObj) => {
     try {
       const results = await registerCustomer(formObj);
+      setAuth(results.customerDetail);
       toast.success('Successfully registered!');
-      console.log('res', results);
     } catch (error) {
       toast.error('Something went wrong!');
       console.log('error', error);

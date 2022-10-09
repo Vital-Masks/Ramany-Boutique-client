@@ -22,5 +22,5 @@ export const isLoggedIn = () => {
 };
 
 export const removeAuth = () => {
-  localStorage.removeItem('user');
+  localStorage.clear();
 };

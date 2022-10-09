@@ -11,10 +11,22 @@ const CategoryCard = ({ size, title, index }) => {
     small: ['w-[80%]'],
   };
 
+  const images = [
+    {
+      img: 'https://images.unsplash.com/photo-1633685894176-9f715a092b79?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1615886753866-79396abc446e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
+    },
+  ];
+
   return (
     <div className={`relative lg-max:shrink-0 ${classMap[size]} h-96`}>
       <Image
-        src={`/assets/categories/${index}.jpg`}
+        src={images[index].img}
         layout="fill"
         objectFit="cover"
         objectPosition={'0% 30%'}

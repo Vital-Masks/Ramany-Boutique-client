@@ -5,7 +5,8 @@ import { Disclosure } from '@headlessui/react';
 
 const Aside = ({ categories }) => {
   const router = useRouter();
-  const { category } = router.query;
+  const { pathname, category } = router.query;
+  const { route } = router;
 
   const grouped = categories?.reduce((cat, curr) => {
     if (!cat[curr.categoryType]) cat[curr.categoryType] = []; //If this type wasn't previously stored
@@ -14,6 +15,10 @@ const Aside = ({ categories }) => {
   }, {});
 
   const types = Object.keys(grouped);
+
+  // const pathName = (category) => {
+  //   if(category === )
+  // };
 
   return (
     <aside>
@@ -53,6 +58,8 @@ const Aside = ({ categories }) => {
                         href={{
                           pathname: type.includes('jewellery')
                             ? '/jewellery'
+                            : type.includes('occasion')
+                            ? `jewellery`
                             : '/products',
                           query: { category: cat._id },
                         }}
@@ -67,42 +74,6 @@ const Aside = ({ categories }) => {
           )}
         </Disclosure>
       ))}
-
-      {/* <Disclosure>
-        {({ open }) => (
-          <div className="my-5 border border-gray-200">
-            <Disclosure.Button className="flex justify-between w-full p-4 text-sm font-semibold text-left text-gray-800 focus:outline-none hover:bg-gray-200">
-              <span>SIZE</span>
-              <ChevronUpIcon
-                className={`${ open ? "" : "rotate-180 transform"
-                  } h-5 w-5 text-gray-800`}
-              />
-            </Disclosure.Button>
-            <Disclosure.Panel className="p-4 text-sm font-medium text-gray-700 ">
-              <div className="flex flex-row border border-gray-200 divide-x-2 ">
-                <div className="grid basis-1/4 place-items-center aspect-square">
-                  XS
-                </div>
-                <div className="grid basis-1/4 place-items-center aspect-square">
-                  XS
-                </div>
-                <div className="grid basis-1/4 place-items-center aspect-square">
-                  XS
-                </div>
-                <div className="grid basis-1/4 place-items-center aspect-square">
-                  XS
-                </div>
-                <div className="grid basis-1/4 place-items-center aspect-square">
-                  XS
-                </div>
-                <div className="grid basis-1/4 place-items-center aspect-square">
-                  XS
-                </div>
-              </div>
-            </Disclosure.Panel>
-          </div>
-        )}
-      </Disclosure> */}
     </aside>
   );
 };

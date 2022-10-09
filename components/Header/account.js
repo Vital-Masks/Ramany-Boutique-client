@@ -1,7 +1,8 @@
 import { UserIcon, LogoutIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { PROFILE } from '../../constants/root';
+import { HOME, PROFILE } from '../../constants/root';
 import { getAuth, removeAuth } from '../../utils/manageUser';
 import Login from '../Views/Auth/login';
 import Register from '../Views/Auth/register';
@@ -10,10 +11,12 @@ const Account = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
   const [user, setUser] = useState();
+  const router = useRouter();
 
-  const logout = () => {
+  const logout = async () => {
     removeAuth();
     setUser();
+    await router.push(HOME);
   };
 
   useEffect(() => {

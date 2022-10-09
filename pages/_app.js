@@ -7,6 +7,7 @@ import { CartContextProvider } from '../context/cartContext';
 import { ProductContextProvider } from '../context/productContext';
 import { CategoryContextProvider } from '../context/categoryContext';
 import { JewelleryContextProvider } from '../context/jewelleryContext';
+import AuthGuard from '../components/AuthGurad';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -15,7 +16,13 @@ function MyApp({ Component, pageProps }) {
         <ProductContextProvider>
           <CategoryContextProvider>
             <Layout>
-              <Component {...pageProps} />
+              {Component.auth ? (
+                <AuthGuard>
+                  <Component {...pageProps} />
+                </AuthGuard>
+              ) : (
+                <Component {...pageProps} />
+              )}
             </Layout>
           </CategoryContextProvider>
         </ProductContextProvider>
