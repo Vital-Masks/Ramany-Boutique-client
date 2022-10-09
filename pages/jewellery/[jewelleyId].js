@@ -109,26 +109,6 @@ const Jewellery = () => {
           </div>
 
           <div>
-            {/* <div className="my-8">
-              <p className="font-bold uppercase">Size:</p>
-              <div className="flex items-center gap-2 mt-2">
-                {product?.sizeAndCount?.map(
-                  (size, index) =>
-                    size.count > 0 && (
-                      <button
-                        key={index}
-                        onClick={() => setSelectedSize(size.size)}
-                        className={`w-10 h-10 border-2 flex items-center justify-center uppercase cursor-pointer hover:bg-black hover:text-white transition-colors ${
-                          selectedSize === size.size && 'bg-black  text-white'
-                        }`}
-                      >
-                        {size.size}
-                      </button>
-                    )
-                )}
-              </div>
-            </div> */}
-
             <div className="my-4 ">
               <p className="font-bold uppercase">QTY:</p>
               <div className="mt-2">

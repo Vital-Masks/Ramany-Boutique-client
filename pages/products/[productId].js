@@ -124,7 +124,7 @@ const Product = () => {
               <div className="mt-2">
                 <button
                   className="px-2 py-1 text-center border border-r-0 border-gray-300"
-                  onClick={() => setQty(qty > 0 ? --qty : 0)}
+                  onClick={() => setQty(qty > 1 ? --qty : 1)}
                 >
                   -
                 </button>

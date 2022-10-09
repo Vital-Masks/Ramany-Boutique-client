@@ -167,7 +167,7 @@ const Checkout = () => {
           await makeOrder(rentCart);
         }
 
-        const message = `You received an order from TheRamyaBoutique by: ${value.number}`;
+        const message = `Hello, I made an order at TheRamyaBoutique.com.`;
         const whatsAppURL = `https://wa.me/94777453835?text=${message}`;
         window.open(whatsAppURL, '_blank').focus();
 
