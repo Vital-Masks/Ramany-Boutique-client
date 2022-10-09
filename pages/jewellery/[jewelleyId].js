@@ -6,6 +6,7 @@ import { CartContext } from '../../context/cartContext';
 import Image from 'next/image';
 import { getJewelleryById } from '../../services/jewellery';
 import Head from 'next/head';
+import { CHECKOUT } from '../../constants/root';
 
 const Jewellery = () => {
   const [qty, setQty] = useState(1);
@@ -38,6 +39,15 @@ const Jewellery = () => {
     } catch (err) {
       console.log('😟 error at [jewelleyId].js line:43');
     }
+  };
+
+  const handleBuyNow = () => {
+    const obj = {
+      productId: jewelleyId,
+      qty: qty,
+    };
+    localStorage.setItem('buyNow', JSON.stringify(obj));
+    router.push(CHECKOUT);
   };
 
   useEffect(() => {
@@ -124,7 +134,7 @@ const Jewellery = () => {
               <div className="mt-2">
                 <button
                   className="px-2 py-1 text-center border border-r-0 border-gray-300"
-                  onClick={() => setQty(qty > 0 ? --qty : 0)}
+                  onClick={() => setQty(qty > 1 ? --qty : 1)}
                 >
                   -
                 </button>
@@ -143,7 +153,10 @@ const Jewellery = () => {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <button className="px-8 py-2 my-2 text-sm font-bold uppercase bg-orange-400 rounded-full">
+              <button
+                onClick={() => handleBuyNow()}
+                className="px-8 py-2 my-2 text-sm font-bold uppercase bg-orange-400 rounded-full"
+              >
                 {product?.jewelleryType === 'Rental' ? 'Rent Now' : 'Buy Now'}
               </button>
               <button

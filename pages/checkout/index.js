@@ -69,6 +69,7 @@ const Checkout = () => {
           name: cloth.find((x) => x._id === cart.productId).clothName,
           code: cloth.find((x) => x._id === cart.productId).clothCode,
           type: cloth.find((x) => x._id === cart.productId).clothType,
+          img: cloth.find((x) => x._id === cart.productId).mainImage,
           size: cart.size,
           qty: cart.quantity,
         })
@@ -83,6 +84,7 @@ const Checkout = () => {
           name: jewellery.find((x) => x._id === cart.productId).jewelleryName,
           code: jewellery.find((x) => x._id === cart.productId).jewelleryCode,
           type: jewellery.find((x) => x._id === cart.productId).jewelleryType,
+          img: jewellery.find((x) => x._id === cart.productId).mainImage,
           size: cart.size,
           qty: cart.quantity,
         })
@@ -90,6 +92,24 @@ const Checkout = () => {
     }
     setCartItems(cartArray);
     setIsLoading(false);
+  };
+
+  const fetchBuyNowProduct = async (obj) => {
+    const { productId, qty } = obj;
+    const product = await getJewelleryById(productId);
+
+    setCartItems([
+      {
+        id: cart.id,
+        productId: cart.productId,
+        name: product.jewelleryName,
+        code: product.jewelleryCode,
+        type: product.jewelleryType,
+        img: product.mainImage,
+        size: 'free',
+        qty: qty,
+      },
+    ]);
   };
 
   const handleSubmit = async (value) => {
@@ -140,17 +160,25 @@ const Checkout = () => {
       };
 
       try {
-        await makeOrder(sellCart);
-        await makeOrder(rentCart);
+        if (sellProducts.length > 0) {
+          await makeOrder(sellCart);
+        }
+        if (rentProducts.length > 0) {
+          await makeOrder(rentCart);
+        }
 
-        const message = `Order from ${value.number}`;
+        const message = `You received an order from TheRamyaBoutique by: ${value.number}`;
         const whatsAppURL = `https://wa.me/94777453835?text=${message}`;
         window.open(whatsAppURL, '_blank').focus();
 
         toast.success('Order made successfully!');
-        localStorage.removeItem('cart');
+        if (localStorage.getItem('buyNow')) {
+          localStorage.removeItem('buyNow');
+        } else {
+          localStorage.removeItem('cart');
+          clearCart();
+        }
         setCartItems([]);
-        clearCart();
       } catch (error) {
         toast.error('Soemthing went wrong!');
         console.log(error);
@@ -159,7 +187,11 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    if (cart) {
+    const buyNowItem = localStorage.getItem('buyNow');
+
+    if (buyNowItem) {
+      fetchBuyNowProduct(JSON.parse(buyNowItem));
+    } else if (cart) {
       fetchProduct();
     }
   }, [cart]);
@@ -200,7 +232,7 @@ const Checkout = () => {
 
               <h5 className="text-xl font-bold">Shipping and Payment</h5>
 
-              <div className="grid gap-1 mt-6 lg:grid-cols-4">
+              <div className="grid gap-1 mt-6 lg:grid-cols-5">
                 <div className="lg:col-span-3 lg:pr-20">
                   <p>Shipping information</p>
                   <div className="grid grid-cols-2 gap-4 mt-4">
@@ -278,29 +310,32 @@ const Checkout = () => {
                     </div>
                   </div>
                 </div>
-                <div className="mt-8 lg:mt-0">
+                <div className="mt-8 lg:mt-0 lg:col-span-2">
                   <p>Your Cart</p>
                   <div className="flex flex-col items-center justify-between w-full mt-4 space-y-3">
                     {cartItems.length ? (
                       cartItems.map((cart, index) => (
                         <div
                           key={index}
-                          className="flex items-center w-full gap-4"
+                          className="flex items-start justify-between w-full gap-4"
                         >
-                          <div className="relative w-10 h-10 overflow-hidden rounded-full">
-                            <Image
-                              src={`https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80`}
-                              layout="fill"
-                              objectFit="cover"
-                              alt="img"
-                            />
+                          <div className="flex items-center w-full gap-4">
+                            <div className="relative w-12 h-12 overflow-hidden rounded-full shrink-0">
+                              <Image
+                                src={cart?.img?.base64URL ?? '/no-image.png'}
+                                layout="fill"
+                                objectFit="cover"
+                                alt="img"
+                              />
+                            </div>
+                            <div>
+                              <p className="font-bold shrink-1">{cart.name}</p>
+                              <p className="text-sm text-gray-400 font-semibild shrink-1">
+                                {cart.code}
+                              </p>
+                            </div>
                           </div>
-                          <div>
-                            <p className="font-bold shrink-1">{cart.name}</p>
-                            <p className="text-sm text-gray-400 font-semibild shrink-1">
-                              {cart.code}
-                            </p>
-                          </div>
+                          <p>x{cart.qty}</p>
                         </div>
                       ))
                     ) : isLoading ? (

@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import Link from 'next/link';
+import { JEWELLERIES } from '../../constants/root';
 
 const CategoryCard = ({ size, title, index }) => {
   const classMap = {
@@ -36,13 +38,15 @@ const CategoryCard = ({ size, title, index }) => {
       <div className="absolute top-0 flex w-full h-full bg-black bg-opacity-50">
         <div className="self-end p-10 text-white">
           <h1
-            className={`text-xl tracking-wider uppercase font-bold ${textWidth[size]}`}
+            className={`text-xl tracking-wider uppercase font-bold mb-5 ${textWidth[size]}`}
           >
             {title}
           </h1>
-          <button className="px-4 py-2 mt-5 text-sm font-bold text-black transition-transform bg-white rounded-full hover:-translate-y-1">
-            Show Collection
-          </button>
+          <Link href={JEWELLERIES}>
+            <a className="px-4 py-2 mt-5 text-sm font-bold text-black transition-transform bg-white rounded-full hover:-translate-y-1">
+              Show Collection
+            </a>
+          </Link>
         </div>
       </div>
     </div>
