@@ -1,7 +1,13 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BsFacebook, BsInstagram, BsTwitter } from 'react-icons/bs';
+import {
+  BsEnvelope,
+  BsFacebook,
+  BsInstagram,
+  BsMailbox,
+  BsTwitter,
+} from 'react-icons/bs';
 
 const Contact = () => {
   return (
@@ -39,24 +45,21 @@ const Contact = () => {
           </div>
           <div className="w-full border-t-2">
             <h4 className="mt-1 text-xl text-gray-600">Contact number</h4>
-            <p className="text-gray-500">+94 077 123 4567</p>
+            <p className="text-gray-500">
+              <Link href="tel:+94 077 123 4567">+94 077 123 4567</Link>
+            </p>
           </div>
           <div className="w-full border-t-2">
             <h4 className="mt-1 text-xl text-gray-600">Social media</h4>
             <div className="flex items-center justify-center gap-4 mt-1 md:justify-start">
-              <Link href={'#'}>
-                <a>
-                  <BsFacebook className="w-7 h-7 text-[#4267B2]" />
-                </a>
-              </Link>
-              <Link href={'#'}>
-                <a>
+              <Link href={'https://www.instagram.com/theramyaboutique/'}>
+                <a target="_blank">
                   <BsInstagram className="w-7 h-7 text-[#FD1D1D]" />
                 </a>
               </Link>
-              <Link href={'#'}>
+              <Link href={'mailto:theramyaboutique@gmail.com'}>
                 <a>
-                  <BsTwitter className="w-7 h-7 text-[#1DA1F2]" />
+                  <BsEnvelope className="w-7 h-7 text-[#1DA1F2]" />
                 </a>
               </Link>
             </div>

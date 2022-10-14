@@ -31,8 +31,8 @@ const Register = ({ setIsRegister, setIsLogin }) => {
       setAuth(results.customerDetail);
       toast.success('Successfully registered!');
     } catch (error) {
-      toast.error('Something went wrong!');
-      console.log('error', error);
+      toast.error(error?.response?.data);
+      console.log('error', error?.response?.data);
     }
     setIsRegister(false);
   };

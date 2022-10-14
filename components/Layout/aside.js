@@ -8,6 +8,8 @@ const Aside = ({ categories }) => {
   const { pathname, category } = router.query;
   const { route } = router;
 
+  console.log(categories);
+
   const grouped = categories?.reduce((cat, curr) => {
     if (!cat[curr.categoryType]) cat[curr.categoryType] = []; //If this type wasn't previously stored
     cat[curr.categoryType].push(curr);
@@ -15,10 +17,6 @@ const Aside = ({ categories }) => {
   }, {});
 
   const types = Object.keys(grouped);
-
-  // const pathName = (category) => {
-  //   if(category === )
-  // };
 
   return (
     <aside>
@@ -36,7 +34,13 @@ const Aside = ({ categories }) => {
           {({ open }) => (
             <div className="my-5 border border-gray-200">
               <Disclosure.Button className="flex justify-between w-full p-4 text-sm font-semibold text-left text-gray-800 focus:outline-none hover:bg-gray-200">
-                <span className="uppercase">{type}</span>
+                <span className="uppercase">
+                  {type.toLowerCase() === 'occasiontype'
+                    ? 'Occasion Type'
+                    : type.toLowerCase() === 'jewellerycategory'
+                    ? 'Jewelleries'
+                    : 'Clothings'}
+                </span>
                 <ChevronUpIcon
                   className={`${
                     open ? '' : 'rotate-180 transform'

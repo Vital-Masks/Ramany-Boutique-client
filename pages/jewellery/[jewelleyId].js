@@ -7,12 +7,13 @@ import Image from 'next/image';
 import { getJewelleryById } from '../../services/jewellery';
 import Head from 'next/head';
 import { CHECKOUT } from '../../constants/root';
+import { isLoggedIn } from '../../utils/manageUser';
 
 const Jewellery = () => {
   const [qty, setQty] = useState(1);
   const [product, setProduct] = useState();
-
   const { addToCart: add } = useContext(CartContext);
+  const loggedIn = isLoggedIn();
 
   const router = useRouter();
   const { jewelleyId } = router.query;
@@ -134,14 +135,20 @@ const Jewellery = () => {
             </div>
             <div className="flex items-center gap-2">
               <button
-                onClick={() => handleBuyNow()}
+                onClick={() => {
+                  !loggedIn
+                    ? toast.error('You have to log in!')
+                    : handleBuyNow();
+                }}
                 className="px-8 py-2 my-2 text-sm font-bold uppercase bg-orange-400 rounded-full"
               >
                 {product?.jewelleryType === 'Rental' ? 'Rent Now' : 'Buy Now'}
               </button>
               <button
                 className="px-8 py-2 my-2 text-sm font-bold uppercase bg-orange-400 rounded-full"
-                onClick={() => addToCart()}
+                onClick={() => {
+                  !loggedIn ? toast.error('You have to log in!') : addToCart();
+                }}
               >
                 Add to cart
               </button>

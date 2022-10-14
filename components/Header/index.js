@@ -32,7 +32,7 @@ const Header = () => {
           <div className="hidden lg:inline-block">
             <NavItems />
           </div>
-          <Cart />
+
           <Account />
           {openMenu ? (
             <button onClick={() => setOpenMenu(!openMenu)}>

@@ -217,7 +217,7 @@ const Profile = () => {
         <div className="py-5 border-b-2">
           <p>Your recent order details</p>
           <div className="flex flex-col gap-5 mt-4">
-            {!orders?.length > 0 ? (
+            {orders?.length > 0 ? (
               orders
                 ?.slice(0)
                 .reverse()
@@ -258,7 +258,7 @@ const Profile = () => {
                 ))
             ) : (
               <div className="flex flex-col items-center justify-center py-5">
-                <p className="text-center">You don't have any orders!</p>
+                <p className="text-center">You don&apos;t have any orders!</p>
                 <Link href={JEWELLERIES}>
                   <a className="px-8 py-2 mt-4 text-sm font-bold text-black uppercase bg-white border rounded-full">
                     Continue shopping

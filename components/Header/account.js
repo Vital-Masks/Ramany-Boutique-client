@@ -6,6 +6,7 @@ import { HOME, PROFILE } from '../../constants/root';
 import { getAuth, removeAuth } from '../../utils/manageUser';
 import Login from '../Views/Auth/login';
 import Register from '../Views/Auth/register';
+import Cart from './cart';
 
 const Account = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -31,17 +32,20 @@ const Account = () => {
         </button>
       )}
       {user && (
-        <Link href={PROFILE}>
-          <a className="flex items-center gap-4 ">
-            <p className="font-bold hover:text-orange-500">
-              {user.firstName}!{' '}
-            </p>
-            <LogoutIcon
-              onClick={() => logout()}
-              className="w-5 h-5 cursor-pointer hover:text-orange-500"
-            />
-          </a>
-        </Link>
+        <>
+          <Cart />
+          <Link href={PROFILE}>
+            <a className="flex items-center gap-4 ">
+              <p className="font-bold hover:text-orange-500">
+                {user.firstName}!{' '}
+              </p>
+              <LogoutIcon
+                onClick={() => logout()}
+                className="w-5 h-5 cursor-pointer hover:text-orange-500"
+              />
+            </a>
+          </Link>
+        </>
       )}
       {isLogin && (
         <Login setIsLogin={setIsLogin} setIsRegister={setIsRegister} />
