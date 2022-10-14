@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 const Card = ({ name, code, image, type }) => {
-  const srcImage = image.base64URL ?? '/no-image.png';
+  const srcImage = image?.base64URL ?? '/no-image.png';
 
   return (
     <div className="relative w-full cursor-pointer">

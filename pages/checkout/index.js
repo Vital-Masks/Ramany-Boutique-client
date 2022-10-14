@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { PRODUCTS } from '../../constants/root';
+import { JEWELLERIES, PRODUCTS } from '../../constants/root';
 import price from './../../utils/price';
 import { getProduct, makeOrder } from '../../services/products';
 import Loader from './../../components/Ui/Loader';
@@ -122,14 +122,14 @@ const Checkout = () => {
       const rentProducts = [];
 
       cartItems
-        .filter((x) => x.type === 'Sell')
+        .filter((x) => x.type === 'Sale')
         .map((cart) =>
           sellProducts.push({
-            orderType: 'sale',
             productName: cart.name,
-            productId: cart.id,
+            productId: cart.productId,
             quantity: cart.qty,
-            netPrice: cart.qty * cart.price,
+            productPrice: 0,
+            netPrice: 0,
           })
         );
 
@@ -137,26 +137,28 @@ const Checkout = () => {
         .filter((x) => x.type === 'Rental')
         .map((cart) =>
           rentProducts.push({
-            orderType: 'rent',
             productName: cart.name,
-            productId: cart.id,
+            productId: cart.productId,
             quantity: cart.qty,
-            netPrice: cart.qty * cart.price,
+            productPrice: 0,
+            netPrice: 0,
           })
         );
 
       const sellCart = {
         customerId: value.id,
-        totalCost: calculateTotalCost(sellProducts),
+        totalCost: 0,
         status: 'pending',
-        productDetails: sellProducts,
+        orderType: 'Sale',
+        jewelleryDetails: sellProducts,
       };
 
       const rentCart = {
         customerId: value.id,
-        totalCost: calculateTotalCost(rentProducts),
+        totalCost: 0,
         status: 'pending',
-        productDetails: rentProducts,
+        orderType: 'Rent',
+        jewelleryDetails: rentProducts,
       };
 
       try {
@@ -348,7 +350,7 @@ const Checkout = () => {
               </div>
 
               <div className="flex items-center justify-end gap-2 mt-4">
-                <Link href={PRODUCTS}>
+                <Link href={JEWELLERIES}>
                   <a className="px-8 py-2 text-sm font-bold text-black uppercase bg-white border rounded-full">
                     Continue shopping
                   </a>

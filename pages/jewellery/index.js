@@ -65,7 +65,6 @@ export default function Jewelleries() {
   }, [jewelleriesState, categoriesState]);
 
   useEffect(() => {
-    console.log('h');
     if (category) {
       fetchJewelleryByCategory(category);
     } else {

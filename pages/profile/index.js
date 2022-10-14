@@ -1,11 +1,14 @@
 import { Field, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
-import { getAuth } from '../../utils/manageUser';
+import { getAuth, setAuth } from '../../utils/manageUser';
 import { PencilAltIcon } from '@heroicons/react/solid';
 import toast, { Toaster } from 'react-hot-toast';
 import { getOrders } from '../../services/orders';
 import Head from 'next/head';
 import Link from 'next/link';
+import moment from 'moment/moment';
+import { JEWELLERIES, PRODUCTS } from '../../constants/root';
+import { updateCustomer } from '../../services/auth';
 
 const Profile = () => {
   const [user, setUser] = useState();
@@ -19,13 +22,28 @@ const Profile = () => {
     country: '',
   });
 
-  const handleSubmit = () => {};
-
-  const fetchUserOrders = async () => {
-    const data = await getOrders(initialState.id);
+  const handleSubmit = async (values) => {
+    try {
+      const res = await updateCustomer(values.id, values);
+      await setAuth(res);
+      fetchUserDet();
+      toast.success('User details updated successfully!');
+    } catch (error) {
+      toast.error('Something went wrong!');
+      console.log(error);
+    }
   };
 
-  useEffect(() => {
+  const fetchUserOrders = async () => {
+    try {
+      const data = await getOrders(initialState.id);
+      setOrders(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchUserDet = () => {
     const user = getAuth();
     setUser(user);
     setInitialState({
@@ -37,6 +55,10 @@ const Profile = () => {
       number: user.phone,
       country: user.country,
     });
+  };
+
+  useEffect(() => {
+    fetchUserDet();
   }, []);
 
   useEffect(() => {
@@ -167,18 +189,20 @@ const Profile = () => {
               )}
             </Formik>
           ) : (
-            <div className="flex basis-1/4">
+            <div className="flex gap-3 basis-1/4">
               <div className="font-semibold text-gray-500 basis-2/4">
-                <p>Location</p>
                 <p>Email</p>
                 <p>Phone</p>
+                <p>Country</p>
+                <p>Address</p>
               </div>
               <div className="text-gray-700 basis-2/4">
+                <p>{user?.email}</p>
+                <p>{user?.phone}</p>
+                <p>{user?.country}</p>
                 <p>
                   {user?.address},{user?.city}
                 </p>
-                <p>{user?.email}</p>
-                <p>{user?.phone}</p>
               </div>
             </div>
           )}
@@ -193,67 +217,55 @@ const Profile = () => {
         <div className="py-5 border-b-2">
           <p>Your recent order details</p>
           <div className="flex flex-col gap-5 mt-4">
-            <div className="p-5 border-2 rounded-lg">
-              <h4 className="text-lg font-bold">Order #ORD1248</h4>
-              <p className="text-sm text-gray-500">20-05-2022</p>
-              <div className="mt-5 overflow-x-auto">
-                <table className="w-full">
-                  <thead className="text-left">
-                    <tr className="border-t border-b">
-                      <th className="py-2 pr-5 w-52">Product Code</th>
-                      <th className="py-2 pr-5 w-52">Product Name</th>
-                      <th className="py-2 pr-5 min-w-52"> Description</th>
-                      <th className="py-2 pr-5 w-52">Quantity</th>
-                      <th className="py-2 pr-5 w-52">Total</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="align-top">
-                      <td className="py-2 pr-5">PRO 1458</td>
-                      <td className="py-2 pr-5">Kundan Jumkhas</td>
-                      <td className="py-2 pr-5">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Praesentium possimus veritatis quis mollitia
-                        aliquid voluptates eaque suscipit,
-                      </td>
-                      <td className="py-2 pr-5">x 2</td>
-                      <td className="py-2 pr-5">50 USD</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            {!orders?.length > 0 ? (
+              orders
+                ?.slice(0)
+                .reverse()
+                .map((order, i) => (
+                  <div key={i} className="p-5 border-2 rounded-lg">
+                    <h4 className="text-lg font-bold">Order #{order._id}</h4>
+                    <p className="text-sm text-gray-500">
+                      {moment(order?.created_at).format('DD/MM/YYYY')}
+                    </p>
+                    <div className="mt-5 overflow-x-auto">
+                      <table className="w-full">
+                        <thead className="text-left">
+                          <tr className="border-t border-b">
+                            <th className="py-2 pr-5 w-52">Product Code</th>
+                            <th className="py-2 pr-5 w-52">Product Name</th>
+                            <th className="py-2 pr-5 w-52">Quantity</th>
+                            {/* <th className="py-2 pr-5 w-52">Total</th> */}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {order.jewelleryDetails?.map((product, i) => (
+                            <tr key={i} className="align-top">
+                              <td className="py-2 pr-5">{product._id}</td>
+                              <td className="py-2 pr-5">
+                                {product?.productName}
+                              </td>
 
-            <div className="p-5 border-2 rounded-lg">
-              <h4 className="text-lg font-bold">Order #ORD1248</h4>
-              <p className="text-sm text-gray-500">20-05-2022</p>
-              <div className="mt-5 overflow-x-auto">
-                <table className="w-full">
-                  <thead className="text-left">
-                    <tr className="border-t border-b">
-                      <th className="py-2 pr-5 w-52">Product Code</th>
-                      <th className="py-2 pr-5 w-52">Product Name</th>
-                      <th className="py-2 pr-5 min-w-52"> Description</th>
-                      <th className="py-2 pr-5 w-52">Quantity</th>
-                      <th className="py-2 pr-5 w-52">Total</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="align-top">
-                      <td className="py-2 pr-5">PRO 1458</td>
-                      <td className="py-2 pr-5">Kundan Jumkhas</td>
-                      <td className="py-2 pr-5">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Praesentium possimus veritatis quis mollitia
-                        aliquid voluptates eaque suscipit,
-                      </td>
-                      <td className="py-2 pr-5">x 2</td>
-                      <td className="py-2 pr-5">50 USD</td>
-                    </tr>
-                  </tbody>
-                </table>
+                              <td className="py-2 pr-5">
+                                x {product?.quantity}
+                              </td>
+                              {/* <td className="py-2 pr-5">50 USD</td> */}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                ))
+            ) : (
+              <div className="flex flex-col items-center justify-center py-5">
+                <p className="text-center">You don't have any orders!</p>
+                <Link href={JEWELLERIES}>
+                  <a className="px-8 py-2 mt-4 text-sm font-bold text-black uppercase bg-white border rounded-full">
+                    Continue shopping
+                  </a>
+                </Link>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

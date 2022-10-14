@@ -29,3 +29,16 @@ export const loginCustomer = async (obj) => {
   };
   return (await axios(options)).data || [];
 };
+
+export const updateCustomer = async (id, obj) => {
+  const options = {
+    method: 'PUT',
+    url: `${baseUrl + endpoints.POST_UPDATE_CUSTOMER}/${id}`,
+    headers: {
+      accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    data: obj,
+  };
+  return (await axios(options)).data || [];
+};

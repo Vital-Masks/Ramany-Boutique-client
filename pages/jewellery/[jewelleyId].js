@@ -126,7 +126,7 @@ const Jewellery = () => {
                 />
                 <button
                   className="px-2 py-1 text-center border border-l-0 border-gray-300"
-                  onClick={() => setQty(qty < product.quantity ? ++qty : qty)}
+                  onClick={() => setQty(qty < product?.quantity ? ++qty : qty)}
                 >
                   +
                 </button>
