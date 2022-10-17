@@ -115,9 +115,9 @@ export default function Jewelleries() {
               </div>
             </div>
             <div className="flex items-baseline gap-4 shrink-0 lg:mt-10">
-              <div className="">
+              {/* <div className="">
                 <Search />
-              </div>
+              </div> */}
               {/* <p>Show products:</p>
             <Dropdown /> */}
             </div>

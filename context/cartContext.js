@@ -15,7 +15,10 @@ export const CartContextProvider = ({ children }) => {
     if (cartItem) {
       const item = cart.map((cart) =>
         cart.productId === productId && cart.size === size
-          ? { ...cart, quantity: cart.quantity + quantity }
+          ? {
+              ...cart,
+              quantity: cart.quantity < 5 ? cart.quantity + quantity : 5,
+            }
           : cart
       );
 

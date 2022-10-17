@@ -9,6 +9,19 @@ import Link from 'next/link';
 import moment from 'moment/moment';
 import { JEWELLERIES, PRODUCTS } from '../../constants/root';
 import { updateCustomer } from '../../services/auth';
+import * as Yup from 'yup';
+
+const schema = Yup.object().shape({
+  firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!'),
+  lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!'),
+  email: Yup.string().email().min(2, 'Too Short!').max(50, 'Too Long!'),
+  number: Yup.string().min(2, 'Too Short!').max(10, 'Too Long!'),
+  country: Yup.string().min(2, 'Too Short!').max(20, 'Too Long!'),
+  password: Yup.string().min(
+    8,
+    'Password is too short - should be 8 chars minimum.'
+  ),
+});
 
 const Profile = () => {
   const [user, setUser] = useState();
@@ -84,22 +97,25 @@ const Profile = () => {
             </span>
           </h5>
         </div>
-        <div className="flex items-start justify-between py-5 border-b-2">
+        <div className="relative py-5 border-b-2 ">
           {isEdit ? (
             <Formik
               initialValues={initialState}
+              validationSchema={schema}
               enableReinitialize
-              onSubmit={(values) => {
+              validateOnChange={false}
+              onSubmit={(values, actions) => {
                 handleSubmit(values);
+                actions.setSubmitting(false);
               }}
             >
               {({ values, errors, touched, isSubmitting }) => (
                 <Form>
-                  <div className="grid gap-1 mt-6 lg:grid-cols-4">
-                    <div className="lg:col-span-3 lg:pr-20">
+                  <div className="w-[70%]">
+                    <div className=" lg:col-span-3 lg:pr-20">
                       <p>Update your information</p>
 
-                      <div className="grid grid-cols-2 gap-4 mt-4">
+                      <div className="grid grid-cols-2 gap-4 mt-4 ">
                         <div className="w-full">
                           <Field
                             placeholder="First Name"
@@ -189,7 +205,7 @@ const Profile = () => {
               )}
             </Formik>
           ) : (
-            <div className="flex gap-3 basis-1/4">
+            <div className="flex gap-3 w-[40%]">
               <div className="font-semibold text-gray-500 basis-2/4">
                 <p>Email</p>
                 <p>Phone</p>
@@ -207,7 +223,7 @@ const Profile = () => {
             </div>
           )}
 
-          <div>
+          <div className="absolute right-0 top-3">
             <PencilAltIcon
               className="w-5 h-5 text-gray-600 cursor-pointer hover:text-gray-800"
               onClick={() => setIsEdit(!isEdit)}
@@ -261,7 +277,7 @@ const Profile = () => {
                 <p className="text-center">You don&apos;t have any orders!</p>
                 <Link href={JEWELLERIES}>
                   <a className="px-8 py-2 mt-4 text-sm font-bold text-black uppercase bg-white border rounded-full">
-                    Continue shopping
+                    Start shopping
                   </a>
                 </Link>
               </div>

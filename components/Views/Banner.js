@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { ArrowRightIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
-import { PRODUCTS } from '../../constants/root';
+import { JEWELLERIES, PRODUCTS } from '../../constants/root';
 
 const Banner = () => {
   return (
@@ -21,7 +21,7 @@ const Banner = () => {
           </h1>
           <button className="flex items-center gap-6 mt-4 group">
             <ArrowRightIcon className="w-8 h-8 p-2 bg-blue-600 rounded-full" />
-            <Link href={PRODUCTS} passHref>
+            <Link href={JEWELLERIES} passHref>
               <p className="font-semibold tracking-widest uppercase transition-transform group-hover:translate-x-2">
                 Shop Now
               </p>

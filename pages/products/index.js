@@ -88,9 +88,9 @@ export default function Products() {
                 />
                 <h4>All ({products?.length || 0})</h4>
               </div>
-              <div className="">
+              {/* <div className="">
                 <Search />
-              </div>
+              </div> */}
             </div>
             <div className="flex items-baseline gap-4 shrink-0 lg:mt-10">
               <p>Show products:</p>
