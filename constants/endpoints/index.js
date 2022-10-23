@@ -8,7 +8,8 @@ const endpoints = {
   POST_ORDER: 'orders',
   GET_ORDERS: 'orders/customer',
   GET_JEWELLERY: 'jewellerys',
-  GET_JEWELLERY_BY_CATEGORY: 'jewellerys/category',
+  GET_JEWELLERY_BY_CATEGORY: 'jewellerys/jewelleryCategory',
+  GET_JEWELLERY_BY_OCCASION_TYPE: 'jewellerys/occasionType',
 };
 
 export default endpoints;

@@ -38,3 +38,15 @@ export const getJewelleryByCategory = async (id) => {
   };
   return (await axios(options)).data || [];
 };
+
+export const getJewelleryByOccasion = async (id) => {
+  const options = {
+    method: 'GET',
+    url: `${baseUrl + endpoints.GET_JEWELLERY_BY_OCCASION_TYPE}/${id}`,
+    headers: {
+      accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  };
+  return (await axios(options)).data || [];
+};

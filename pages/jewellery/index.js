@@ -13,7 +13,10 @@ import { CategoryContext } from '../../context/categoryContext';
 import { JewelleryContext } from '../../context/jewelleryContext';
 
 import Search from '../../components/Header/search';
-import { getJewelleryByCategory } from '../../services/jewellery';
+import {
+  getJewelleryByCategory,
+  getJewelleryByOccasion,
+} from '../../services/jewellery';
 import Head from 'next/head';
 
 export default function Jewelleries() {
@@ -23,11 +26,12 @@ export default function Jewelleries() {
   const { categories: categoriesState } = useContext(CategoryContext);
   const { jewelleries: jewelleriesState } = useContext(JewelleryContext);
 
+  const [allProducts, setAllProducts] = useState([]);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
 
   const router = useRouter();
-  const { category } = router.query;
+  const { category, occasion } = router.query;
 
   const fetchJewelleryByCategory = async (category) => {
     setIsLoading(true);
@@ -41,14 +45,25 @@ export default function Jewelleries() {
     setIsLoading(false);
   };
 
+  const fetchJewelleryByOccasion = async (category) => {
+    setIsLoading(true);
+    try {
+      const categoryProductsResults = await getJewelleryByOccasion(category);
+      setProducts(categoryProductsResults);
+    } catch (error) {
+      setProducts([]);
+      console.log(error);
+    }
+    setIsLoading(false);
+  };
+
   const filterProduct = (val) => {
     if (val) {
-      const products = jewelleriesState.filter(
-        (x) => x.jewelleryType === 'Rental'
-      );
-      setProducts(products);
+      setAllProducts(products);
+      const pro = products?.filter((x) => x.jewelleryType === 'Rental');
+      setProducts(pro);
     } else {
-      setProducts(jewelleriesState);
+      setProducts(allProducts);
     }
   };
 
@@ -67,10 +82,12 @@ export default function Jewelleries() {
   useEffect(() => {
     if (category) {
       fetchJewelleryByCategory(category);
+    } else if (occasion) {
+      fetchJewelleryByOccasion(occasion);
     } else {
       setProducts(jewelleriesState);
     }
-  }, [category, jewelleriesState]);
+  }, [category, occasion, jewelleriesState]);
 
   return (
     <>

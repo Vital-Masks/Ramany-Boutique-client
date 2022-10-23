@@ -7,9 +7,6 @@ import { HOME, JEWELLERIES } from '../../constants/root';
 const Aside = ({ categories }) => {
   const router = useRouter();
   const { pathname, category } = router.query;
-  const { route } = router;
-
-  console.log(categories);
 
   const grouped = categories?.reduce((cat, curr) => {
     if (!cat[curr.categoryType]) cat[curr.categoryType] = []; //If this type wasn't previously stored
@@ -18,6 +15,16 @@ const Aside = ({ categories }) => {
   }, {});
 
   const types = Object.keys(grouped);
+
+  const filterByCategory = (type, id) => {
+    if (type.includes('jewellery')) {
+      router.push(`/jewellery?category=${id}`);
+    } else if (type.includes('occasion')) {
+      router.push(`/jewellery?occasion=${id}`);
+    } else {
+      router.push(`/products?category=${id}`);
+    }
+  };
 
   return (
     <aside>
@@ -59,7 +66,7 @@ const Aside = ({ categories }) => {
                           : ''
                       }`}
                     >
-                      <Link
+                      {/* <Link
                         href={{
                           pathname: type.includes('jewellery')
                             ? '/jewellery'
@@ -68,9 +75,11 @@ const Aside = ({ categories }) => {
                             : '/products',
                           query: { category: cat._id },
                         }}
-                      >
+                      > */}
+                      <button onClick={() => filterByCategory(type, cat._id)}>
                         {cat.categoryName}
-                      </Link>
+                      </button>
+                      {/* </Link> */}
                     </li>
                   ))}
                 </ul>

@@ -65,7 +65,6 @@ const Profile = () => {
 
   const fetchUserDet = () => {
     const user = getAuth();
-    console.log('res', user);
     setUser(user);
     setInitialState({
       id: user._id,

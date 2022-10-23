@@ -150,7 +150,7 @@ const Checkout = () => {
       const sellCart = {
         customerId: value.id,
         totalCost: 0,
-        status: 'pending',
+        status: 'Pending',
         orderType: 'Sale',
         jewelleryDetails: sellProducts,
       };
