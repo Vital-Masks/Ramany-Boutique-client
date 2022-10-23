@@ -116,7 +116,7 @@ export default function Products() {
               ))}
             </div>
           ) : (
-            <p className="my-10 text-center">Not Items!</p>
+            <p className="my-10 text-center">No Items!</p>
           )}
         </div>
       </div>

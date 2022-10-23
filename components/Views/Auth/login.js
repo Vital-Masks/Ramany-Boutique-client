@@ -1,4 +1,5 @@
 import { Field, Form, Formik } from 'formik';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 import { loginCustomer } from '../../../services/auth';
@@ -10,16 +11,19 @@ const LoginSchema = Yup.object().shape({
 });
 
 const Login = ({ setIsLogin, setIsRegister }) => {
+  const [error, setError] = useState('');
+
   const handleSubmit = async (formObj) => {
     try {
       const results = await loginCustomer(formObj);
       setIsLogin(false);
       setAuth(results.customerDetails[0]);
+      setIsLogin(false);
     } catch (error) {
-      toast.error('username or password is incorrect!');
+      setError('username or password is incorrect!');
+      // toast.error('username or password is incorrect!');
       console.log('error', error);
     }
-    setIsLogin(false);
   };
   return (
     <div className="absolute z-10 p-5 bg-white shadow-xl top-16 md:top-24 rounded-xl right-5 md-max:left-5 md:w-1/2 md:right-20 lg:w-1/3 xl:w-1/4 xl:right-22">
@@ -31,6 +35,7 @@ const Login = ({ setIsLogin, setIsRegister }) => {
       </p>
       <div className="space-y-6 text-center">
         <p className="text-lg font-bold">Login</p>
+        <small className="text-red-500">{error}</small>
         <Formik
           initialValues={{
             email: '',

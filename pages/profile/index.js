@@ -14,8 +14,12 @@ import * as Yup from 'yup';
 const schema = Yup.object().shape({
   firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!'),
   lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!'),
-  email: Yup.string().email().min(2, 'Too Short!').max(50, 'Too Long!'),
-  number: Yup.string().min(2, 'Too Short!').max(10, 'Too Long!'),
+  email: Yup.string().email(),
+  number: Yup.number()
+    .typeError("That doesn't look like a phone number")
+    .positive("A phone number can't start with a minus")
+    .integer("A phone number can't include a decimal point")
+    .min(10),
   country: Yup.string().min(2, 'Too Short!').max(20, 'Too Long!'),
   password: Yup.string().min(
     8,
@@ -33,13 +37,16 @@ const Profile = () => {
     email: '',
     number: '',
     country: '',
+    password: '',
   });
 
   const handleSubmit = async (values) => {
     try {
       const res = await updateCustomer(values.id, values);
-      await setAuth(res);
+
+      setAuth(res.Data);
       fetchUserDet();
+      setIsEdit(false);
       toast.success('User details updated successfully!');
     } catch (error) {
       toast.error('Something went wrong!');
@@ -58,13 +65,14 @@ const Profile = () => {
 
   const fetchUserDet = () => {
     const user = getAuth();
+    console.log('res', user);
     setUser(user);
     setInitialState({
       id: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      password: '',
+      password: user.password,
       number: user.phone,
       country: user.country,
     });
@@ -113,10 +121,18 @@ const Profile = () => {
                 <Form>
                   <div className="w-[70%]">
                     <div className=" lg:col-span-3 lg:pr-20">
-                      <p>Update your information</p>
+                      <p className="mb-4 text-xl font-bold text-gray-700">
+                        Update your information
+                      </p>
 
                       <div className="grid grid-cols-2 gap-4 mt-4 ">
                         <div className="w-full">
+                          <label
+                            htmlFor="firsName"
+                            className="text-sm font-semibold"
+                          >
+                            First Name
+                          </label>
                           <Field
                             placeholder="First Name"
                             className="w-full px-4 py-2 border rounded-full focus:outline-none"
@@ -129,6 +145,12 @@ const Profile = () => {
                           ) : null}
                         </div>
                         <div className="w-full">
+                          <label
+                            htmlFor="lastName"
+                            className="text-sm font-semibold"
+                          >
+                            Last Name
+                          </label>
                           <Field
                             placeholder="Last Name"
                             className="w-full px-4 py-2 border rounded-full focus:outline-none"
@@ -141,6 +163,12 @@ const Profile = () => {
                           )}
                         </div>
                         <div className="w-full">
+                          <label
+                            htmlFor="email"
+                            className="text-sm font-semibold"
+                          >
+                            Email
+                          </label>
                           <Field
                             placeholder="Email"
                             className="w-full px-4 py-2 border rounded-full focus:outline-none"
@@ -153,10 +181,17 @@ const Profile = () => {
                           )}
                         </div>
                         <div className="w-full">
+                          <label
+                            htmlFor="password"
+                            className="text-sm font-semibold"
+                          >
+                            Password
+                          </label>
                           <Field
                             placeholder="Password"
                             className="w-full px-4 py-2 border rounded-full focus:outline-none"
                             name="password"
+                            type="password"
                           />
                           {errors.password && (
                             <p className="pl-4 text-sm text-red-500">
@@ -165,6 +200,12 @@ const Profile = () => {
                           )}
                         </div>
                         <div className="w-full">
+                          <label
+                            htmlFor="mobile"
+                            className="text-sm font-semibold"
+                          >
+                            Mobile
+                          </label>
                           <Field
                             placeholder="Phone"
                             className="w-full px-4 py-2 border rounded-full focus:outline-none"
@@ -177,6 +218,12 @@ const Profile = () => {
                           )}
                         </div>
                         <div className="w-full">
+                          <label
+                            htmlFor="country"
+                            className="text-sm font-semibold"
+                          >
+                            Country
+                          </label>
                           <Field
                             placeholder="Country"
                             className="w-full px-4 py-2 border rounded-full focus:outline-none"
@@ -231,7 +278,9 @@ const Profile = () => {
           </div>
         </div>
         <div className="py-5 border-b-2">
-          <p>Your recent order details</p>
+          <p className="mb-4 text-xl font-bold text-gray-700">
+            Your recent order details
+          </p>
           <div className="flex flex-col gap-5 mt-4">
             {orders?.length > 0 ? (
               orders

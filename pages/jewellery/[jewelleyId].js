@@ -127,32 +127,51 @@ const Jewellery = () => {
                 />
                 <button
                   className="px-2 py-1 text-center border border-l-0 border-gray-300"
-                  onClick={() => setQty(qty < product?.quantity ? ++qty : qty)}
+                  onClick={() =>
+                    setQty(
+                      product?.quantity <= 5 && qty < product?.quantity
+                        ? ++qty
+                        : qty < 5
+                        ? ++qty
+                        : 5
+                    )
+                  }
                 >
                   +
                 </button>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            {product?.quantity > 0 ? (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => {
+                    !loggedIn
+                      ? toast.error('You have to log in!')
+                      : handleBuyNow();
+                  }}
+                  className="px-8 py-2 my-2 text-sm font-bold uppercase bg-orange-400 rounded-full"
+                >
+                  {product?.jewelleryType === 'Rental' ? 'Rent Now' : 'Buy Now'}
+                </button>
+                <button
+                  className="px-8 py-2 my-2 text-sm font-bold uppercase bg-orange-400 rounded-full"
+                  onClick={() => {
+                    !loggedIn
+                      ? toast.error('You have to log in!')
+                      : addToCart();
+                  }}
+                >
+                  Add to cart
+                </button>
+              </div>
+            ) : (
               <button
-                onClick={() => {
-                  !loggedIn
-                    ? toast.error('You have to log in!')
-                    : handleBuyNow();
-                }}
                 className="px-8 py-2 my-2 text-sm font-bold uppercase bg-orange-400 rounded-full"
+                disabled
               >
-                {product?.jewelleryType === 'Rental' ? 'Rent Now' : 'Buy Now'}
+                Out of stock
               </button>
-              <button
-                className="px-8 py-2 my-2 text-sm font-bold uppercase bg-orange-400 rounded-full"
-                onClick={() => {
-                  !loggedIn ? toast.error('You have to log in!') : addToCart();
-                }}
-              >
-                Add to cart
-              </button>
-            </div>
+            )}
           </div>
         </div>
       </div>

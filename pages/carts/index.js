@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { CHECKOUT, PRODUCTS } from '../../constants/root';
+import { CHECKOUT, JEWELLERIES, PRODUCTS } from '../../constants/root';
 import { getProduct } from '../../services/products';
 import toast, { Toaster } from 'react-hot-toast';
 import { TrashIcon } from '@heroicons/react/solid';
@@ -174,7 +174,7 @@ const Carts = () => {
             >
               Clear cart
             </button>
-            <Link href={PRODUCTS}>
+            <Link href={JEWELLERIES}>
               <a className="px-8 py-2 text-sm font-bold text-center text-black uppercase transition-colors bg-white border rounded-full hover:bg-gray-100 md-max:w-full">
                 Continue shopping
               </a>

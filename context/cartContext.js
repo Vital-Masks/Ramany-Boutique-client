@@ -6,6 +6,13 @@ export const CartContext = createContext(null);
 export const CartContextProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
+  const maxFive = (cartQty, qty) => {
+    let result;
+    let total = cartQty + qty;
+    result = total < 5 ? total : 5;
+    return result;
+  };
+
   const addToCart = (values) => {
     const { productId, quantity, size } = values;
     const cartItem = cart.find(
@@ -17,7 +24,7 @@ export const CartContextProvider = ({ children }) => {
         cart.productId === productId && cart.size === size
           ? {
               ...cart,
-              quantity: cart.quantity < 5 ? cart.quantity + quantity : 5,
+              quantity: maxFive(cart.quantity, quantity),
             }
           : cart
       );

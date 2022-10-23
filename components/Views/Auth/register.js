@@ -1,5 +1,5 @@
 import { Field, Form, Formik } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 import { registerCustomer } from '../../../services/auth';
@@ -18,23 +18,40 @@ const SignupSchema = Yup.object().shape({
   password: Yup.string()
     .min(8, 'Password must be at least 8 characters!')
     .required('Required'),
-  address: Yup.string().required('Required'),
-  city: Yup.string().required('Required'),
-  country: Yup.string().required('Required'),
-  phone: Yup.string().required('Required'),
+  address: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  city: Yup.string()
+    .min(2, 'Too Short!')
+    .max(20, 'Too Long!')
+    .required('Required'),
+  country: Yup.string()
+    .min(2, 'Too Short!')
+    .max(20, 'Too Long!')
+    .required('Required'),
+  phone: Yup.number()
+    .typeError("That doesn't look like a phone number")
+    .positive("A phone number can't start with a minus")
+    .integer("A phone number can't include a decimal point")
+    .min(10)
+    .required('Required'),
 });
 
 const Register = ({ setIsRegister, setIsLogin }) => {
+  const [error, setError] = useState('');
+
   const handleSubmit = async (formObj) => {
     try {
       const results = await registerCustomer(formObj);
       setAuth(results.customerDetail);
       toast.success('Successfully registered!');
+      setIsRegister(false);
     } catch (error) {
-      toast.error(error?.response?.data);
+      setError(error?.response?.data);
+      // toast.error(error?.response?.data);
       console.log('error', error?.response?.data);
     }
-    setIsRegister(false);
   };
 
   return (
@@ -47,6 +64,7 @@ const Register = ({ setIsRegister, setIsLogin }) => {
       </p>
       <div className="space-y-6 text-center">
         <p className="text-lg font-bold">Register</p>
+        <small className="text-red-500">{error}</small>
         <Formik
           initialValues={{
             firstName: '',

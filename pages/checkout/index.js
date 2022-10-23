@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { JEWELLERIES, PRODUCTS } from '../../constants/root';
+import { HOME, JEWELLERIES, PRODUCTS } from '../../constants/root';
 import price from './../../utils/price';
 import { getProduct, makeOrder } from '../../services/products';
 import Loader from './../../components/Ui/Loader';
@@ -12,6 +12,7 @@ import { getAuth, isLoggedIn } from '../../utils/manageUser';
 import * as Yup from 'yup';
 import { getJewelleryById } from '../../services/jewellery';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 const CheckoutSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
@@ -47,6 +48,7 @@ const Checkout = () => {
 
   const { cart, clearCart } = useContext(CartContext);
   const loggedIn = isLoggedIn();
+  const router = useRouter();
 
   const fetchProduct = async () => {
     setIsLoading(true);
@@ -181,6 +183,7 @@ const Checkout = () => {
           clearCart();
         }
         setCartItems([]);
+        await router.push(HOME);
       } catch (error) {
         toast.error('Soemthing went wrong!');
         console.log(error);
@@ -243,6 +246,7 @@ const Checkout = () => {
                         placeholder="Email"
                         className="w-full px-4 py-2 border rounded-full focus:outline-none"
                         name="email"
+                        disabled
                       />
                       {errors.email && touched.email ? (
                         <p className="pl-4 text-sm text-red-500">
@@ -255,6 +259,7 @@ const Checkout = () => {
                         placeholder="Phone"
                         className="w-full px-4 py-2 border rounded-full focus:outline-none"
                         name="number"
+                        disabled
                       />
                       {errors.number && (
                         <p className="pl-4 text-sm text-red-500">
@@ -267,6 +272,7 @@ const Checkout = () => {
                         placeholder="First Name"
                         className="w-full px-4 py-2 border rounded-full focus:outline-none"
                         name="firstName"
+                        disabled
                       />
                       {errors.firstName && (
                         <p className="pl-4 text-sm text-red-500">
@@ -279,6 +285,7 @@ const Checkout = () => {
                         placeholder="Last Name"
                         className="w-full px-4 py-2 border rounded-full focus:outline-none"
                         name="lastName"
+                        disabled
                       />
                       {errors.lastName && (
                         <p className="pl-4 text-sm text-red-500">
@@ -291,6 +298,7 @@ const Checkout = () => {
                         placeholder="Address"
                         className="w-full px-4 py-2 border rounded-full focus:outline-none"
                         name="address"
+                        disabled
                       />
                       {errors.address && (
                         <p className="pl-4 text-sm text-red-500">
@@ -303,6 +311,7 @@ const Checkout = () => {
                         placeholder="City"
                         className="w-full px-4 py-2 border rounded-full focus:outline-none"
                         name="city"
+                        disabled
                       />
                       {errors.city && (
                         <p className="pl-4 text-sm text-red-500">

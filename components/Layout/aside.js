@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ChevronUpIcon, HomeIcon } from '@heroicons/react/outline';
 import { Disclosure } from '@headlessui/react';
+import { HOME, JEWELLERIES } from '../../constants/root';
 
 const Aside = ({ categories }) => {
   const router = useRouter();
@@ -21,10 +22,10 @@ const Aside = ({ categories }) => {
   return (
     <aside>
       <p className="flex items-center gap-3 text-sm text-gray-400">
-        <Link href={`/`} passHref>
+        <Link href={HOME} passHref>
           <HomeIcon className="w-5 h-5 text-gray-400" />
         </Link>{' '}
-        <Link href={`/products`} passHref>
+        <Link href={JEWELLERIES} passHref>
           / All Products
         </Link>{' '}
       </p>
