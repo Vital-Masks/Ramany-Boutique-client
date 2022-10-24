@@ -9,7 +9,7 @@ const CategoryCard = ({ size, title, index }) => {
   };
 
   const textWidth = {
-    large: ['w-[60%]'],
+    large: ['w-[100%]'],
     small: ['w-[80%]'],
   };
 
@@ -21,6 +21,19 @@ const CategoryCard = ({ size, title, index }) => {
         return 'https://images.unsplash.com/photo-1615886753866-79396abc446e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80';
       case 'OCCASIONTYPE':
         return 'https://images.unsplash.com/photo-1542042161784-26ab9e041e89?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80';
+      default:
+        break;
+    }
+  };
+
+  const categoryTitle = (category) => {
+    switch (category) {
+      case 'JEWELLERYCATEGORY':
+        return 'Jewellery Category';
+      case 'CLOTHINGCATEGORY':
+        return 'Clothing Category';
+      case 'OCCASIONTYPE':
+        return 'Occasion Type';
       default:
         break;
     }
@@ -41,7 +54,7 @@ const CategoryCard = ({ size, title, index }) => {
           <h1
             className={`text-xl tracking-wider uppercase font-bold mb-5 ${textWidth[size]}`}
           >
-            {title}
+            {categoryTitle(title.toUpperCase())}
           </h1>
           <Link href={JEWELLERIES}>
             <a className="px-4 py-2 mt-5 text-sm font-bold text-black transition-transform bg-white rounded-full hover:-translate-y-1">
