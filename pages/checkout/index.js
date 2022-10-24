@@ -136,7 +136,7 @@ const Checkout = () => {
         );
 
       cartItems
-        .filter((x) => x.type === 'Rental')
+        .filter((x) => x.type === 'Rent')
         .map((cart) =>
           rentProducts.push({
             productName: cart.name,

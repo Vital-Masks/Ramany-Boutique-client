@@ -60,7 +60,7 @@ export default function Jewelleries() {
   const filterProduct = (val) => {
     if (val) {
       setAllProducts(products);
-      const pro = products?.filter((x) => x.jewelleryType === 'Rental');
+      const pro = products?.filter((x) => x.jewelleryType === 'Rent');
       setProducts(pro);
     } else {
       setProducts(allProducts);
@@ -69,10 +69,11 @@ export default function Jewelleries() {
 
   useEffect(() => {
     setIsLoading(true);
-    if (jewelleriesState) {
+    if (jewelleriesState.length > 0) {
+      console.log(jewelleriesState);
       setProducts(jewelleriesState);
+      setIsLoading(false);
     }
-    setIsLoading(false);
 
     if (categoriesState) {
       setCategories(categoriesState);

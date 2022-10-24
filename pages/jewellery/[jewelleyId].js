@@ -129,11 +129,11 @@ const Jewellery = () => {
                   className="px-2 py-1 text-center border border-l-0 border-gray-300"
                   onClick={() =>
                     setQty(
-                      product?.quantity <= 5 && qty < product?.quantity
+                      product?.quantity > 4 && qty > 4
+                        ? 5
+                        : qty < product?.quantity
                         ? ++qty
-                        : qty < 5
-                        ? ++qty
-                        : 5
+                        : product?.quantity
                     )
                   }
                 >

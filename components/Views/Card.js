@@ -5,7 +5,7 @@ const Card = ({ name, code, image, type }) => {
 
   return (
     <div className="relative w-full cursor-pointer">
-      {type?.toLowerCase() === 'rental' && (
+      {type?.toLowerCase() === 'rent' && (
         <span className="absolute top-2 right-2 z-10 bg-indigo-100 text-indigo-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-200 dark:text-indigo-900">
           {type}
         </span>

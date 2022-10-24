@@ -13,22 +13,23 @@ const CategoryCard = ({ size, title, index }) => {
     small: ['w-[80%]'],
   };
 
-  const images = [
-    {
-      img: 'https://images.unsplash.com/photo-1633685894176-9f715a092b79?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1615886753866-79396abc446e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
-    },
-  ];
+  const categoryImage = (category) => {
+    switch (category) {
+      case 'JEWELLERYCATEGORY':
+        return 'https://images.unsplash.com/photo-1569397288884-4d43d6738fbd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=765&q=80';
+      case 'CLOTHINGCATEGORY':
+        return 'https://images.unsplash.com/photo-1615886753866-79396abc446e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80';
+      case 'OCCASIONTYPE':
+        return 'https://images.unsplash.com/photo-1542042161784-26ab9e041e89?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80';
+      default:
+        break;
+    }
+  };
 
   return (
     <div className={`relative lg-max:shrink-0 ${classMap[size]} h-96`}>
       <Image
-        src={images[index].img}
+        src={categoryImage(title.toUpperCase())}
         layout="fill"
         objectFit="cover"
         objectPosition={'0% 30%'}
