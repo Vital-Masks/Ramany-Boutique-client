@@ -11,15 +11,13 @@ import { JEWELLERIES, PRODUCTS } from '../../constants/root';
 import { updateCustomer } from '../../services/auth';
 import * as Yup from 'yup';
 
+const CANADA_NUMBER = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
+
 const schema = Yup.object().shape({
   firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!'),
   lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!'),
   email: Yup.string().email(),
-  number: Yup.number()
-    .typeError("That doesn't look like a phone number")
-    .positive("A phone number can't start with a minus")
-    .integer("A phone number can't include a decimal point")
-    .min(10),
+  number: Yup.string().matches(CANADA_NUMBER, 'Phone number is not valid'),
   country: Yup.string().min(2, 'Too Short!').max(20, 'Too Long!'),
   password: Yup.string().min(
     8,

@@ -5,6 +5,8 @@ import * as Yup from 'yup';
 import { registerCustomer } from '../../../services/auth';
 import { setAuth } from '../../../utils/manageUser';
 
+const CANADA_NUMBER = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
+
 const SignupSchema = Yup.object().shape({
   firstName: Yup.string()
     .min(2, 'Too Short!')
@@ -30,11 +32,8 @@ const SignupSchema = Yup.object().shape({
     .min(2, 'Too Short!')
     .max(20, 'Too Long!')
     .required('Required'),
-  phone: Yup.number()
-    .typeError("That doesn't look like a phone number")
-    .positive("A phone number can't start with a minus")
-    .integer("A phone number can't include a decimal point")
-    .min(10)
+  phone: Yup.string()
+    .matches(CANADA_NUMBER, 'Phone number is not valid')
     .required('Required'),
 });
 

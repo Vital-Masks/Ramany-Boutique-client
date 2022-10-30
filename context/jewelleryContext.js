@@ -6,8 +6,12 @@ export const JewelleryContextProvider = ({ children }) => {
   const [jewelleries, setJewelleries] = useState([]);
 
   const fetchJewelleries = async () => {
-    const productsResults = await getJewellery();
-    setJewelleries(productsResults);
+    try {
+      const productsResults = await getJewellery();
+      setJewelleries(productsResults);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const value = { jewelleries };

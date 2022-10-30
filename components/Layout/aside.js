@@ -6,7 +6,7 @@ import { HOME, JEWELLERIES } from '../../constants/root';
 
 const Aside = ({ categories }) => {
   const router = useRouter();
-  const { pathname, category } = router.query;
+  const { pathname, category, occasion } = router.query;
 
   const grouped = categories?.reduce((cat, curr) => {
     if (!cat[curr.categoryType]) cat[curr.categoryType] = []; //If this type wasn't previously stored
@@ -61,7 +61,7 @@ const Aside = ({ categories }) => {
                     <li
                       key={index}
                       className={`my-4 hover:text-base active:text-base transition-transform text-gray-500 ${
-                        category === cat._id
+                        category === cat._id || occasion === cat._id
                           ? 'text-base font-semibold text-gray-700'
                           : ''
                       }`}

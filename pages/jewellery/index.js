@@ -4,10 +4,10 @@ import Link from 'next/link';
 
 import Aside from '../../components/Layout/aside';
 import MobileAside from '../../components/Layout/mobileAside';
-import Dropdown from '../../components/Ui/Dropdown';
 import Card from '../../components/Views/Card';
 import Loader from './../../components/Ui/Loader';
 import { AdjustmentsIcon } from '@heroicons/react/outline';
+import ReactPaginate from 'react-paginate';
 
 import { CategoryContext } from '../../context/categoryContext';
 import { JewelleryContext } from '../../context/jewelleryContext';
@@ -19,12 +19,40 @@ import {
 } from '../../services/jewellery';
 import Head from 'next/head';
 
+function Items({ products }) {
+  return (
+    <>
+      {products?.map(
+        ({ _id, jewelleryName, jewelleryCode, mainImage, jewelleryType }) => (
+          <Link href={`/jewellery/${_id}`} key={_id}>
+            <a>
+              <Card
+                name={jewelleryName}
+                code={jewelleryCode}
+                image={mainImage}
+                type={jewelleryType}
+              />
+            </a>
+          </Link>
+        )
+      )}
+    </>
+  );
+}
+
 export default function Jewelleries() {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [isRental, setIsRental] = useState(false);
   const { categories: categoriesState } = useContext(CategoryContext);
   const { jewelleries: jewelleriesState } = useContext(JewelleryContext);
+
+  // We start with an empty list of items.
+  const [currentItems, setCurrentItems] = useState(null);
+  const [pageCount, setPageCount] = useState(0);
+  // Here we use item offsets; we could also use page offsets
+  // following the API or data you're working with.
+  const [itemOffset, setItemOffset] = useState(0);
 
   const [allProducts, setAllProducts] = useState([]);
   const [products, setProducts] = useState([]);
@@ -59,12 +87,20 @@ export default function Jewelleries() {
 
   const filterProduct = (val) => {
     if (val) {
-      setAllProducts(products);
-      const pro = products?.filter((x) => x.jewelleryType === 'Rent');
-      setProducts(pro);
+      setAllProducts(currentItems);
+      const pro = currentItems?.filter((x) => x.jewelleryType === 'Rent');
+      setCurrentItems(pro);
     } else {
-      setProducts(allProducts);
+      setCurrentItems(allProducts);
     }
+  };
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * 9) % jewelleriesState.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
   };
 
   useEffect(() => {
@@ -81,6 +117,7 @@ export default function Jewelleries() {
   }, [jewelleriesState, categoriesState]);
 
   useEffect(() => {
+    setIsRental(false);
     if (category) {
       fetchJewelleryByCategory(category);
     } else if (occasion) {
@@ -89,6 +126,18 @@ export default function Jewelleries() {
       setProducts(jewelleriesState);
     }
   }, [category, occasion, jewelleriesState]);
+
+  useEffect(() => {
+    // Fetch items from another resources.
+    const endOffset = itemOffset + 9;
+    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    setCurrentItems(products.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(products.length / 9));
+  }, [products, itemOffset]);
+
+  useEffect(() => {
+    filterProduct(isRental);
+  }, [isRental]);
 
   return (
     <>
@@ -101,11 +150,12 @@ export default function Jewelleries() {
           <Aside categories={categories} />
           <div className="form-check">
             <input
-              onChange={(e) => filterProduct(e.target.checked)}
+              onChange={(e) => setIsRental(e.target.checked)}
               className="float-left w-4 h-4 mt-1 mr-2 align-top transition duration-200 bg-white bg-center bg-no-repeat bg-contain border border-gray-300 rounded-sm appearance-none cursor-pointer form-check-input checked:bg-blue-600 checked:border-blue-600 focus:outline-none"
               type="checkbox"
-              value=""
+              value={isRental}
               id="flexCheckDefault"
+              checked={isRental}
             />
             <label
               className="inline-block text-gray-800 form-check-label"
@@ -144,28 +194,23 @@ export default function Jewelleries() {
             <div className="grid my-4 place-items-center">
               <Loader load={isLoading} />
             </div>
-          ) : products?.length ? (
-            <div className="grid grid-cols-1 gap-12 py-5 md:grid-cols-2 xl:grid-cols-3 gap-y-10">
-              {products.map(
-                ({
-                  _id,
-                  jewelleryName,
-                  jewelleryCode,
-                  mainImage,
-                  jewelleryType,
-                }) => (
-                  <Link href={`/jewellery/${_id}`} key={_id}>
-                    <a>
-                      <Card
-                        name={jewelleryName}
-                        code={jewelleryCode}
-                        image={mainImage}
-                        type={jewelleryType}
-                      />
-                    </a>
-                  </Link>
-                )
-              )}
+          ) : currentItems?.length ? (
+            <div className="flex flex-col">
+              <div className="grid grid-cols-1 gap-12 py-5 md:grid-cols-2 xl:grid-cols-3 gap-y-10 font">
+                <Items products={currentItems} />
+              </div>
+
+              <ReactPaginate
+                breakLabel="..."
+                nextLabel="next >"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={5}
+                pageCount={pageCount}
+                previousLabel="< previous"
+                renderOnZeroPageCount={null}
+                className="flex items-center self-end gap-5 px-4 py-1 bg-gray-100 rounded-full mt-7"
+                activeClassName="font-semibold"
+              />
             </div>
           ) : (
             <p className="my-10 text-center">No Items!</p>

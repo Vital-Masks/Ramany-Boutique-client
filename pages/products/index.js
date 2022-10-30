@@ -13,19 +13,50 @@ import { getProductsByCategory } from '../../services/categories';
 import { ProductContext } from '../../context/productContext';
 import { CategoryContext } from '../../context/categoryContext';
 import { JewelleryContext } from '../../context/jewelleryContext';
+import ReactPaginate from 'react-paginate';
 
 import Search from '../../components/Header/search';
 import Head from 'next/head';
 
+function Items({ products }) {
+  return (
+    <>
+      {products?.map(
+        ({ _id, jewelleryName, jewelleryCode, mainImage, jewelleryType }) => (
+          <Link href={`/jewellery/${_id}`} key={_id}>
+            <a>
+              <Card
+                name={jewelleryName}
+                code={jewelleryCode}
+                image={mainImage}
+                type={jewelleryType}
+              />
+            </a>
+          </Link>
+        )
+      )}
+    </>
+  );
+}
+
 export default function Products() {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isRental, setIsRental] = useState(false);
+  const [allProducts, setAllProducts] = useState([]);
 
   const { products: productsState } = useContext(ProductContext);
   const { categories: categoriesState } = useContext(CategoryContext);
 
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+
+  // We start with an empty list of items.
+  const [currentItems, setCurrentItems] = useState(null);
+  const [pageCount, setPageCount] = useState(0);
+  // Here we use item offsets; we could also use page offsets
+  // following the API or data you're working with.
+  const [itemOffset, setItemOffset] = useState(0);
 
   const router = useRouter();
   const { category, type } = router.query;
@@ -41,6 +72,32 @@ export default function Products() {
     }
     setIsLoading(false);
   };
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * 9) % jewelleriesState.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
+
+  const filterProduct = (val) => {
+    if (val) {
+      setAllProducts(currentItems);
+      const pro = currentItems?.filter((x) => x.jewelleryType === 'Rent');
+      setCurrentItems(pro);
+    } else {
+      setCurrentItems(allProducts);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch items from another resources.
+    const endOffset = itemOffset + 9;
+    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    setCurrentItems(products.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(products.length / 9));
+  }, [products, itemOffset]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -62,6 +119,10 @@ export default function Products() {
     }
   }, [category, productsState, type]);
 
+  useEffect(() => {
+    filterProduct(isRental);
+  }, [isRental]);
+
   return (
     <>
       <Head>
@@ -71,6 +132,22 @@ export default function Products() {
       <div className="relative grid w-full max-w-screen-xl grid-cols-4 gap-10 px-5 py-3 mx-auto mt-16 md:py-5 md:px-20 xl:px-0 lg:mt-28 xl:mt-12">
         <div className="hidden lg:block">
           <Aside categories={categories} />
+          <div className="form-check">
+            <input
+              onChange={(e) => setIsRental(e.target.checked)}
+              className="float-left w-4 h-4 mt-1 mr-2 align-top transition duration-200 bg-white bg-center bg-no-repeat bg-contain border border-gray-300 rounded-sm appearance-none cursor-pointer form-check-input checked:bg-blue-600 checked:border-blue-600 focus:outline-none"
+              type="checkbox"
+              value={isRental}
+              id="flexCheckDefault"
+              checked={isRental}
+            />
+            <label
+              className="inline-block text-gray-800 form-check-label"
+              htmlFor="flexCheckDefault"
+            >
+              Show rentals only
+            </label>
+          </div>
         </div>
         <div className="col-span-3 lg:hidden">
           <MobileAside
@@ -92,28 +169,32 @@ export default function Products() {
                 <Search />
               </div> */}
             </div>
-            <div className="flex items-baseline gap-4 shrink-0 lg:mt-10">
+            {/* <div className="flex items-baseline gap-4 shrink-0 lg:mt-10">
               <p>Show products:</p>
               <Dropdown />
-            </div>
+            </div> */}
           </div>
           {isLoading ? (
             <div className="grid my-4 place-items-center">
               <Loader load={isLoading} />
             </div>
           ) : products?.length ? (
-            <div className="grid grid-cols-1 gap-12 py-5 md:grid-cols-2 xl:grid-cols-3 gap-y-10">
-              {products.map(({ _id, productName, productCode, mainImage }) => (
-                <Link href={`/products/${_id}`} key={_id} passHref>
-                  <a>
-                    <Card
-                      name={productName}
-                      code={productCode}
-                      image={mainImage}
-                    />
-                  </a>
-                </Link>
-              ))}
+            <div className="flex flex-col">
+              <div className="grid grid-cols-1 gap-12 py-5 md:grid-cols-2 xl:grid-cols-3 gap-y-10 font">
+                <Items products={currentItems} />
+              </div>
+
+              <ReactPaginate
+                breakLabel="..."
+                nextLabel="next >"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={5}
+                pageCount={pageCount}
+                previousLabel="< previous"
+                renderOnZeroPageCount={null}
+                className="flex items-center self-end gap-5 px-4 py-1 bg-gray-100 rounded-full mt-7"
+                activeClassName="font-semibold"
+              />
             </div>
           ) : (
             <p className="my-10 text-center">No Items!</p>
