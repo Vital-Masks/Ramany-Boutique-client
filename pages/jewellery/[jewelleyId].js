@@ -151,7 +151,7 @@ const Jewellery = () => {
                   }}
                   className="px-8 py-2 my-2 text-sm font-bold uppercase bg-orange-400 rounded-full"
                 >
-                  {product?.jewelleryType === 'Rental' ? 'Rent Now' : 'Buy Now'}
+                  {product?.jewelleryType === 'Rent' ? 'Rent Now' : 'Buy Now'}
                 </button>
                 <button
                   className="px-8 py-2 my-2 text-sm font-bold uppercase bg-orange-400 rounded-full"
