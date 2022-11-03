@@ -22,7 +22,7 @@ const schema = Yup.object().shape({
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
-  email: Yup.string().email().required('Required'),
+  // email: Yup.string().email().required('Required'),
   number: Yup.string()
     .matches(CANADA_NUMBER, 'Phone number is not valid')
     .required('Required'),
@@ -30,9 +30,10 @@ const schema = Yup.object().shape({
     .min(2, 'Too Short!')
     .max(20, 'Too Long!')
     .required('Required'),
-  password: Yup.string()
-    .min(8, 'Password is too short - should be 8 chars minimum.')
-    .required('Required'),
+  password: Yup.string().min(
+    8,
+    'Password is too short - should be 8 chars minimum.'
+  ),
 });
 
 const Profile = () => {
@@ -79,7 +80,7 @@ const Profile = () => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      password: user.password,
+      password: '',
       number: user.phone,
       country: user.country,
     });
@@ -169,7 +170,7 @@ const Profile = () => {
                             </p>
                           )}
                         </div>
-                        <div className="w-full">
+                        {/* <div className="w-full">
                           <label
                             htmlFor="email"
                             className="text-sm font-semibold"
@@ -186,7 +187,7 @@ const Profile = () => {
                               {errors.email}
                             </p>
                           )}
-                        </div>
+                        </div> */}
                         <div className="w-full">
                           <label
                             htmlFor="password"

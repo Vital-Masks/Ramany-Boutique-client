@@ -44,6 +44,7 @@ export default function Jewelleries() {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isRental, setIsRental] = useState(false);
+  const [total, setTotal] = useState(0);
   const { categories: categoriesState } = useContext(CategoryContext);
   const { jewelleries: jewelleriesState } = useContext(JewelleryContext);
 
@@ -65,6 +66,7 @@ export default function Jewelleries() {
     setIsLoading(true);
     try {
       const categoryProductsResults = await getJewelleryByCategory(category);
+      setTotal(categoryProductsResults.length);
       setProducts(categoryProductsResults);
     } catch (error) {
       setProducts([]);
@@ -77,6 +79,7 @@ export default function Jewelleries() {
     setIsLoading(true);
     try {
       const categoryProductsResults = await getJewelleryByOccasion(category);
+      setTotal(categoryProductsResults.length);
       setProducts(categoryProductsResults);
     } catch (error) {
       setProducts([]);
@@ -89,8 +92,12 @@ export default function Jewelleries() {
     if (val) {
       setAllProducts(currentItems);
       const pro = currentItems?.filter((x) => x.jewelleryType === 'Rent');
+      setPageCount(Math.ceil(pro.length / 9));
+      setTotal(pro.length);
       setCurrentItems(pro);
     } else {
+      setPageCount(Math.ceil(products.length / 9));
+      setTotal(products.length);
       setCurrentItems(allProducts);
     }
   };
@@ -107,6 +114,7 @@ export default function Jewelleries() {
     setIsLoading(true);
     if (jewelleriesState.length > 0) {
       console.log(jewelleriesState);
+      setTotal(jewelleriesState.length);
       setProducts(jewelleriesState);
       setIsLoading(false);
     }
@@ -179,7 +187,7 @@ export default function Jewelleries() {
                   className="w-5 h-5 text-gray-500 lg:hidden"
                   onClick={() => setOpenMobileMenu(!openMobileMenu)}
                 />
-                <h4>All ({products?.length || 0})</h4>
+                <h4>All ({total})</h4>
               </div>
             </div>
             <div className="flex items-baseline gap-4 shrink-0 lg:mt-10">
