@@ -23,7 +23,7 @@ const schema = Yup.object().shape({
     .max(50, 'Too Long!')
     .required('Required'),
   // email: Yup.string().email().required('Required'),
-  number: Yup.string()
+  phone: Yup.string()
     .matches(CANADA_NUMBER, 'Phone number is not valid')
     .required('Required'),
   country: Yup.string()
@@ -44,21 +44,35 @@ const Profile = () => {
     firstName: '',
     lastName: '',
     email: '',
-    number: '',
+    phone: '',
     country: '',
     password: '',
   });
 
   const handleSubmit = async (values) => {
     try {
-      const res = await updateCustomer(values.id, values);
+      const formObj = {};
+      if (values.password) {
+        formObj = { ...values };
+      } else {
+        formObj = {
+          id: values.id,
+          firstName: values.firstName,
+          lastName: values.lastName,
+          email: values.email,
+          phone: values.phone,
+          country: values.country,
+        };
+      }
+
+      const res = await updateCustomer(values.id, formObj);
 
       setAuth(res.Data);
       fetchUserDet();
       setIsEdit(false);
       toast.success('User details updated successfully!');
     } catch (error) {
-      toast.error('Something went wrong!');
+      toast.error('Something went wrong, try again later!');
       console.log(error);
     }
   };
@@ -81,7 +95,7 @@ const Profile = () => {
       lastName: user.lastName,
       email: user.email,
       password: '',
-      number: user.phone,
+      phone: user.phone,
       country: user.country,
     });
   };
@@ -209,7 +223,7 @@ const Profile = () => {
                         </div>
                         <div className="w-full">
                           <label
-                            htmlFor="mobile"
+                            htmlFor="phone"
                             className="text-sm font-semibold"
                           >
                             Mobile
@@ -217,11 +231,11 @@ const Profile = () => {
                           <Field
                             placeholder="Phone"
                             className="w-full px-4 py-2 border rounded-full focus:outline-none"
-                            name="number"
+                            name="phone"
                           />
-                          {errors.number && (
+                          {errors.phone && (
                             <p className="pl-4 text-sm text-red-500">
-                              {errors.number}
+                              {errors.phone}
                             </p>
                           )}
                         </div>
