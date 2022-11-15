@@ -39,7 +39,9 @@ export const CartContextProvider = ({ children }) => {
   };
 
   const clearCart = () => {
+    localStorage.removeItem('cart');
     setCart([]);
+    getCardItem();
   };
 
   const clearCartItem = (id) => {
@@ -49,9 +51,13 @@ export const CartContextProvider = ({ children }) => {
   };
 
   const getCardItem = async () => {
-    const data = await JSON.parse(localStorage?.cart);
-    if (data) {
-      setCart(data);
+    if (localStorage?.cart !== undefined) {
+      const data = await JSON.parse(localStorage?.cart);
+      if (data) {
+        setCart(data);
+      }
+    } else {
+      setCart([]);
     }
   };
 

@@ -103,7 +103,7 @@ const Checkout = () => {
     setCartItems([
       {
         id: cart.id,
-        productId: cart.productId,
+        productId: productId,
         name: product.jewelleryName,
         code: product.jewelleryCode,
         type: product.jewelleryType,
@@ -360,7 +360,10 @@ const Checkout = () => {
 
               <div className="flex items-center justify-end gap-2 mt-4">
                 <Link href={JEWELLERIES}>
-                  <a className="px-8 py-2 text-sm font-bold text-black uppercase bg-white border rounded-full">
+                  <a
+                    onClick={() => localStorage.removeItem('buyNow')}
+                    className="px-8 py-2 text-sm font-bold text-black uppercase bg-white border rounded-full"
+                  >
                     Continue shopping
                   </a>
                 </Link>
@@ -381,3 +384,4 @@ const Checkout = () => {
 };
 
 export default Checkout;
+Checkout.auth = true;

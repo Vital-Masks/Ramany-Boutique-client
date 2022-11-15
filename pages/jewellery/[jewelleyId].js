@@ -29,6 +29,7 @@ const Jewellery = () => {
         size: 'free',
       };
       add(product);
+      fetchProduct();
     }
   };
 
@@ -45,7 +46,7 @@ const Jewellery = () => {
   const handleBuyNow = () => {
     const obj = {
       productId: jewelleyId,
-      qty: qty,
+      qty: 1,
     };
     localStorage.setItem('buyNow', JSON.stringify(obj));
     router.push(CHECKOUT);
@@ -84,10 +85,14 @@ const Jewellery = () => {
         <div className="flex flex-col justify-between p-2">
           <div>
             <h2 className="text-2xl font-semibold">{product?.jewelleryName}</h2>
-            <p className="mt-1 font-bold text-red-500 text-md">
-              {' '}
-              {product?.jewelleryCode}
-            </p>
+            <div className="flex items-center gap-2">
+              <p className="mt-1 font-bold text-red-500 text-md">
+                {product?.jewelleryCode}
+              </p>
+              <p className="px-2 py-1 text-xs text-red-400 rounded-full bg-red-50">
+                {product?.quantity} item{product?.quantity > 1 && 's'} left
+              </p>
+            </div>
             {product?.occasionTypeId?.map(({ categoryName, index }) => (
               <p
                 key={index}

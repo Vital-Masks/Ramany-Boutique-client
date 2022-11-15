@@ -9,10 +9,12 @@ import Loader from './../../components/Ui/Loader';
 import { CartContext } from '../../context/cartContext';
 import { getJewelleryById } from '../../services/jewellery';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 const Carts = () => {
   const [cartItems, setCartItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const route = useRouter();
 
   const {
     cart,
@@ -66,10 +68,16 @@ const Carts = () => {
   };
 
   const clearCart = () => {
-    localStorage.removeItem('cart');
-    setCartItems([]);
-    clear();
-    toast.success('Cart cleared successfully!');
+    try {
+      setIsLoading(true);
+      setTimeout(() => {
+        clear();
+        setIsLoading(false);
+      }, 5000);
+      toast.success('Cart cleared successfully!');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const deleteCartItem = async (id) => {
@@ -77,8 +85,14 @@ const Carts = () => {
     toast.success('Cart item removed successfully!');
   };
 
+  const checkout = () => {
+    route.push(CHECKOUT);
+  };
+
   useEffect(() => {
-    if (cart) {
+    setCartItems([]);
+    if (cart.length) {
+      console.log('cart', cart);
       fetchProduct();
     }
   }, [cart]);
@@ -111,7 +125,14 @@ const Carts = () => {
                 </tr>
               </thead>
               <tbody>
-                {cartItems.length ? (
+                {isLoading ? (
+                  <tr>
+                    <td></td>
+                    <td className="flex items-center justify-center w-full gap-4 px-6 py-8 font-medium text-center">
+                      <Loader load={isLoading} />
+                    </td>
+                  </tr>
+                ) : cartItems.length > 0 ? (
                   cartItems.map((cart, index) => (
                     <tr key={index} className="text-gray-900">
                       <th
@@ -142,13 +163,6 @@ const Carts = () => {
                       </td>
                     </tr>
                   ))
-                ) : isLoading ? (
-                  <tr>
-                    <td></td>
-                    <td className="flex items-center justify-center w-full gap-4 px-6 py-8 font-medium text-center">
-                      <Loader load={isLoading} />
-                    </td>
-                  </tr>
                 ) : (
                   <tr>
                     <td></td>
@@ -169,7 +183,7 @@ const Carts = () => {
           </div>
           <div className="flex flex-col-reverse items-center justify-end gap-2 md:flex-row">
             <button
-              onClick={() => clearCart()}
+              onClick={() => cart.length && clearCart()}
               className="px-8 py-2 text-sm font-bold text-gray-400 uppercase transition-colors bg-gray-100 rounded-full hover:text-gray-600 md-max:w-full"
             >
               Clear cart
@@ -179,11 +193,15 @@ const Carts = () => {
                 Continue shopping
               </a>
             </Link>
-            <Link href={CHECKOUT}>
-              <a className="px-8 py-2 text-sm font-bold text-center text-black uppercase transition-colors bg-orange-400 rounded-full hover:bg-orange-500 md-max:w-full">
-                Checkout
-              </a>
-            </Link>
+            {/* <Link href={CHECKOUT}> */}
+            <button
+              disabled={!cart.length}
+              onClick={() => checkout()}
+              className="px-8 py-2 text-sm font-bold text-center text-black uppercase transition-colors bg-orange-400 rounded-full disabled:opacity-50 hover:bg-orange-500 md-max:w-full"
+            >
+              Checkout
+            </button>
+            {/* </Link> */}
           </div>
         </div>
       </div>

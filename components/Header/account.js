@@ -36,7 +36,11 @@ const Account = () => {
           <Cart />
           <Link href={PROFILE}>
             <a className="flex items-center gap-4 ">
-              <p className="font-bold hover:text-orange-500">
+              <p
+                className={`font-bold hover:text-orange-500 ${
+                  router.pathname === PROFILE ? 'text-orange-500' : ''
+                }`}
+              >
                 {user.firstName}!{' '}
               </p>
               <LogoutIcon
