@@ -360,10 +360,7 @@ const Checkout = () => {
 
               <div className="flex items-center justify-end gap-2 mt-4">
                 <Link href={JEWELLERIES}>
-                  <a
-                    onClick={() => localStorage.removeItem('buyNow')}
-                    className="px-8 py-2 text-sm font-bold text-black uppercase bg-white border rounded-full"
-                  >
+                  <a className="px-8 py-2 text-sm font-bold text-black uppercase bg-white border rounded-full">
                     Continue shopping
                   </a>
                 </Link>

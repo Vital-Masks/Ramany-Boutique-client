@@ -163,7 +163,8 @@ const Jewellery = () => {
                   onClick={() => {
                     !loggedIn
                       ? toast.error('You have to log in!')
-                      : addToCart();
+                      : localStorage.removeItem('buyNow');
+                    addToCart();
                   }}
                 >
                   Add to cart

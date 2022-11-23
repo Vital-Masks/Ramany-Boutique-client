@@ -148,7 +148,10 @@ const Product = () => {
               </button>
               <button
                 className="px-8 py-2 my-2 text-sm font-bold uppercase bg-orange-400 rounded-full"
-                onClick={() => addToCart()}
+                onClick={() => {
+                  localStorage.removeItem('buyNow');
+                  addToCart();
+                }}
               >
                 Add to cart
               </button>
