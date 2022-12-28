@@ -8,7 +8,7 @@ const Banner = () => {
     <div className="relative h-[500px] lg:h-[800px]">
       <Image
         priority
-        src={`https://images.unsplash.com/photo-1629231537930-c37842a36fc1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80`}
+        src={`/assets/NIC18446.jpg`}
         layout="fill"
         objectFit="cover"
         alt="banner"

@@ -139,7 +139,7 @@ export default function Jewelleries() {
     // Fetch items from another resources.
     const endOffset = itemOffset + 9;
     console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-    setCurrentItems(products.slice(itemOffset, endOffset));
+    console.log(products.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(products.length / 9));
   }, [products, itemOffset]);
 

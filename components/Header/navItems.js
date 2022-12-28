@@ -53,7 +53,7 @@ const NavItems = () => {
           About Us
         </a>
       </Link>
-      <Link href={CONTACT}>
+      {/* <Link href={CONTACT}>
         <a
           className={`font-normal text-gray-500 transition-colors hover:text-orange-500 ${
             router.pathname === CONTACT ? 'text-orange-500' : ''
@@ -61,7 +61,7 @@ const NavItems = () => {
         >
           Contact Us
         </a>
-      </Link>
+      </Link> */}
     </div>
   );
 };
