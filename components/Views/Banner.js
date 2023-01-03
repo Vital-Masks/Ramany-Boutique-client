@@ -1,14 +1,14 @@
 import Image from 'next/image';
 import { ArrowRightIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
-import { JEWELLERIES, PRODUCTS } from '../../constants/root';
+import { JEWELLERIES } from '../../constants/root';
 
 const Banner = () => {
   return (
     <div className="relative h-[500px] lg:h-[800px]">
       <Image
+        src="/assets/bannerImg.jpeg"
         priority
-        src={`/assets/bannerImg.jpg`}
         layout="fill"
         objectFit="cover"
         alt="banner"
