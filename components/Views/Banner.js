@@ -2,13 +2,14 @@ import Image from 'next/image';
 import { ArrowRightIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
 import { JEWELLERIES, PRODUCTS } from '../../constants/root';
+import banner from '/assets/NIC18446.jpg';
 
 const Banner = () => {
   return (
     <div className="relative h-[500px] lg:h-[800px]">
       <Image
         priority
-        src={`/assets/NIC18446.jpg`}
+        src={banner}
         layout="fill"
         objectFit="cover"
         alt="banner"
@@ -17,7 +18,7 @@ const Banner = () => {
         <div className="md:w-[70%] ml-10 lg:ml-40 xl:ml-60 xl:w-[60%]">
           <h1 className="text-2xl font-extrabold tracking-wide md:text-5xl lg:text-6xl xl:text-8xl xl:leading-snug">
             {' '}
-            Make your Big Day More Colorful!
+            Make your <br /> Big Day <br /> More Colorful!
           </h1>
           <button className="flex items-center gap-6 mt-4 group">
             <ArrowRightIcon className="w-8 h-8 p-2 bg-blue-600 rounded-full" />
