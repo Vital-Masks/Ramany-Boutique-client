@@ -12,16 +12,16 @@ import { MdMail, MdPhoneInTalk } from 'react-icons/md';
 const Footer = () => {
   const navigation = {
     main: [
-      { name: 'Home', href: HOME },
+      // { name: 'Home', href: HOME },
       // { name: 'Clothing', href: PRODUCTS },
-      { name: 'Jewellery', href: JEWELLERIES },
+      // { name: 'Jewellery', href: JEWELLERIES },
       { name: 'Terms and Conditions', href: TERMS },
       { name: 'Privacy Policy', href: PRIVACY },
     ],
     social: [
       {
         name: 'Phone',
-        href: 'tel:+940771234567',
+        href: 'tel:+14164742388',
         icon: (props) => <MdPhoneInTalk {...props} />,
       },
       {
@@ -40,7 +40,8 @@ const Footer = () => {
   return (
     <footer className="bg-white border-t">
       <div className="px-4 py-8 mx-auto overflow-hidden max-w-7xl sm:px-6 lg:px-8">
-        <nav
+    <div className='flex items-center justify-between'>
+    <nav
           className="flex flex-wrap justify-center -mx-5 -my-2"
           aria-label="Footer"
         >
@@ -52,7 +53,7 @@ const Footer = () => {
             </Link>
           ))}
         </nav>
-        <div className="flex justify-center mt-8 space-x-6">
+        <div className="flex justify-center space-x-6">
           {navigation.social.map((item) => (
             <Link href={item.href} key={item.name}>
               <a className="text-gray-400 hover:text-gray-500" target="_blank">
@@ -62,9 +63,10 @@ const Footer = () => {
             </Link>
           ))}
         </div>
-        <p className="mt-8 text-base text-center text-gray-400">
+    </div>
+        <p className="mt-5 text-sm text-center text-gray-400">
           &copy; {new Date().getFullYear()} The Ramya Boutique. All rights
-          reserved. | Designed by Vital Masks
+          reserved. | Developed by Vital Masks
         </p>
       </div>
     </footer>

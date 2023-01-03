@@ -11,7 +11,7 @@ const About = () => {
       <div className="relative w-full h-[500px]">
         <Image
           priority
-          src={`https://images.unsplash.com/photo-1614951841462-92cb7e25f7fb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80`}
+          src={'/assets/5E7A3876.jpg'}
           layout="fill"
           objectFit="cover"
           alt="banner"
@@ -54,7 +54,7 @@ const About = () => {
             </div>
             <div className="relative w-full aspect-square">
               <Image
-                src={`https://images.unsplash.com/photo-1615886753866-79396abc446e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80`}
+                src={'/assets/NIC18490.jpg'}
                 layout="fill"
                 objectFit="cover"
                 alt="cover image"
