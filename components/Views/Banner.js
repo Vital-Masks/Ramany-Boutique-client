@@ -14,8 +14,8 @@ const Banner = () => {
         alt="banner"
       />
       <div className="absolute top-0 left-0 flex flex-col items-start justify-center w-full h-full text-white bg-black bg-opacity-40">
-        <div className="md:w-[70%] ml-10 lg:ml-40 xl:ml-60 xl:w-[60%]">
-          <h1 className="text-2xl font-extrabold tracking-wide md:text-5xl lg:text-6xl xl:text-8xl xl:leading-snug">
+        <div className="md:w-[70%] ml-10 lg:ml-24 xl:ml-32 xl:w-[60%]">
+          <h1 className="text-2xl font-extrabold tracking-wide md:text-5xl lg:text-6xl xl:text-7xl xl:leading-snug">
             {' '}
             Make your Big Day More Colorful!
           </h1>
