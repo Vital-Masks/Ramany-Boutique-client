@@ -32,29 +32,33 @@ const About = () => {
             <div className="py-4">
               <h1 className="text-3xl font-bold leading-loose">Who We Are?</h1>
               <p className="mt-2 text-stone-800">
-                Over the period of several years, the Ramya boutique has formed
-                long-lasting connections with clients by base to form founded on
-                trust, excelling in service, and offering customers with
-                attractive clothing and one-of-a-kind handcrafted pieces of
-                jewellery. We embrace diversity and versatility in the world of
-                fashion and make it our aim to fulfill the ever-evolving taste
-                requirements of our customers. Our mission is to constantly
-                surpass your expectations regarding the level of engagement and
-                connectedness that you have of jewellers and boutiques, and we
-                want to accomplish this by providing the highest possible level
-                of customer service. The exceptional handiwork that we do has
-                earned us recognition not just in Canada but also all across the
-                world. We craft heirloom-worthy pieces of personal adornment by
-                utilizing the purest kind of gold combined with zircons and
-                precious stones of the highest quality. Customers who want
-                wonderful adornments for their special day to celebrate
+                The Ramya boutique has formed long-lasting connections with
+                clients by base to form founded on trust, excelling in service,
+                and offering customers attractive jewels and one-of-a-kind
+                handcrafted pieces of jewelry. We embrace diversity and
+                versatility in the world of fashion and make it our aim to
+                fulfill the ever-evolving taste requirements of our customers.
+                Our mission is to constantly surpass your expectations regarding
+                the level of engagement and connectedness that you have of
+                jewelers, and we want to accomplish this by providing the
+                highest possible level of customer service. Our owner Ramani has
+                been brilliant in providing you with the best-ever jewelries. As
+                a solo entrepreneur, she has mastered everything in the art
+                behind jewelries, crafts, design, and fashion. Her efforts in
+                fulfilling your needs with the exceptional handiwork that we do
+                have earned us recognition not just in Canada but also all
+                across the world. We craft heirloom-worthy pieces of personal
+                adornment by utilizing the purest kind of gold combined with
+                zircons and precious stones of the highest quality. Customers
+                who want wonderful adornments for their special day to celebrate
                 remarkable achievements may enjoy the benefits of the many
                 personalized services that we provide here at our business.
               </p>
             </div>
-            <div className="relative w-full aspect-square">
+            <div className="relative w-full aspect-square m-5">
               <Image
                 src={'/assets/NIC18490.jpg'}
+                priority
                 layout="fill"
                 objectFit="cover"
                 alt="cover image"

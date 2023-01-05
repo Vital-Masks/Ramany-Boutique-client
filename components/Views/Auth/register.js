@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { registerCustomer } from '../../../services/auth';
 import { setAuth } from '../../../utils/manageUser';
 
-const CANADA_NUMBER = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
+const CANADA_NUMBER = /\D*([2-9]\d{2})(\D*)([2-9]\d{2})(\D*)(\d{4})\D*/;
 
 const SignupSchema = Yup.object().shape({
   firstName: Yup.string()

@@ -3,9 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { useState } from 'react';
-import MobileAside from '../Layout/mobileAside';
 import Account from './account';
-import Cart from './cart';
 import MobileNav from './mobileNav';
 import NavItems from './navItems';
 

@@ -11,7 +11,7 @@ import { JEWELLERIES, PRODUCTS } from '../../constants/root';
 import { updateCustomer } from '../../services/auth';
 import * as Yup from 'yup';
 
-const CANADA_NUMBER = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
+const CANADA_NUMBER = /\D*([2-9]\d{2})(\D*)([2-9]\d{2})(\D*)(\d{4})\D*/;
 
 const schema = Yup.object().shape({
   firstName: Yup.string()

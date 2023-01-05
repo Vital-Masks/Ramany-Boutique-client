@@ -116,13 +116,18 @@ export default function Jewelleries() {
       console.log(jewelleriesState);
       setTotal(jewelleriesState.length);
       setProducts(jewelleriesState);
+      setCurrentItems(jewelleriesState);
       setIsLoading(false);
     }
 
     if (categoriesState) {
       setCategories(categoriesState);
     }
-  }, [jewelleriesState, categoriesState]);
+
+    if (isRental) {
+      filterProduct(isRental);
+    }
+  }, [jewelleriesState, categoriesState, isRental]);
 
   useEffect(() => {
     setIsRental(false);
@@ -132,22 +137,19 @@ export default function Jewelleries() {
       fetchJewelleryByOccasion(occasion);
     } else {
       setProducts(jewelleriesState);
+      setCurrentItems(jewelleriesState);
     }
   }, [category, occasion, jewelleriesState]);
 
   useEffect(() => {
     // Fetch items from another resources.
-    if(products){
+    if (products) {
       const endOffset = itemOffset + 9;
       console.log(`Loading items from ${itemOffset} to ${endOffset}`);
       console.log(products.slice(itemOffset, endOffset));
       setPageCount(Math.ceil(products.length / 9));
     }
   }, [products, itemOffset]);
-
-  useEffect(() => {
-    filterProduct(isRental);
-  }, [isRental]);
 
   return (
     <>

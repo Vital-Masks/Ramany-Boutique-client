@@ -158,21 +158,46 @@ const Checkout = () => {
       const rentCart = {
         customerId: value.id,
         totalCost: 0,
-        status: 'pending',
+        status: 'Pending',
         orderType: 'Rent',
         jewelleryDetails: rentProducts,
       };
 
+      const messageProducts = '';
+
       try {
         if (sellProducts.length > 0) {
           await makeOrder(sellCart);
+          sellProducts.map(
+            (p) =>
+              (messageProducts =
+                messageProducts +
+                '%0A' +
+                p.productName +
+                ' ' +
+                'x' +
+                p.quantity)
+          );
         }
         if (rentProducts.length > 0) {
           await makeOrder(rentCart);
+          rentProducts.map(
+            (p) =>
+              (messageProducts =
+                messageProducts +
+                '%0A' +
+                p.productName +
+                ' ' +
+                'x' +
+                p.quantity)
+          );
         }
 
-        const message = `Hello, I made an order at TheRamyaBoutique.com.`;
-        const whatsAppURL = `https://wa.me/94777453835?text=${message}`;
+        const customer = `Full name: ${initialState.firstName} ${initialState.lastName}%0APhone: ${initialState.number}%0AEmail: ${initialState.email}`;
+
+        const message = `Hello, I made an order at TheRamyaBoutique.com.%0A%0A${messageProducts}%0A%0A${customer}`;
+
+        const whatsAppURL = `https://wa.me/+14164742388?text=${message}`;
         window.open(whatsAppURL, '_blank').focus();
 
         toast.success('Order made successfully!');

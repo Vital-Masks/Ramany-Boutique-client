@@ -20,7 +20,6 @@ const TermsAndConditions = () => {
           </div>
           <div className="mx-auto mt-6 prose prose-lg text-gray-500 prose-indigo">
             <p>
-              {' '}
               Welcome to &quot;The Ramya Boutique&quot;. As you continue to
               browse and use our website, you are agreeing to comply with and be
               bound by the following terms and conditions, which, together with
@@ -104,6 +103,19 @@ const TermsAndConditions = () => {
               will not be considered.
             </p>
 
+            <h3>RENTAL POLICY</h3>
+            <p>
+              We clean, sterilize and inspect each Product we send to you, but
+              use of the Products is at your own risk and The Ramya Boutique
+              shall not be held liable for any health related complaints
+              associated with Products or damages associated with the use of
+              Products. Subject to your compliance with these Terms (including
+              payment of fees), our right to terminate the Services, and our
+              right to demand the return of Products, we do not impose any
+              limitations on the time period during which you may keep any
+              Product we have sent to you through The Ramya Boutique.
+            </p>
+
             <h3>PAYMENT POLICY</h3>
             <p>
               Customers can pay through any of the cards that are accepted by
@@ -116,8 +128,7 @@ const TermsAndConditions = () => {
               payments as all transactions are done on the respective payment
               gateway partner&quot;s website. However, we do promise to help in
               whatever way possible in case you are facing difficulty making
-              payments. The Cash on Delivery option is currently not available
-              on our website.
+              payments.
             </p>
 
             <h3>CUSTOMER ALTERATION</h3>
@@ -160,7 +171,6 @@ const TermsAndConditions = () => {
             </p>
 
             <h3>SALE, DISCOUNTS & OFFERS</h3>
-
             <p>
               At <a href="www.theramyaboutique.com">www.theramyaboutique.com</a>
               , we come up with discounts and offers repeatedly. These are
@@ -175,7 +185,6 @@ const TermsAndConditions = () => {
             </p>
 
             <h3>ELECTRONIC COMMUNICATIONS</h3>
-
             <p>
               When you subscribe or register with us, you automatically give us
               the consent to communicate. You agree that all agreements,
@@ -186,11 +195,13 @@ const TermsAndConditions = () => {
               information that we feel might be relevant to convey to our
               customers.
             </p>
+
             <h3>LEGAL JURISDICTION</h3>
             <p>
               This User Agreement shall be construed in accord with the
               applicable laws of Canada.
             </p>
+
             <h3>CONDITIONS FOR CUSTOMER SUPPORT</h3>
             <p>
               The conversation on the WhatsApp chat may be recorded and used by
@@ -219,6 +230,7 @@ const TermsAndConditions = () => {
               to be aware of any such additional duty/taxes before placing an
               order.
             </p>
+
             <h3>OPTIONAL TOOLS</h3>
             <p>
               We may provide you with access to third-party tools over which we
@@ -253,6 +265,7 @@ const TermsAndConditions = () => {
               party’s policies and practices and make sure you understand them
               before you engage in any transaction.
             </p>
+
             <h3>CHANGES TO TERMS OF SERVICE</h3>
             <p>
               You can review the most current version of the Terms of Service at
@@ -264,6 +277,7 @@ const TermsAndConditions = () => {
               following the posting of any changes to these Terms of Service
               constitutes acceptance of those changes.
             </p>
+
             <h3>CONTACT INFORMATION</h3>
             <p>
               Questions about the Terms of Service should be sent to us at{' '}

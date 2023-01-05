@@ -17,6 +17,7 @@ import ReactPaginate from 'react-paginate';
 
 import Search from '../../components/Header/search';
 import Head from 'next/head';
+import { getProducts } from '../../services/products';
 
 function Items({ products }) {
   return (
@@ -39,7 +40,7 @@ function Items({ products }) {
   );
 }
 
-export default function Products() {
+export default function Products({ data }) {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isRental, setIsRental] = useState(false);
@@ -122,6 +123,8 @@ export default function Products() {
   useEffect(() => {
     filterProduct(isRental);
   }, [isRental]);
+
+  console.log('datas', data);
 
   return (
     <>
