@@ -13,7 +13,7 @@ const Header = () => {
   return (
     <>
       <MobileNav open={openMenu} />
-      <div className="fixed z-30 flex items-center justify-between w-full max-w-6xl px-5 py-2 mx-auto bg-white border-b xl:relative 2xl:max-w-screen-xl md:py-2 md:px-20 xl:px-0">
+      <div className="fixed z-30 flex items-center justify-between w-full max-w-6xl px-5 py-2 mx-auto bg-white border-b lg:relative 2xl:max-w-screen-xl md:py-2 md:px-20 xl:px-0">
         <div className="flex items-center gap-10">
           <Link href="/" passHref>
             <div className="relative w-10 h-10 cursor-pointer md:h-16 md:w-16">

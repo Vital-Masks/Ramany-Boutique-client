@@ -14,18 +14,22 @@ const Banner = () => {
         alt="banner"
       />
       <div className="absolute top-0 left-0 flex flex-col items-start justify-center w-full h-full text-white bg-black bg-opacity-40">
-        <div className="md:w-[70%] ml-10 lg:ml-20 2xl:ml-72 xl:w-[60%]">
-          <h1 className="text-2xl font-extrabold tracking-wide md:text-5xl lg:text-6xl xl:text-7xl xl:leading-snug">
-            Make your <br /> Big Day <br /> More Colorful!
-          </h1>
-          <button className="flex items-center gap-6 mt-4 group">
-            <ArrowRightIcon className="w-8 h-8 p-2 bg-blue-600 rounded-full" />
-            <Link href={JEWELLERIES} passHref>
-              <p className="font-semibold tracking-widest uppercase transition-transform group-hover:translate-x-2">
-                Shop Now
-              </p>
-            </Link>
-          </button>
+        <div className="max-w-6xl mx-auto justify-between flex w-full px-5 2xl:max-w-screen-xl md:px-20 xl:px-0">
+          <div>
+            {' '}
+            <h1 className="text-5xl font-extrabold tracking-wide  lg:text-6xl xl:text-7xl xl:leading-snug">
+              Make your <br /> Big Day <br /> More Colorful!
+            </h1>
+            <button className="flex items-center gap-6 mt-4 group">
+              <ArrowRightIcon className="w-8 h-8 p-2 bg-blue-600 rounded-full" />
+              <Link href={JEWELLERIES} passHref>
+                <p className="font-semibold tracking-widest uppercase transition-transform group-hover:translate-x-2">
+                  Shop Now
+                </p>
+              </Link>
+            </button>
+          </div>
+          <div></div>
         </div>
       </div>
     </div>
