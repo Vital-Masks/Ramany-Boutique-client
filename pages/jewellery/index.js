@@ -117,7 +117,6 @@ export default function Jewelleries() {
   useEffect(() => {
     setIsLoading(true);
     if (jewelleriesState.length > 0) {
-      console.log(jewelleriesState);
       setTotal(jewelleriesState.length);
       setProducts(jewelleriesState);
       setCurrentItems(jewelleriesState);
@@ -128,9 +127,7 @@ export default function Jewelleries() {
       setCategories(categoriesState);
     }
 
-    if (isRental) {
-      filterProduct(isRental);
-    }
+    filterProduct(isRental);
   }, [jewelleriesState, categoriesState, isRental]);
 
   useEffect(() => {
@@ -150,7 +147,6 @@ export default function Jewelleries() {
     if (products) {
       const endOffset = itemOffset + 9;
       console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-      console.log(products.slice(itemOffset, endOffset));
       setPageCount(Math.ceil(products.length / 9));
     }
   }, [products, itemOffset]);

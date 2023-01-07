@@ -1,8 +1,4 @@
 export const setAuth = (user) => {
-  // let userObj = {
-  // 	auth: true,
-  // 	role: user.role,
-  // };
   localStorage.setItem('user', JSON.stringify(user));
 };
 

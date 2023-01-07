@@ -92,7 +92,6 @@ const Carts = () => {
   useEffect(() => {
     setCartItems([]);
     if (cart.length) {
-      console.log('cart', cart);
       fetchProduct();
     }
   }, [cart]);

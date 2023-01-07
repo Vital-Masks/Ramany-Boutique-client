@@ -124,8 +124,6 @@ export default function Products({ data }) {
     filterProduct(isRental);
   }, [isRental]);
 
-  console.log('datas', data);
-
   return (
     <>
       <Head>

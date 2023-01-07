@@ -1,6 +1,5 @@
 import { Field, Form, Formik } from 'formik';
 import { useState } from 'react';
-import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 import { loginCustomer } from '../../../services/auth';
 import { setAuth } from '../../../utils/manageUser';
@@ -21,7 +20,6 @@ const Login = ({ setIsLogin, setIsRegister }) => {
       setIsLogin(false);
     } catch (error) {
       setError('username or password is incorrect!');
-      // toast.error('username or password is incorrect!');
       console.log('error', error);
     }
   };

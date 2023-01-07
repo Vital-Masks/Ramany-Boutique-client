@@ -5,7 +5,7 @@ import { Disclosure } from '@headlessui/react';
 
 const MobileAside = ({ openMobileMenu, categories }) => {
   const router = useRouter();
-  const { category } = router.query;
+  const { pathname, category, occasion } = router.query;
 
   const grouped = categories?.reduce((cat, curr) => {
     if (!cat[curr.categoryType]) cat[curr.categoryType] = []; //If this type wasn't previously stored
@@ -14,6 +14,16 @@ const MobileAside = ({ openMobileMenu, categories }) => {
   }, {});
 
   const types = Object.keys(grouped);
+
+  const filterByCategory = (type, id) => {
+    if (type.includes('jewellery')) {
+      router.push(`/jewellery?category=${id}`);
+    } else if (type.includes('occasion')) {
+      router.push(`/jewellery?occasion=${id}`);
+    } else {
+      router.push(`/products?category=${id}`);
+    }
+  };
 
   return (
     <>
@@ -42,14 +52,11 @@ const MobileAside = ({ openMobileMenu, categories }) => {
                               : ''
                           }`}
                         >
-                          <Link
-                            href={{
-                              pathname: '/products',
-                              query: { category: cat._id },
-                            }}
+                          <button
+                            onClick={() => filterByCategory(type, cat._id)}
                           >
                             {cat.categoryName}
-                          </Link>
+                          </button>
                         </li>
                       ))}
                     </ul>

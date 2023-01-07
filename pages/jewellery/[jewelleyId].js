@@ -19,10 +19,11 @@ const Jewellery = () => {
   const { jewelleyId } = router.query;
 
   const addToCart = () => {
+    if (!loggedIn) toast.error('You have to log in!');
     if (!jewelleyId) toast.error('Something went wrong!');
     if (!qty) toast.error('Quantity must be > 0!');
 
-    if (jewelleyId) {
+    if (jewelleyId && loggedIn && qty) {
       const product = {
         productId: jewelleyId,
         quantity: qty,
@@ -45,12 +46,18 @@ const Jewellery = () => {
   };
 
   const handleBuyNow = () => {
-    const obj = {
-      productId: jewelleyId,
-      qty: 1,
-    };
-    localStorage.setItem('buyNow', JSON.stringify(obj));
-    router.push(CHECKOUT);
+    if (!loggedIn) toast.error('You have to log in!');
+    if (!jewelleyId) toast.error('Something went wrong!');
+    if (!qty) toast.error('Quantity must be > 0!');
+
+    if (jewelleyId && loggedIn && qty) {
+      const obj = {
+        productId: jewelleyId,
+        qty: qty,
+      };
+      localStorage.setItem('buyNow', JSON.stringify(obj));
+      router.push(CHECKOUT);
+    }
   };
 
   useEffect(() => {
@@ -94,7 +101,7 @@ const Jewellery = () => {
                 {product?.quantity} item{product?.quantity > 1 && 's'} left
               </p>
             </div>
-            {product?.occasionTypeId?.map(({ categoryName, index }) => (
+            {product?.occasionTypeId?.map(({ categoryName }, index) => (
               <p
                 key={index}
                 className="my-2 text-sm font-semibold text-gray-400"
@@ -150,11 +157,7 @@ const Jewellery = () => {
             {product?.quantity > 0 ? (
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => {
-                    !loggedIn
-                      ? toast.error('You have to log in!')
-                      : handleBuyNow();
-                  }}
+                  onClick={() => handleBuyNow()}
                   className="px-8 py-2 my-2 text-sm font-bold uppercase bg-orange-400 rounded-full"
                 >
                   {product?.jewelleryType === 'Rent' ? 'Rent Now' : 'Buy Now'}
@@ -162,9 +165,7 @@ const Jewellery = () => {
                 <button
                   className="px-8 py-2 my-2 text-sm font-bold uppercase bg-orange-400 rounded-full"
                   onClick={() => {
-                    !loggedIn
-                      ? toast.error('You have to log in!')
-                      : localStorage.removeItem('buyNow');
+                    localStorage.removeItem('buyNow');
                     addToCart();
                   }}
                 >
