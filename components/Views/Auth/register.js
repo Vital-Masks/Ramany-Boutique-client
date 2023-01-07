@@ -33,7 +33,8 @@ const SignupSchema = Yup.object().shape({
     .max(20, 'Too Long!')
     .required('Required'),
   phone: Yup.string()
-    .matches(CANADA_NUMBER, 'Phone number is not valid')
+    .matches(/^[0-9]+$/, 'Phone number is not valid')
+    .max(15, 'Phone number is not valid')
     .required('Required'),
 });
 

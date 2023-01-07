@@ -17,8 +17,8 @@ const About = () => {
           alt="banner"
         />
         <div className="absolute top-0 left-0 flex flex-col items-start justify-center w-full h-full text-white bg-black bg-opacity-40">
-          <div className="md:w-[70%] ml-10 lg:ml-40 xl:ml-60 xl:w-[60%]">
-            <h1 className="text-2xl font-extrabold tracking-wide md:text-5xl lg:text-6xl xl:text-8xl xl:leading-snug">
+          <div className="md:w-[70%] ml-10 lg:ml-20 2xl:ml-72 xl:w-[60%]">
+            <h1 className="text-2xl font-extrabold tracking-wide md:text-5xl lg:text-6xl xl:text-7xl xl:leading-snug">
               {' '}
               About Us
             </h1>
@@ -27,7 +27,7 @@ const About = () => {
       </div>
 
       <div className="bg-gray-100">
-        <div className="flex max-w-screen-lg gap-3 px-5 mx-auto overflow-x-scroll md:px-20 xl:px-0 2xl:max-w-screen-xl lg:overflow-hidden">
+        <div className="flex max-w-6xl gap-3 px-5 mx-auto overflow-x-scroll 2xl:max-w-7xl md:px-20 xl:px-0 lg:overflow-hidden">
           <div className="grid items-center grid-cols-1 gap-20 lg:grid-cols-2">
             <div className="py-4">
               <h1 className="text-3xl font-bold leading-loose">Who We Are?</h1>
@@ -55,7 +55,7 @@ const About = () => {
                 personalized services that we provide here at our business.
               </p>
             </div>
-            <div className="relative w-full aspect-square m-5">
+            <div className="relative w-full m-5 aspect-square">
               <Image
                 src={'/assets/NIC18490.jpg'}
                 priority

@@ -64,7 +64,7 @@ export default function Home() {
       <CardSection type={'jewellery'} products={products} loading={isLoading} />
 
       {/* Category Type Section */}
-      <div className="flex max-w-screen-lg gap-3 px-5 mx-auto my-20 overflow-x-scroll md:px-20 xl:px-0 2xl:max-w-screen-xl lg:overflow-hidden">
+      <div className="flex max-w-6xl gap-3 px-5 mx-auto my-20 overflow-x-scroll md:px-20 xl:px-0 2xl:max-w-screen-xl lg:overflow-hidden">
         {types?.map((categoryType, index) => (
           <CategoryCard
             key={index}

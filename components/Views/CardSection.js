@@ -5,7 +5,7 @@ import Card from './Card';
 
 const CardSection = ({ type, products, loading }) => {
   return (
-    <div className="max-w-screen-lg px-5 mx-auto my-20 md:px-20 xl:px-0 2xl:max-w-screen-xl">
+    <div className="max-w-6xl px-5 mx-auto my-20 md:px-20 xl:px-0 2xl:max-w-screen-xl">
       <div className="flex items-center justify-between my-10">
         <p className="text-lg font-semibold">Selected just for you</p>
         <Link href={JEWELLERIES}>

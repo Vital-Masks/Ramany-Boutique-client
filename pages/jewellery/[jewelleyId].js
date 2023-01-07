@@ -30,6 +30,7 @@ const Jewellery = () => {
       };
       add(product);
       fetchProduct();
+      toast.success('Product added to cart!');
     }
   };
 

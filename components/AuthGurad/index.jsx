@@ -18,7 +18,7 @@ const AuthGuard = ({ children }) => {
         children
       ) : (
         <div className="flex flex-col min-h-full pt-16 pb-12 bg-white">
-          <main className="flex flex-col justify-center flex-grow w-full px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+          <main className="flex flex-col justify-center flex-grow w-full max-w-6xl px-4 mx-auto sm:px-6 lg:px-8">
             <div className="py-16">
               <div className="text-center">
                 <p className="text-base font-semibold text-indigo-600">401</p>

@@ -127,8 +127,9 @@ const Checkout = () => {
         .filter((x) => x.type === 'Sale')
         .map((cart) =>
           sellProducts.push({
-            productName: cart.name,
             productId: cart.productId,
+            productCode: cart.code,
+            productName: cart.name,
             quantity: cart.qty,
             productPrice: 0,
             netPrice: 0,
@@ -139,8 +140,9 @@ const Checkout = () => {
         .filter((x) => x.type === 'Rent')
         .map((cart) =>
           rentProducts.push({
-            productName: cart.name,
             productId: cart.productId,
+            productCode: cart.code,
+            productName: cart.name,
             quantity: cart.qty,
             productPrice: 0,
             netPrice: 0,
@@ -163,29 +165,35 @@ const Checkout = () => {
         jewelleryDetails: rentProducts,
       };
 
-      const messageProducts = '';
+      let messageProducts = '';
 
       try {
         if (sellProducts.length > 0) {
           await makeOrder(sellCart);
-          sellProducts.map(
+
+          sellProducts.forEach(
             (p) =>
               (messageProducts =
                 messageProducts +
                 '%0A' +
+                p.productCode +
+                ' ' +
                 p.productName +
                 ' ' +
                 'x' +
                 p.quantity)
           );
         }
+
         if (rentProducts.length > 0) {
           await makeOrder(rentCart);
-          rentProducts.map(
+          rentProducts.forEach(
             (p) =>
               (messageProducts =
                 messageProducts +
                 '%0A' +
+                p.productCode +
+                ' ' +
                 p.productName +
                 ' ' +
                 'x' +
@@ -257,7 +265,7 @@ const Checkout = () => {
       >
         {({ values, errors, touched, isSubmitting }) => (
           <Form>
-            <div className="relative w-full max-w-screen-xl px-5 py-3 mx-auto mt-20 md:py-5 md:px-20 xl:px-0 lg:mt-28 xl:mt-12">
+            <div className="relative w-full max-w-6xl px-5 py-3 mx-auto mt-20 2xl:max-w-7xl md:py-5 md:px-20 xl:px-0 lg:mt-28 xl:mt-12">
               <Toaster />
 
               <h5 className="text-xl font-bold">Shipping and Payment</h5>
@@ -383,19 +391,24 @@ const Checkout = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-2 mt-4">
-                <Link href={JEWELLERIES}>
-                  <a className="px-8 py-2 text-sm font-bold text-black uppercase bg-white border rounded-full">
-                    Continue shopping
-                  </a>
-                </Link>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="px-8 py-2 text-sm font-bold text-black uppercase bg-orange-400 rounded-full"
-                >
-                  Make order
-                </button>
+              <div className="flex flex-col items-end">
+                <div className="flex items-center justify-end gap-2 mt-4">
+                  <Link href={JEWELLERIES}>
+                    <a className="px-8 py-2 text-sm font-bold text-black uppercase bg-white border rounded-full">
+                      Continue shopping
+                    </a>
+                  </Link>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="px-8 py-2 text-sm font-bold text-black uppercase bg-orange-400 rounded-full"
+                  >
+                    Make order
+                  </button>
+                </div>
+                <i className="mt-4 text-sm">
+                  Make sure you send the whatsapp message while checkout!
+                </i>
               </div>
             </div>
           </Form>
