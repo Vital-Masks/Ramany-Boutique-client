@@ -28,7 +28,7 @@ const Account = () => {
     <>
       {!user && (
         <button onClick={() => setIsLogin(!isLogin)}>
-          <UserIcon className="w-5 h-5 text-gray-500 cursor-pointer md:w-7 md:h-7" />
+          <UserIcon className="w-5 h-5 text-gray-300 cursor-pointer md:w-7 md:h-7" />
         </button>
       )}
       {user && (

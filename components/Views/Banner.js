@@ -2,22 +2,69 @@ import Image from 'next/image';
 import { ArrowRightIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
 import { JEWELLERIES } from '../../constants/root';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import 'swiper/css';
+import 'swiper/css/pagination';
+
+import { Autoplay, Pagination } from 'swiper';
 
 const Banner = () => {
   return (
-    <div className="relative h-[500px] 2xl:h-[800px]">
-      <Image
-        priority
-        src="/assets/bannerImg.jpg"
-        layout="fill"
-        objectFit="cover"
-        alt="banner"
-      />
-      <div className="absolute top-0 left-0 flex flex-col items-start justify-center w-full h-full text-white bg-black bg-opacity-40">
-        <div className="max-w-6xl mx-auto justify-between flex w-full px-5 2xl:max-w-screen-xl md:px-20 xl:px-0">
+    <div className="relative h-[500px] 2xl:h-[800px] -top-24">
+      <Swiper
+        // pagination={{
+        //   dynamicBullets: true,
+        // }}
+        autoplay={{
+          delay: 3500,
+          disableOnInteraction: false,
+        }}
+        modules={[Autoplay, Pagination]}
+        className="w-full h-full mySwiper"
+      >
+        <SwiperSlide>
+          <Image
+            priority
+            src="/assets/banner/1.jpg"
+            layout="fill"
+            objectFit="cover"
+            alt="banner"
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Image
+            priority
+            src="/assets/banner/2.jpg"
+            layout="fill"
+            objectFit="cover"
+            alt="banner"
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Image
+            priority
+            src="/assets/banner/3.jpg"
+            layout="fill"
+            objectFit="cover"
+            alt="banner"
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Image
+            priority
+            src="/assets/banner/4.jpg"
+            layout="fill"
+            objectFit="cover"
+            alt="banner"
+          />
+        </SwiperSlide>
+      </Swiper>
+      <div className="absolute top-0 left-0 z-40 flex flex-col items-start justify-end w-full h-full pb-20 text-white bg-black bg-opacity-40">
+        <div className="flex justify-between w-full max-w-6xl px-5 mx-auto 2xl:max-w-screen-xl md:px-20 xl:px-0">
           <div>
             {' '}
-            <h1 className="text-5xl font-extrabold tracking-wide  lg:text-6xl xl:text-7xl xl:leading-snug">
+            <h1 className="text-3xl font-extrabold tracking-wide lg:text-6xl xl:text-7xl xl:leading-snug">
               Make your <br /> Big Day <br /> More Colorful!
             </h1>
             <button className="flex items-center gap-6 mt-4 group">
