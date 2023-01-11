@@ -18,7 +18,7 @@ const Header = () => {
           <Link href="/" passHref>
             <div className="relative w-10 h-10 cursor-pointer md:h-16 md:w-16">
               <Image
-                src={`/logo.png`}
+                src={`/ramyalogo.png`}
                 layout="fill"
                 objectFit="cover"
                 alt="img"
